@@ -43,8 +43,8 @@ public class App {
             tx = session.beginTransaction();
              
             // Creating Article entity that will be save to the sqlite database
-            Article article1 = new Article(1, "Whittington, Keith J.", "Infusing active learning into introductory programming courses", 2004);
-            Article article2 = new Article(2, "Allan Collins and John Seely Brown and Ann Holum", "Cognitive apprenticeship: making thinking visible", 1991);
+            Article article1 = new Article("Whi04", "Whittington, Keith J.", "Infusing active learning into introductory programming courses", 2004);
+            Article article2 = new Article("CBH91", "Allan Collins and John Seely Brown and Ann Holum", "Cognitive apprenticeship: making thinking visible", 1991);
              
             // Saving to the database
             session.save(article1);

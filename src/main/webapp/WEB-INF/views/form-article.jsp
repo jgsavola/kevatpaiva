@@ -39,52 +39,58 @@
 <fieldset>
 <legend>Lisää lähdeviite</legend>
 	
-    <label for="entry-type">Tyyppi</label>
-	<select name="entry-type" size="3">
+    <label for="type">Tyyppi</label>
+	<select name="type" size="3">
     	<option value="article" title="An article from a journal or magazine">Artikkeli</option>
         <option value="book" disabled="disabled" title="A book with an explicit publisher">Kirja</option>
         <option value="inproceedings" disabled="disabled" title="An article in a conference proceedings">Konferenssi</option>
 	</select>
 
-    <label for="entry-id">ID</label>
-    <input name="entry-id" id="entry-id" type="text" />    
+    <label for="id">ID</label>
+    <input name="id" id="id" type="text" />    
     
-    <label for="entry-author">Kirjoittaja <p class="help" title="Recognized structures:
+    <label for="author">Kirjoittaja <p class="help" title="Recognized structures:
     [First von Last] or 
     [von Last, First] or 
     [von Last, Jr ,First]">(help)</p></label>
-    <input name="entry-author" id="entry-author" type="text" />
+    <input name="author" id="author" type="text" />
 
 
     
-    <label for="entry-title">Otsikko</label>
-    <input name="entry-title" id="entry-title" type="text" />
+    <label for="title">Otsikko</label>
+    <input name="title" id="title" type="text" />
     
-    <label for="entry-journal">Journaali</label>
-    <input name="entry-journal" id="entry-journal" type="text" />
+    <label for="journal">Journaali</label>
+    <input name="journal" id="journal" type="text" />
     
-    <label for="entry-year">Vuosi</label>
-	<input name="entry-year" id="entry-year" type="text" />
+    <label for="year">Vuosi</label>
+	<input name="year" id="year" type="text" />
+    
+    <label for="publisher">Kustantaja</label>
+	<input name="publisher" id="publisher" type="text" />
+        
+    <label for="address">Kustantaja</label>
+	<input name="address" id="addressd" type="text" />
 
 	<p>Valinnaiset</p>
 
-    <label for="entry-volume">Nidos/Määrä</label>
-	<input name="entry-volume" id="entry-volume" type="text" />
+    <label for="volume">Nidos/Määrä</label>
+	<input name="volume" id="volume" type="text" />
     
-    <label for="entry-number">Numero</label>
-	<input name="entry-number" id="entry-number" type="text" />
+    <label for="number">Numero</label>
+	<input name="number" id="number" type="text" />
     
-    <label for="entry-pages">Sivut</label>
-	<input name="entry-pages" id="entry-pages" type="text" />
+    <label for="pages">Sivut</label>
+	<input name="pages" id="pages" type="text" />
     
-    <label for="entry-month">Kuukausi</label>
-	<input name="entry-month" id="entry-month" type="text" />
+    <label for="month">Kuukausi</label>
+	<input name="month" id="month" type="text" />
     
-    <label for="entry-note">Kommentti</label>
-	<input name="entry-note" id="entry-note" type="text" />
+    <label for="note">Kommentti</label>
+	<input name="note" id="note" type="text" />
     
-    <label for="entry-key">Key</label>
-	<input name="entry-key" id="entry-key" type="text" />
+    <label for="key">Key</label>
+	<input name="key" id="key" type="text" />
 
 	<input name="form-submit" id="form-submit" class="button" type="submit" value="Lähetä" />
 </fieldset>
