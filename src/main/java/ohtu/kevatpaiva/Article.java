@@ -32,6 +32,7 @@ public class Article implements Serializable {
     }
  
     public Article(String id, String author, String title, int year) {
+        this.id = id;
         this.author = author;
         this.title = title;
         this.year = year;
