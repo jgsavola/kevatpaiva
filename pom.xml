@@ -22,12 +22,6 @@
         <!-- spring -->
         <spring.version>3.0.5.RELEASE</spring.version>
         
-        <!-- tomcat -->
-        <tomcat6Version>6.0.36</tomcat6Version>
-        <managerWebAppPath>${basedir}/target/</managerWebAppPath>
-        <warTestPath>${basedir}/src/test/simple-war-project-1.0-SNAPSHOT.war</warTestPath>
-        <keystoreTestPath>${basedir}/src/test/keystore</keystoreTestPath>
-        
     </properties>
 
     <repositories>
