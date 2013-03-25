@@ -23,20 +23,6 @@ public class HelloController {
         return "hello";
     }
     
-    @RequestMapping(method = RequestMethod.POST)
-    public String lisaaArtikkeli(@RequestParam String id, @RequestParam String author, 
-            @RequestParam String title, @RequestParam String journal, @RequestParam int year, 
-            @RequestParam int volume, @RequestParam int number, @RequestParam String pages, 
-            @RequestParam String publisher) {
-        
-        Article artikkeli = new Article(id, author, title, year);
-        artikkeli.setJournal(journal);
-        artikkeli.setVolume(volume);
-        artikkeli.setNumber(number);
-        artikkeli.setPages(pages);
-        artikkeli.setPublisher(publisher);
-        return null;
-        
-    }
+    
  
 }
