@@ -32,7 +32,14 @@ public class ArticleTest {
         configuration.configure(); 
          
         Properties properties = configuration.getProperties();
-         
+        
+        /**
+         * Käytä testaukseen erillistä tietokantatiedostoa, koska
+         * testit muokkaavat tietokantaa. Näin käyttäjän tietokantaa
+         * ei tarvitse muuttaa.
+         */
+        properties.setProperty("hibernate.connection.url", "jdbc:sqlite:kevatpaiva.test.db");
+        
         serviceRegistry = new ServiceRegistryBuilder().applySettings(properties).buildServiceRegistry();         
         sessionFactory = configuration.buildSessionFactory(serviceRegistry); 
          
