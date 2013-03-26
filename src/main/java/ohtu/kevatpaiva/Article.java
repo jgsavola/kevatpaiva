@@ -1,9 +1,9 @@
 package ohtu.kevatpaiva;
  
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
  
@@ -11,11 +11,8 @@ import javax.persistence.Table;
  * The persistent class for the article database table.
  *
  */
-@Entity
-@Table(name = "article")
 public class Article implements Serializable {
     
-    @Id
     private String id;
     private String author;
     private String title;
@@ -26,6 +23,8 @@ public class Article implements Serializable {
     private String pages;
     private String publisher;
     private String address;
+    
+    private Set tags = new HashSet();
  
     public Article() {
  
@@ -37,7 +36,14 @@ public class Article implements Serializable {
         this.title = title;
         this.year = year;
     }
- 
+
+    public Set getTags() {
+        return tags;
+    }
+
+    public void setTags(Set tags) {
+        this.tags = tags;
+    }
     
     public String getId() {
         return this.id;

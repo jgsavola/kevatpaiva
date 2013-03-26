@@ -13,8 +13,16 @@
         <property name="connection.password"></property>
          
         <property name="hibernate.hbm2ddl.auto">update</property>
+        
+        <mapping resource="Article.hbm.xml"/>
+        
+<!--        <hibernate-mapping package="ohtu.kevatpaiva">
+            <class name="Article" table="article">
+            </class>
+        </hibernate-mapping>
          
-        <mapping class="ohtu.kevatpaiva.Article"/>
+         
+        <mapping class="ohtu.kevatpaiva.Article"/> -->
         <mapping class="ohtu.kevatpaiva.Viite"/>
         
     </session-factory>

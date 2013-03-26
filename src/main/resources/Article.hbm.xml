@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+      "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+          "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="ohtu.kevatpaiva">
+
+    <class name="Article" table="reference" discriminator-value="ARTICLE">
+        <id name="id" column="id" />
+        <discriminator column="referencetype"/>
+        <property name="author"/>
+        <property name="title"/>
+        <property name="journal"/>
+        <property name="volume"/>
+        <property name="number"/>
+        <property name="year"/>
+        <property name="pages"/>
+        <property name="publisher"/>
+        <property name="address"/>
+        <set name="tags" table="reference_tags">
+            <key column="id"/>
+            <element type="string" column="tag"/>
+        </set>
+    </class>
+</hibernate-mapping>
