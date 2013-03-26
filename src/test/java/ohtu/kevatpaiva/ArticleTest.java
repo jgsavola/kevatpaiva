@@ -13,12 +13,11 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
-import org.junit.After;
 import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.BeforeClass;
 
 /**
+ * Testaa Article-luokan toimintaa.
  *
  * @author jgsavola
  */
@@ -41,9 +40,13 @@ public class ArticleTest {
     }
          
     public ArticleTest() {
-        System.out.println("Constructor");
     }
     
+    /**
+     * Poista kaikki artikkelit ennen testejä.
+     *
+     * @throws Exception 
+     */
     @BeforeClass
     public static void setUp() throws Exception {
         System.out.println("setUp");
@@ -57,7 +60,7 @@ public class ArticleTest {
         tx = session.beginTransaction();
         
         /**
-         * Pitää miettiä uudestaan tämä rakenne.
+         * FIXME: Pitää miettiä uudestaan tämä rakenne.
          */
         try {
             /**
@@ -86,7 +89,7 @@ public class ArticleTest {
      * Testaa artikkeleiden luomista.
      */
     @Test
-    public void testaArtikkelinLuomista() {
+    public void testaaArtikkelinLuomista() {
         System.out.println("Luo artikkeleita.");
 
         Transaction tx=null;
@@ -111,9 +114,8 @@ public class ArticleTest {
             
             assertEquals("Artikkeleita on talletettu 2", articleList.size(), 2);
             
-            for (Article article : articleList) {
+            for (Article article : articleList)
                 System.out.println("Id: " + article.getId() + " | Name:"  + article.getAuthor() + " | Email:" + article.getTitle());
-            }
         } catch (Exception ex) {
             ex.printStackTrace();
              
@@ -125,10 +127,50 @@ public class ArticleTest {
     }
 
     /**
-     * Testaa artikkeleiden hakemista.
+     * ID-kenttä ei saa olla null, koska se on avainkenttä.
      */
     @Test
-    public void testaArtikkelinHakemista() {
+    public void testaaNullIDKentta() {
+        System.out.println("Yritä luoda artikkeli ID:llä null.");
+
+        Transaction tx=null;
+         
+        try {
+            tx = session.beginTransaction();
+             
+            // Creating Article entity that will be save to the sqlite database
+            Article article1 = new Article(null, "NULL ID author", "NULL ID title", 2004);
+             
+            // Saving to the database
+            session.save(article1);
+             
+            // Committing the change in the database.
+            session.flush();
+            tx.commit();
+             
+            fail("Pitäisi tulla poikkeus ID:stä null");
+        } catch (org.hibernate.id.IdentifierGenerationException ex) {
+            // Rolling back the changes to make the data consistent in case of any failure
+            // in between multiple database write operations.
+            tx.rollback();
+        }  catch (Exception ex) {
+            ex.printStackTrace();
+             
+            // Rolling back the changes to make the data consistent in case of any failure
+            // in between multiple database write operations.
+            tx.rollback();
+            fail("Odottamaton poikkeus " + ex);         
+        }
+        finally{
+        }
+    }
+
+    /**
+     * Testaa artikkeleiden hakemista. Huom! tämä testi pitää ajaa 
+     * testaaArtikkelinLuomista-testin jälkeen.
+     */
+    @Test
+    public void testaaArtikkelinHakemista() {
         System.out.println("Hae artikkeleita.");
 
         Transaction tx=null;
