@@ -1,6 +1,7 @@
 package ohtu.kevatpaiva.controllers;
 
 import ohtu.kevatpaiva.Article;
+import ohtu.kevatpaiva.tallennus.ArtikkelinTallentaja;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,7 +35,9 @@ public class ReferenceController {
         artikkeli.setNumber(number);
         artikkeli.setPages(pages);
         artikkeli.setPublisher(publisher);
-        return null;
+        ArtikkelinTallentaja tallentaja = new ArtikkelinTallentaja();
+        tallentaja.tallennaArtikkeli(artikkeli);
+        return "form-article";
         
     }
  

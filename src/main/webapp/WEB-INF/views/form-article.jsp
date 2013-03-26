@@ -69,7 +69,7 @@
     <label for="publisher">Kustantaja</label>
 	<input name="publisher" id="publisher" type="text" />
         
-    <label for="address">Kustantaja</label>
+    <label for="address">Osoite</label>
 	<input name="address" id="addressd" type="text" />
 
 	<p>Valinnaiset</p>
