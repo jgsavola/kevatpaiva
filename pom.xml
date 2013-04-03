@@ -115,8 +115,7 @@
                 <artifactId>maven-war-plugin</artifactId>
                 <version>2.2</version>
                 <configuration>
-                <!-- root directory from the generated war file -->
-                <warSourceDirectory>webapp</warSourceDirectory>
+                    <failOnMissingWebXml>true</failOnMissingWebXml>
                 </configuration>
             </plugin>
 
