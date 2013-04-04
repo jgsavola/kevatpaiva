@@ -118,6 +118,14 @@ public class Article implements Serializable {
     public void setAddress(String address) {
         this.address = address;
     }
-    
-    
+
+    /**
+     * Luo BibTeX-esitys artikkelista. Lopputuloksena pitäisi olla
+     * merkkijono käyvässä BibTeX-formaatissa.
+     *
+     * @return Artikkelin BibTeX-esitys.
+     */
+    public String toBibTeX() {
+        return "STUB";
+    }
 }
