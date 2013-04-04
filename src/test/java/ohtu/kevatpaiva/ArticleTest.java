@@ -15,6 +15,7 @@ import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 
 /**
  * Testaa Article-luokan toimintaa.
@@ -206,6 +207,7 @@ public class ArticleTest {
      * Testaa BibTeX-esityksen tuottamista.
      */
     @Test
+    @Ignore("Odottaa toBibTeX-metodin toteutusta...")
     public void testaaArtikkelinBibTeXEsitysta() {
         System.out.println("Luo BibTeX-esitys.");
 
