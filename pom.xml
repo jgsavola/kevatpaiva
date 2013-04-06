@@ -55,6 +55,13 @@
             <artifactId>jetty-servlets</artifactId>
             <version>${jetty.version}</version>
         </dependency>
+        
+        <!-- jstl -->
+        <dependency>
+            <groupId>jstl</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
+        </dependency>
   
 
         <!-- spring -->
@@ -95,7 +102,13 @@
           <artifactId>junit</artifactId>
           <version>4.11</version>
           <scope>test</scope>
-        </dependency>         
+        </dependency> 
+        
+        <dependency>
+            <groupId>jstl</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
+        </dependency>        
     </dependencies>
 
     <build>

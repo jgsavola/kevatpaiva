@@ -4,6 +4,7 @@
  */
 package ohtu.kevatpaiva.tallennus;
 
+import java.util.List;
 import java.util.Properties;
 import ohtu.kevatpaiva.Article;
 import org.hibernate.HibernateException;
@@ -60,5 +61,23 @@ public class ArtikkelinTallentaja {
         finally {
             
         }
+    }
+    
+    public List<Article> listaaArtikelit() {
+        
+        List<Article> articleList;
+        try {
+            tx = session.beginTransaction();
+             
+            articleList = session.createQuery("from Article").list();
+             
+            // Committing the change in the database.
+            session.flush();
+            tx.commit();
+        }
+        finally {
+            
+        }
+        return articleList;
     }
 }
