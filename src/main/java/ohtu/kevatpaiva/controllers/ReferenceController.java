@@ -69,7 +69,7 @@ public class ReferenceController {
         }
         
         model.addAttribute("title", "Lisätty!");
-        model.addAttribute("message", id + " lisätty!");
+        model.addAttribute("message", id + " lisätty onnistuneesti!");
         return "message";
     }
 }

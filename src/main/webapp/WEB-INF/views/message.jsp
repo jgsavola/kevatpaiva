@@ -17,7 +17,7 @@
     <h1>${title}</h1>
     <p>${message}</p>
     <form action="haebibtex" method="GET" enctype="application/x-www-form-urlencoded">
-        <input type="submit" value="BibTex"/>
+        <input name="bibtex" type="submit" value="BibTex"/>
     </form>
 </body>
 </html>
