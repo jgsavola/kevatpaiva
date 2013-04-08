@@ -126,6 +126,30 @@ public class Article implements Serializable {
      * @return Artikkelin BibTeX-esitys.
      */
     public String toBibTeX() {
-        return "STUB";
+        /**
+         * FIXME: Kentät pitää koodata BibTeX-muotoon.
+         */
+        String bibtex = "@article{" + this.getId() + ",\n";
+
+        if (this.getAuthor() != null) {
+            bibtex += "    author = {" + this.getAuthor() + "},\n";
+        }
+        if (this.getTitle() != null) {
+            bibtex += "    title = {" + this.getTitle() + "},\n";
+        }
+        if (this.getJournal() != null) {
+            bibtex += "    journal = {" + this.getJournal() + "},\n";
+        }
+        /**
+         * FIXME: volume, number, year ovat tyyppiä int, joten ne eivät
+         * voi olla null. Siis niistä tulee käytännössä pakollisia kenttä.
+         */
+        bibtex += "    volume = {" + this.getVolume() + "},\n";
+        bibtex += "    number = {" + this.getNumber() + "},\n";
+        bibtex += "    year = {" + this.getYear() + "}\n";
+
+        bibtex += "}\n";
+
+        return bibtex;
     }
 }

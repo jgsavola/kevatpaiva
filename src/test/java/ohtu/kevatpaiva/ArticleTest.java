@@ -207,17 +207,18 @@ public class ArticleTest {
      * Testaa BibTeX-esityksen tuottamista.
      */
     @Test
-    @Ignore("Odottaa toBibTeX-metodin toteutusta...")
     public void testaaArtikkelinBibTeXEsitysta() {
         System.out.println("Luo BibTeX-esitys.");
 
         Article article1 = new Article("W04", "Whittington, Keith J.", "Infusing active learning into introductory programming courses", 2004);
 
         String bibtex_ok = "@article{W04,\n"
-                            + "author = {Whittington, Keith J.},\n"
-                            + "title = {Infusing active learning into introductory programming courses},\n"
-                            + "journal = {J. Comput. Small Coll.},\n"
-                            + "year = {2004},";
+            + "    author = {Whittington, Keith J.},\n"
+            + "    title = {Infusing active learning into introductory programming courses},\n"
+            + "    volume = {0},\n"
+            + "    number = {0},\n"
+            + "    year = {2004}\n"
+            + "}\n";
 
         String bibtex = article1.toBibTeX();
         assertEquals("Artikkelin BibTeX-esitys on oikein.", bibtex_ok, bibtex);
