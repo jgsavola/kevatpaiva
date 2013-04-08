@@ -15,10 +15,7 @@
     <body>
         <h1>BibTeX</h1>
         <p>Artikkelit BibTeX-muodossa:</p>
-        <ol>
-            <c:forEach var="item" items="${bibit}">
-                <li>${item}</li>
-            </c:forEach>
-        </ol>
+        <pre><c:forEach var="item" items="${bibit}">${item}
+</c:forEach></pre>
     </body>
 </html>
