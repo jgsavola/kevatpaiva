@@ -22,6 +22,8 @@
         <!-- spring -->
         <spring.version>3.0.5.RELEASE</spring.version>
         
+        <easyb.version>1.5</easyb.version>
+        
     </properties>
 
     <repositories>
@@ -96,6 +98,14 @@
           <version>3.7.2</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.easyb</groupId>
+            <artifactId>easyb-core</artifactId>
+            <version>${easyb.version}</version>
+            <scope>test</scope>        
+        </dependency>
+        
+        
         <!-- junit test -->
         <dependency>
           <groupId>junit</groupId>
@@ -105,10 +115,13 @@
         </dependency> 
         
         <dependency>
-            <groupId>jstl</groupId>
-            <artifactId>jstl</artifactId>
-            <version>1.2</version>
-        </dependency>        
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>2.13.0</version> 
+            <scope>compile</scope>
+        </dependency>
+        
+               
     </dependencies>
 
     <build>
@@ -176,6 +189,25 @@
                             <followSymlinks>false</followSymlinks>
                         </fileset>
                     </filesets>
+                </configuration>
+            </plugin>
+            
+            <plugin>
+                <groupId>org.easyb</groupId>
+                <artifactId>maven-easyb-plugin</artifactId>
+                <version>1.4</version>
+                <executions>
+                    <execution>
+                        <phase>integration-test</phase>
+                        <goals>
+                            <goal>test</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <storyType>html</storyType>
+                    <storyReport>${basedir}/target/easyb/easyb-report.html
+                    </storyReport>
                 </configuration>
             </plugin>
         </plugins>
