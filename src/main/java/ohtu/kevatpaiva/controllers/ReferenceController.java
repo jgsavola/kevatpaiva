@@ -15,7 +15,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequestMapping("/")
 public class ReferenceController {
+    private ArtikkelinTallentaja tallentaja;
 
+    public ReferenceController() {
+        this.tallentaja = new ArtikkelinTallentaja();
+    }    
+    
     @RequestMapping(method = RequestMethod.GET)
     public String naytaLomake() {
 
@@ -60,7 +65,6 @@ public class ReferenceController {
         }
         
         try {
-            ArtikkelinTallentaja tallentaja = new ArtikkelinTallentaja();
             tallentaja.tallennaArtikkeli(artikkeli);
         } catch (Exception e) {
             model.addAttribute("title", "Poikkeus");

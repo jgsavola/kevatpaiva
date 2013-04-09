@@ -47,7 +47,16 @@ public class ArtikkelinTallentaja {
         //return sessionFactory; 
     }
     
-    public void tallennaArtikkeli(Article artikkeli) {
+    /**
+     * Tallenna artikkeli tietokantaan.
+     *
+     * Huom! Koska transaktio-olio <code>tx</code> on luokan attribuuttina, 
+     * transaktio pitää lopettaa explisiittisesti metodin sisällä.
+     *
+     * @param artikkeli
+     * @throws Exception 
+     */
+    public void tallennaArtikkeli(Article artikkeli) throws Exception {
         try {
             tx = session.beginTransaction();
              
@@ -57,9 +66,14 @@ public class ArtikkelinTallentaja {
             // Committing the change in the database.
             session.flush();
             tx.commit();
-        }
-        finally {
-            
+        } catch (Exception ex) {
+            /**
+             * Suorita <code>rollback()</code> kaikissa 
+             * poikkeustapauksissa.
+             */
+            ex.printStackTrace();
+            tx.rollback();
+            throw ex;
         }
     }
     
