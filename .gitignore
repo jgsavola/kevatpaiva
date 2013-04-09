@@ -1,3 +1,5 @@
 /target/
 kevatpaiva.db
 kevatpaiva.test.db
+# OSX
+.DS_Store
