@@ -14,6 +14,9 @@
     </head>
     <body>
         <h1>BibTeX</h1>
+        <form action="../miniprojekti" method="GET">
+            <input type="submit" value="Palaa lisäykseen"/>
+        </form>
         <p>Artikkelit BibTeX-muodossa:</p>
         <pre><c:forEach var="item" items="${bibit}">${item}
 </c:forEach></pre>

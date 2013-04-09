@@ -19,5 +19,8 @@
     <form action="haebibtex" method="GET" enctype="application/x-www-form-urlencoded">
         <input name="bibtex" type="submit" value="BibTex"/>
     </form>
+    <form action="" method="GET">
+        <input type="submit" value="Palaa lisäykseen"/>
+    </form>
 </body>
 </html>
