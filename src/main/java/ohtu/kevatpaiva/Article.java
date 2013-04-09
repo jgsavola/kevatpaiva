@@ -132,13 +132,13 @@ public class Article implements Serializable {
         String bibtex = "@article{" + this.getId() + ",\n";
 
         if (this.getAuthor() != null) {
-            bibtex += "    author = {" + this.getAuthor() + "},\n";
+            bibtex += "    author = {" + Muunto.muunnaMuoto(this.getAuthor(), false) + "},\n";
         }
         if (this.getTitle() != null) {
-            bibtex += "    title = {" + this.getTitle() + "},\n";
+            bibtex += "    title = {" + Muunto.muunnaMuoto(this.getTitle(), true) + "},\n";
         }
         if (this.getJournal() != null) {
-            bibtex += "    journal = {" + this.getJournal() + "},\n";
+            bibtex += "    journal = {" + Muunto.muunnaMuoto(this.getJournal(), false) + "},\n";
         }
         /**
          * FIXME: volume, number, year ovat tyyppiä int, joten ne eivät

@@ -4,7 +4,7 @@ package ohtu.kevatpaiva;
  *
  * @author ninbarlu
  */
-public class MuunnaBibTexMuoto {
+public class Muunto {
 
     private static String okt = "abcdefghijklmnopqrstuvxyz0123456789 .,-";
     private static String isot = "ABCDEFGHIJKLMNOPQRSTUVXYZ";
