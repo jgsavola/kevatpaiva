@@ -19,8 +19,8 @@
         <!-- jetty -->
         <jetty.version>9.0.0.v20130308</jetty.version>
         
-        <!-- spring -->
-        <spring.version>3.0.5.RELEASE</spring.version>
+        <!-- spring - upgraded from 3.0.5.RELASE -->
+        <spring.version>3.2.2.RELEASE</spring.version>
         
         <easyb.version>1.5</easyb.version>
         
@@ -120,8 +120,13 @@
             <version>2.13.0</version> 
             <scope>compile</scope>
         </dependency>
-        
-               
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring.version}</version>
+            <scope>test</scope>
+            <type>jar</type>
+        </dependency>
     </dependencies>
 
     <build>

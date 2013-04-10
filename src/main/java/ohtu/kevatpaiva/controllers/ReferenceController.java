@@ -1,7 +1,9 @@
 package ohtu.kevatpaiva.controllers;
 
+import javax.servlet.http.HttpServletResponse;
 import ohtu.kevatpaiva.Article;
 import ohtu.kevatpaiva.tallennus.ArtikkelinTallentaja;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +21,7 @@ public class ReferenceController {
 
     public ReferenceController() {
         this.tallentaja = new ArtikkelinTallentaja();
-    }    
+    }
     
     @RequestMapping(method = RequestMethod.GET)
     public String naytaLomake() {
@@ -29,6 +31,7 @@ public class ReferenceController {
 
     @RequestMapping(method = RequestMethod.POST)
     public String lisaaArtikkeli(
+            HttpServletResponse response,
             @RequestParam String id,
             @RequestParam String author,
             @RequestParam String title,
@@ -40,7 +43,7 @@ public class ReferenceController {
             @RequestParam(value = "publisher", required = false) String publisher,
             @RequestParam(value = "address", required = false) String address,
             ModelMap model) {
-
+        
         Article artikkeli = new Article(id, author, title, year);
         
         // (journal) NOT REQUIRED?
