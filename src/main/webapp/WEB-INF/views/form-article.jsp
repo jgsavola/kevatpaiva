@@ -76,6 +76,8 @@
 	<input name="form-submit" id="form-submit" class="button" type="submit" value="Lähetä" />
 </fieldset>
 </form>
-
+    <p>
+        Katso lisättyjä artikkeleita <a href="haebibtex">BibTeX</a> muodossa
+    </p>
 </body>
 </html>
