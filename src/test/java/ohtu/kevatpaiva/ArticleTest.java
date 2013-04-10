@@ -214,7 +214,7 @@ public class ArticleTest {
 
         String bibtex_ok = "@article{W04,\n"
             + "    author = {Whittington, Keith J.},\n"
-            + "    title = {Infusing active learning into introductory programming courses},\n"
+            + "    title = {{I}nfusing active learning into introductory programming courses},\n"
             + "    volume = {0},\n"
             + "    number = {0},\n"
             + "    year = {2004}\n"
