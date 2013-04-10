@@ -1,10 +1,11 @@
 package ohtu.kevatpaiva.controllers;
 
-import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.List;
 import ohtu.kevatpaiva.Article;
 import ohtu.kevatpaiva.tallennus.ArtikkelinTallentaja;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,7 +32,6 @@ public class ReferenceController {
 
     @RequestMapping(method = RequestMethod.POST)
     public String lisaaArtikkeli(
-            HttpServletResponse response,
             @RequestParam String id,
             @RequestParam String author,
             @RequestParam String title,
@@ -79,4 +79,27 @@ public class ReferenceController {
         model.addAttribute("message", id + " lisätty onnistuneesti!");
         return "message";
     }
+
+    @RequestMapping(value = "listaa", method = RequestMethod.GET)
+    public String get(Model model) {
+
+        List<Article> artikkelit;
+
+        try {
+            artikkelit = tallentaja.listaaArtikelit();
+        } catch (Exception e) {
+            model.addAttribute("title", "Poikkeus");
+            model.addAttribute("message", e.getMessage());
+            return "message";
+        }
+
+        ArrayList<Article> articles = new ArrayList();
+        for (Article artikkeli : artikkelit) {
+            articles.add(artikkeli);
+        }
+
+        model.addAttribute("artikkelit", articles);
+
+        return "list";
+     }
 }
