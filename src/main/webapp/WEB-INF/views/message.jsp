@@ -15,12 +15,12 @@
 </head>
 <body>
     <h1>${title}</h1>
+    <ul style="list-style: none">
+            <li><a href="listaa">Tarkastele viitteitä</a></li>
+            <li><a href="haebibtex">Tarkastele viitteitä BibTex-muodossa</a></li>
+            <li><a href="lomake">Lisää uusi viite</a></li>
+    </ul>
     <p>${message}</p>
-    <form action="haebibtex" method="GET" enctype="application/x-www-form-urlencoded">
-        <input name="bibtex" type="submit" value="BibTex"/>
-    </form>
-    <form action="" method="GET">
-        <input type="submit" value="Palaa lisäykseen"/>
-    </form>
+    
 </body>
 </html>

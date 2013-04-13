@@ -16,13 +16,15 @@
     </head>
     <body>
         <h1>Artikkeliviitteet</h1>
+        <ul style="list-style: none">
+            <li><a href="haebibtex">Tarkastele viitteitä BibTex-muodossa</a></li>
+            <li><a href="lomake">Lisää uusi viite</a></li>
+        </ul>
         <ul>
             <c:forEach var="item" items="${artikkelit}">
                 <li>${item.id} | ${item.title} | ${item.author} | ${item.year}</li>
             </c:forEach>
         </ul>
-        <p>
-            <a href=${pageContext.request.contextPath}>Takas lisäämään viiteitä</a>
-        </p>
+        
     </body>
 </html>

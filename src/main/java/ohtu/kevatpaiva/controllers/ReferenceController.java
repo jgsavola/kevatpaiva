@@ -25,24 +25,82 @@ public class ReferenceController {
     }
     
     @RequestMapping(method = RequestMethod.GET)
+    public String naytaPaasivu() {
+
+        return "start";
+    }
+    
+    @RequestMapping(value="lomake", method = RequestMethod.GET)
     public String naytaLomake() {
 
         return "form-article";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value="lisaa", method = RequestMethod.POST)
     public String lisaaArtikkeli(
+            @RequestParam String type,
             @RequestParam String id,
             @RequestParam String author,
             @RequestParam String title,
             @RequestParam(value = "journal", required = false) String journal, // (journal) NOT REQUIRED?
-            @RequestParam Integer year,
-            @RequestParam(value = "volume", required = false) Integer volume,
-            @RequestParam(value = "number", required = false) Integer number,
+            @RequestParam String year,
+            @RequestParam(value = "volume", required = false) String volume,
+            @RequestParam(value = "number", required = false) String number,
             @RequestParam(value = "pages", required = false) String pages,
             @RequestParam(value = "publisher", required = false) String publisher,
             @RequestParam(value = "address", required = false) String address,
+            @RequestParam(value = "booktitle", required = false) String booktitle,
+            @RequestParam(value = "editor", required = false) String editor,
+            @RequestParam(value = "month", required = false) String month,
+            @RequestParam(value = "key", required = false) String key,
+            @RequestParam(value = "note", required = false) String note,
+            @RequestParam(value = "edition", required = false) String edition,
+            @RequestParam(value = "series", required = false) String series,
             ModelMap model) {
+        
+        boolean idOnJo = tallentaja.onkoArtikkeli(id);
+        
+        if (idOnJo || id.equals("") || author.equals("") || title.equals("") || year.equals("") 
+                || (type.equals("article") && journal.equals(""))
+                || (type.equals("book") && (editor.equals("") || publisher.equals(""))) 
+                || (type.equals("inproceedings") && booktitle.equals(""))) {
+            //model.addAttribute("type", type);
+            model.addAttribute("id", id);
+            model.addAttribute("author", author);
+            model.addAttribute("title", title);
+            model.addAttribute("journal", journal);
+            model.addAttribute("year", year);
+            model.addAttribute("number", number);
+            model.addAttribute("pages", pages);
+            model.addAttribute("publisher", publisher);
+            model.addAttribute("address", address);
+            model.addAttribute("booktitle", booktitle);
+            model.addAttribute("editor", editor);
+            model.addAttribute("month", month);
+            model.addAttribute("key", key);
+            model.addAttribute("note", note);
+            model.addAttribute("edition", edition);
+            model.addAttribute("series", series);
+            
+            String message;
+            if (idOnJo) {
+                message = "Viite kyseisellä id:llä on jo tallennettu";
+            }
+            else if (type.equals("article") && journal.equals("")) {
+                message = "Journaali on pakollinen kenttä";
+            }
+            else if (type.equals("book") && (editor.equals("") || publisher.equals(""))) {
+                message = "Ediittori ja julkaisija ovat pakollisia kenttiä";
+            }
+            else if (type.equals("inproceedings") && booktitle.equals("")) {
+                message = "Kirjan otsikko on pakollinen kenttä";
+            }
+            else {
+                message = "Id, kirjoittaja, otsikko ja vuosi ovat pakollisia kenttiä";
+            }
+            model.addAttribute("message", message);
+            return "form-article";
+        }
         
         Article artikkeli = new Article(id, author, title, year);
         
@@ -102,4 +160,28 @@ public class ReferenceController {
 
         return "list";
      }
+    
+    @RequestMapping(value="haebibtex", method = RequestMethod.GET)
+    public String tulostaBibTeX(Model model) {
+        
+        List<Article> artikkelit;
+        try {
+            ArtikkelinTallentaja tallentaja = new ArtikkelinTallentaja();
+            artikkelit = tallentaja.listaaArtikelit();
+        } catch (Exception e) {
+            model.addAttribute("title", "Poikkeus");
+            model.addAttribute("message", e.getMessage());
+            return "message"; 
+        }
+        
+       ArrayList<String> bibit = new ArrayList<String>();
+        for (Article artikkeli : artikkelit) {
+            String bibtex = artikkeli.toBibTeX();
+            bibit.add(bibtex);
+        }
+         
+        model.addAttribute("bibit", bibit);
+
+        return "bibtex";
+    }
 }

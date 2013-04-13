@@ -20,9 +20,9 @@ public class Article implements Serializable {
     private String author;
     private String title;
     private String journal;
-    private int volume;
-    private int number;
-    private int year;
+    private String volume;
+    private String number;
+    private String year;
     private String pages;
     private String publisher;
     private String address;
@@ -31,7 +31,7 @@ public class Article implements Serializable {
  
     }
  
-    public Article(String id, String author, String title, int year) {
+    public Article(String id, String author, String title, String year) {
         this.id = id;
         this.author = author;
         this.title = title;
@@ -71,27 +71,27 @@ public class Article implements Serializable {
         this.journal = journal;
     }
 
-    public int getVolume() {
+    public String getVolume() {
         return volume;
     }
 
-    public void setVolume(int volume) {
+    public void setVolume(String volume) {
         this.volume = volume;
     }
 
-    public int getNumber() {
+    public String getNumber() {
         return number;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(String number) {
         this.number = number;
     }
 
-    public int getYear() {
+    public String getYear() {
         return year;
     }
 
-    public void setYear(int year) {
+    public void setYear(String year) {
         this.year = year;
     }
 

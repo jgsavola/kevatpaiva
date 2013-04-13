@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Properties;
 import ohtu.kevatpaiva.Article;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -93,5 +94,31 @@ public class ArtikkelinTallentaja {
             
         }
         return articleList;
+    }
+    
+    public boolean onkoArtikkeli(String id) {
+        
+        List<Article> articleList;
+        try {
+            tx = session.beginTransaction();
+             
+            Query query = session.createQuery("from Article WHERE id = :article_id");
+            query.setParameter("article_id", id);
+            articleList = query.list();
+            
+            for (Article article : articleList) {
+                if (article.getId() == id) {
+                    return true;
+                }
+            }
+             
+            // Committing the change in the database.
+            session.flush();
+            tx.commit();
+        }
+        finally {
+            
+        }
+        return false;
     }
 }
