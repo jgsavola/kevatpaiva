@@ -1,13 +1,18 @@
 import ohtu.*
 import org.openqa.selenium.*
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+import org.openqa.selenium.support.ui.Select
 
 description 'User gets a list of articles in bibtex form'
 
 scenario "user can see the articles in bibtex form", {
     given 'user has inserted an article', {
         driver = new HtmlUnitDriver();
-        driver.get("http://localhost:8080/miniprojekti/");   
+        driver.get("http://localhost:8080/miniprojekti/lomake")
+        element = driver.findElement(By.name("type"))
+        select = new Select(element)
+        select.selectByValue("article")
+
         element = driver.findElement(By.name("id"));
         element.sendKeys("RRR03");
         element = driver.findElement(By.name("author"));
@@ -21,8 +26,8 @@ scenario "user can see the articles in bibtex form", {
     }
 
     when 'user clicks BibTex-button', {
-        element = driver.findElement(By.name("bibtex"));
-        element.submit();
+        element = driver.findElement(By.partialLinkText("BibTex-muodossa"))
+        element.click()
     }
  
     then 'articles will be listed', {

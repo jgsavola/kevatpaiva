@@ -1,16 +1,21 @@
 import ohtu.*
 import org.openqa.selenium.*
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+import org.openqa.selenium.support.ui.Select
 
 description 'User can add a new article'
 
 scenario "user can add a new article to the database", {
     given 'article-form selected', {
         driver = new HtmlUnitDriver();
-        driver.get("http://localhost:8080/miniprojekti");       
+        driver.get("http://localhost:8080/miniprojekti/lomake")
     }
 
     when 'article information is given', {
+        element = driver.findElement(By.name("type"))
+        select = new Select(element)
+        select.selectByValue("article")
+
         element = driver.findElement(By.name("id"));
         element.sendKeys("B06");
         element = driver.findElement(By.name("author"));
@@ -19,6 +24,8 @@ scenario "user can add a new article to the database", {
         element.sendKeys("Helping novice programming students succeed");
         element = driver.findElement(By.name("year"));
         element.sendKeys("2006");
+        element = driver.findElement(By.name("journal"))
+        element.sendKeys("Obligatory Scientific Journal")
         element = driver.findElement(By.name("form-submit"));
         element.submit();
         System.out.println( driver.getPageSource() );
@@ -33,10 +40,14 @@ scenario "user can add a new article to the database", {
 scenario "user cannot add a article with a already used id", { 
     given 'article-form selected', {
         driver = new HtmlUnitDriver();
-        driver.get("http://localhost:8080/miniprojekti");       
+        driver.get("http://localhost:8080/miniprojekti/lomake")
     }
 
     when 'article information is given', {
+        element = driver.findElement(By.name("type"))
+        select = new Select(element)
+        select.selectByValue("article")
+
         element = driver.findElement(By.name("id"));
         element.sendKeys("B06");
         element = driver.findElement(By.name("author"));
@@ -45,13 +56,18 @@ scenario "user cannot add a article with a already used id", {
         element.sendKeys("Helping novice programming students succeed");
         element = driver.findElement(By.name("year"));
         element.sendKeys("2006");
+        element = driver.findElement(By.name("journal"))
+        element.sendKeys("Obligatory Scientific Journal")
         element = driver.findElement(By.name("form-submit"));
         element.submit();
         System.out.println( driver.getPageSource() );
     }
  
     then 'article will not be added', {
-        driver.getPageSource().contains("column id is not unique").shouldBe true
+        // FIXME: teoriassa kumpikin alla oleva virheilmoitus on mahdollinen
+        //        -- Pitäisi saada "or"-ehto toimimaan.
+        //driver.getPageSource().contains("column id is not unique").shouldBe true
+        driver.getPageSource().contains("different object with the same identifier").shouldBe true
     }
 }
 
