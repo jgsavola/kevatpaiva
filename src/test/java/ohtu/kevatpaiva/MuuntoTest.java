@@ -1,7 +1,6 @@
 package ohtu.kevatpaiva;
 
 import static org.junit.Assert.assertEquals;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -20,10 +19,9 @@ public class MuuntoTest {
         assertEquals("teStI", Muunto.muunnaMuoto("teStI", false));
     }
 
-    @Ignore
     @Test
     public void muunnaSkandit() {
-        String syote = "aÄöO";
+        String syote = "a\u00c4\u00f6O"; // "aÄöO"
         String odotettu = "a\\\"{A}\\\"{o}O";
 
         String tulos = Muunto.muunnaMuoto(syote, false);
@@ -34,11 +32,10 @@ public class MuuntoTest {
 
         assertEquals("Skandien muuntaminen onnistuu.", odotettu, tulos);
     }
-    
-    @Ignore
+
     @Test
     public void muunnaKokoJono() {
-        String syote = "Otsikko, ääkköset";
+        String syote = "Otsikko, \u00e4\u00e4kk\u00f6set"; // "Otsikko, ääkköset"
         String odotettu = "{O}tsikko, \\\"{a}\\\"{a}kk\\\"{o}set";
 
         String tulos = Muunto.muunnaMuoto(syote, true);

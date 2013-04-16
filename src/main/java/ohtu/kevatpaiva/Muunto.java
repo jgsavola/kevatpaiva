@@ -24,12 +24,12 @@ public class Muunto {
      * muutkin merkit kuin skandit.
      */
     static {
-        skandiMap.put("å", "\\aa");
-        skandiMap.put("ä", "\\\"{a}");
-        skandiMap.put("ö", "\\\"{o}");
-        skandiMap.put("Å", "\\AA");
-        skandiMap.put("Ä", "\\\"{A}");
-        skandiMap.put("Ö", "\\\"{O}");
+        skandiMap.put("\u00e5", "\\aa");
+        skandiMap.put("\u00e4", "\\\"{a}");
+        skandiMap.put("\u00f6", "\\\"{o}");
+        skandiMap.put("\u00c5", "\\AA");
+        skandiMap.put("\u00c4", "\\\"{A}");
+        skandiMap.put("\u00d6", "\\\"{O}");
     }
 
     /**
