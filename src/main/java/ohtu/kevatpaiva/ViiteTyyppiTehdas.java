@@ -11,9 +11,16 @@ public class ViiteTyyppiTehdas {
             return luoArtikkeliTyyppi();
         }
         
+        if (vt.equals("book")) {
+            return luoKirjaTyyppi();
+        }
+        
+        if (vt.equals("inproceedings")) {
+            return luoKonferenssiJulkaisuViite();
+        }
+        
         throw new IllegalArgumentException("Tuntematon viitetyyppi: " + vt);
-                
-                
+  
     }
     
     private static ViiteTyyppi luoArtikkeliTyyppi() {
@@ -36,5 +43,50 @@ public class ViiteTyyppiTehdas {
         return artikkeliTyyppi;
         
     }
+
+    private static ViiteTyyppi luoKirjaTyyppi() {
+        
+        ViiteTyyppi kirjaTyyppi = new ViiteTyyppi(
+                "book",
+                "Kirja",
+                new KenttaTyyppi("author","Kirjoittaja",true),
+                new KenttaTyyppi("editor","Toimittaja",true),
+                new KenttaTyyppi("publisher","Julkaisia",true),
+                new KenttaTyyppi("title","Otsikko",true),
+                new KenttaTyyppi("year","Vuosi",true),
+                new KenttaTyyppi("address","Osoite",false),
+                new KenttaTyyppi("edition","Painos",false),
+                new KenttaTyyppi("key","Avain",false),
+                new KenttaTyyppi("month","Kuukausi",false),
+                new KenttaTyyppi("note","Huomio",false),
+                new KenttaTyyppi("number","Numero",false),
+                new KenttaTyyppi("series","Sarja",false),
+                new KenttaTyyppi("volume","Nide",false));
+        
+        return kirjaTyyppi;
+    }
     
+    private static ViiteTyyppi luoKonferenssiJulkaisuViite() {
+        
+        ViiteTyyppi konferenssiJulkaisuTyyppi = new ViiteTyyppi(
+                "inproceedings",
+                "Konferenssi julkaisu",
+                new KenttaTyyppi("author","Kirjoittaja",true),
+                new KenttaTyyppi("booktitle","Konferenssi",true),
+                new KenttaTyyppi("title","Otsikko",true),
+                new KenttaTyyppi("year","Vuosi",true),
+                new KenttaTyyppi("address","Osoite",false),
+                new KenttaTyyppi("editor","Toimittaja",false),
+                new KenttaTyyppi("key","Avain",false),
+                new KenttaTyyppi("month","Kuukausi",false),
+                new KenttaTyyppi("note","Huomio",false),
+                new KenttaTyyppi("number","Numero",false),
+                new KenttaTyyppi("organization","Organisaatio",false),
+                new KenttaTyyppi("pages","Sivut",false),
+                new KenttaTyyppi("publisher","Julkaisia",false),
+                new KenttaTyyppi("series","Sarja",false),
+                new KenttaTyyppi("volume","Nide",false));
+        
+        return konferenssiJulkaisuTyyppi;
+    }
 }
