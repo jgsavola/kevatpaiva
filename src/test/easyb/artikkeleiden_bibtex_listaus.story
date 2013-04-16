@@ -5,7 +5,8 @@ import org.openqa.selenium.support.ui.Select
 
 description 'User gets a list of articles in bibtex form'
 
-scenario "user can see the articles in bibtex form", {
+scenario "user can see the articles in bibtex form starting from insertion", {
+
     given 'user has inserted an article', {
         driver = new HtmlUnitDriver();
         driver.get("http://localhost:8080/miniprojekti/lomake")
@@ -25,7 +26,7 @@ scenario "user can see the articles in bibtex form", {
         element.submit();
     }
 
-    when 'user clicks BibTex-button', {
+    when 'user clicks BibTex-link', {
         element = driver.findElement(By.partialLinkText("BibTex-muodossa"))
         element.click()
     }
@@ -33,4 +34,59 @@ scenario "user can see the articles in bibtex form", {
     then 'articles will be listed', {
         driver.getPageSource().contains("Artikkelit BibTeX-muodossa").shouldBe true
     }
+
+}
+
+scenario "user can see the articles in bibtex form starting from the main page", {
+
+    given 'user is on the main page', {
+        driver = new HtmlUnitDriver();
+        driver.get("http://localhost:8080/miniprojekti/")
+    }
+
+    when 'user clicks BibTex-link', {
+        element = driver.findElement(By.partialLinkText("BibTex-muodossa"))
+        element.click()
+    }
+ 
+    then 'articles will be listed', {
+        driver.getPageSource().contains("Artikkelit BibTeX-muodossa").shouldBe true
+    }
+
+}
+
+scenario "user can see the articles in bibtex form starting from the insertion page", {
+
+    given 'user is on the lomake page', {
+        driver = new HtmlUnitDriver();
+        driver.get("http://localhost:8080/miniprojekti/lomake/")
+    }
+
+    when 'user clicks BibTex-link', {
+        element = driver.findElement(By.partialLinkText("BibTex-muodossa"))
+        element.click()
+    }
+ 
+    then 'articles will be listed', {
+        driver.getPageSource().contains("Artikkelit BibTeX-muodossa").shouldBe true
+    }
+
+}
+
+scenario "user can see the articles in bibtex form starting from the reference list", {
+
+    given 'user is on the reference list page', {
+        driver = new HtmlUnitDriver();
+        driver.get("http://localhost:8080/miniprojekti/listaa/")
+    }
+
+    when 'user clicks BibTex-link', {
+        element = driver.findElement(By.partialLinkText("BibTex-muodossa"))
+        element.click()
+    }
+ 
+    then 'articles will be listed', {
+        driver.getPageSource().contains("Artikkelit BibTeX-muodossa").shouldBe true
+    }
+
 }
