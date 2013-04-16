@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Ignore;
 
 /**
  *
@@ -39,6 +40,7 @@ public class TallentajaTest {
     public void tearDown() {
     }
     
+    @Ignore
     @Test
     public void testaaViitteenPoistoa() throws Exception {
         if (tallentaja.onkoArtikkeli("K00")) {
@@ -53,6 +55,7 @@ public class TallentajaTest {
         assertFalse(tallentaja.onkoArtikkeli("K00"));
     }
     
+    @Ignore
     @Test
     public void testaaViitteenTallennustaTallentajanKautta() throws Exception {
         
