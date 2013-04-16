@@ -99,4 +99,13 @@ public class Kentta {
         }
         return true;
     }
+
+    /**
+     * Muodosta kentän BibTeX-esitys muodossa "nimi = {arvo}".
+     *
+     * @return Merkkijono BibTeX-muodossa.
+     */
+    public String toBibTeX() {
+        return tyyppi.getNimi() + " = {" + Muunto.muunnaMuoto(arvo, false) + "}";
+    }
 }

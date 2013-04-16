@@ -117,7 +117,8 @@ public class ViiteTest {
             Viite viite2 = new Viite("CBH91", vt,
                     kt.luoKentta("author", "Allan Collins and John Seely Brown and Ann Holum"),
                     kt.luoKentta("title", "Cognitive apprenticeship: making thinking visible"),
-                    kt.luoKentta("year", "1991"));
+                    kt.luoKentta("year", "1991"),
+                    kt.luoKentta("note", "Joku ääkkösiä sisältävä \"note\"."));
 
             // Saving to the database
             session.save(viite1);
@@ -134,6 +135,7 @@ public class ViiteTest {
 
             for (Viite viite : viiteList) {
                 System.out.println("Viite Id: " + viite.getId()); // + " | Name:"  + viite.getAuthor() + " | Email:" + viite.getTitle());
+                System.out.println(viite.toBibTeX());
             }
         } catch (Exception ex) {
             ex.printStackTrace();
