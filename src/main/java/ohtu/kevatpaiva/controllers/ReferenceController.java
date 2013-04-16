@@ -3,6 +3,8 @@ package ohtu.kevatpaiva.controllers;
 import java.util.ArrayList;
 import java.util.List;
 import ohtu.kevatpaiva.Article;
+import ohtu.kevatpaiva.ViiteTyyppi;
+import ohtu.kevatpaiva.ViiteTyyppiTehdas;
 import ohtu.kevatpaiva.tallennus.ArtikkelinTallentaja;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,27 +41,28 @@ public class ReferenceController {
 
     @RequestMapping(value="lisaa", method = RequestMethod.POST)
     public String lisaaArtikkeli(
-            @RequestParam String type,
-            @RequestParam String id,
-            @RequestParam String author,
-            @RequestParam String title,
-            @RequestParam(value = "journal", required = false) String journal, // (journal) NOT REQUIRED?
-            @RequestParam String year,
-            @RequestParam(value = "volume", required = false) String volume,
-            @RequestParam(value = "number", required = false) String number,
-            @RequestParam(value = "pages", required = false) String pages,
-            @RequestParam(value = "publisher", required = false) String publisher,
-            @RequestParam(value = "address", required = false) String address,
-            @RequestParam(value = "booktitle", required = false) String booktitle,
-            @RequestParam(value = "editor", required = false) String editor,
-            @RequestParam(value = "month", required = false) String month,
-            @RequestParam(value = "key", required = false) String key,
-            @RequestParam(value = "note", required = false) String note,
-            @RequestParam(value = "edition", required = false) String edition,
-            @RequestParam(value = "series", required = false) String series,
-            ModelMap model) {
+            
+        @RequestParam("type") String type,
+        ModelMap model) {
+
+        // RequestBody:lla?
         
-        boolean idOnJo = tallentaja.onkoArtikkeli(id);
+        /*
+         * TODO: refactor type to viite
+         */
+        
+        ViiteTyyppi vt = ViiteTyyppiTehdas.luoViiteTyyppi(type);
+        
+        // pieni validointi
+        
+        // 
+        
+        
+        
+        //boolean idOnJo = tallentaja.onkoArtikkeli(id);
+        
+        /*
+        
         
         if (idOnJo || id.equals("") || author.equals("") || title.equals("") || year.equals("") 
                 || (type.equals("article") && journal.equals(""))
@@ -103,6 +106,7 @@ public class ReferenceController {
             return "form-article";
         }
         
+        
         Article artikkeli = new Article(id, author, title, year);
         
         // (journal) NOT REQUIRED?
@@ -136,6 +140,8 @@ public class ReferenceController {
         
         model.addAttribute("title", "Lisätty!");
         model.addAttribute("message", id + " lisätty onnistuneesti!");
+        */
+        
         return "message";
     }
 

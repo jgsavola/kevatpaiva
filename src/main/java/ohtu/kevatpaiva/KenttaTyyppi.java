@@ -13,6 +13,14 @@ public class KenttaTyyppi {
 
     public KenttaTyyppi() {
     }
+
+    public KenttaTyyppi(String nimi, String selite, boolean pakollinen) {
+        this.nimi = nimi;
+        this.selite = selite;
+        this.pakollinen = pakollinen;
+    }
+    
+    
     
     public String getNimi() {
         return nimi;
