@@ -43,6 +43,10 @@ public class ViiteTyyppi {
         this.selitys = selitys;
     }
 
+    public List<KenttaTyyppi> getKenttaTyypit() {
+        return kenttaTyypit;
+    }
+    
     void lisaaKenttaTyyppi(KenttaTyyppi kenttaTyyppi) {
         this.kenttaTyypit.add(kenttaTyyppi);
     }
