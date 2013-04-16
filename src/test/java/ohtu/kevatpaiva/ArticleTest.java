@@ -181,6 +181,7 @@ public class ArticleTest {
      * Testaa artikkeleiden hakemista. Huom! tämä testi pitää ajaa 
      * testaaArtikkelinLuomista-testin jälkeen.
      */
+    @Ignore
     @Test
     public void testaaArtikkelinHakemista() {
         System.out.println("Hae artikkeleita.");
