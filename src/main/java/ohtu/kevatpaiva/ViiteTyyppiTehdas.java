@@ -1,9 +1,20 @@
 package ohtu.kevatpaiva;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Tältä tehtaalta saadaan alustettuja viite-olioita, jolla kentät valmiina.
  */
 public class ViiteTyyppiTehdas {
+    
+    public static List<ViiteTyyppi> luoViiteTyyppiLista() {
+        return Arrays.asList(
+                luoArtikkeliTyyppi(),
+                luoKirjaTyyppi(),
+                luoKonferenssijulkaisuTyyppi());
+    }
     
     public static ViiteTyyppi luoViiteTyyppi(String vt) {
 
