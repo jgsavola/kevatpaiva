@@ -2,6 +2,7 @@ package ohtu.kevatpaiva;
 
 import java.util.List;
 import java.util.Properties;
+import ohtu.kevatpaiva.tallennus.ArtikkelinTallentaja;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -23,6 +24,8 @@ import org.junit.Ignore;
  * @author jgsavola
  */
 public class ArticleTest {
+    
+    ArtikkelinTallentaja tallentaja;
     private static SessionFactory sessionFactory = null; 
     private static ServiceRegistry serviceRegistry = null; 
     
@@ -57,6 +60,7 @@ public class ArticleTest {
      */
     @BeforeClass
     public static void setUp() throws Exception {
+        
         System.out.println("setUp");
 
         configureSessionFactory();
@@ -223,4 +227,6 @@ public class ArticleTest {
         String bibtex = article1.toBibTeX();
         assertEquals("Artikkelin BibTeX-esitys on oikein.", bibtex_ok, bibtex);
     }
+    
+    
 }

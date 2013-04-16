@@ -105,12 +105,6 @@ public class ArtikkelinTallentaja {
             Query query = session.createQuery("from Article WHERE id = :article_id");
             query.setParameter("article_id", id);
             articleList = query.list();
-            
-            for (Article article : articleList) {
-                if (article.getId() == id) {
-                    return true;
-                }
-            }
              
             // Committing the change in the database.
             session.flush();
@@ -119,6 +113,32 @@ public class ArtikkelinTallentaja {
         finally {
             
         }
+        for (Article article : articleList) {
+                System.out.println(article.getId());
+                if (article.getId().equalsIgnoreCase(id)) {
+                    return true;
+                }
+                else return false;
+            }
         return false;
+    }
+    
+    public void poistaViite(String id) {
+        if (onkoArtikkeli(id)) {
+        try {
+            tx = session.beginTransaction();
+             
+            Query query = session.createQuery("delete from Article where id = :viiteId ");
+            query.setString("viiteId", id);
+            query.executeUpdate();
+             
+            // Committing the change in the database.
+            session.flush();
+            tx.commit();
+        }
+        finally {
+            
+        }
+        }
     }
 }
