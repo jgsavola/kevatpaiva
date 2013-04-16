@@ -107,20 +107,17 @@ public class ViiteTest {
             tx = session.beginTransaction();
 
             ViiteTyyppi vt = ViiteTyyppiTehdas.luoViiteTyyppi("article");
+            KenttaTehdas kt = new KenttaTehdas(vt);
 
             Viite viite1 = new Viite("W04", vt,
-                    new Kentta(vt.getKenttaTyyppi("author"),
-                              "Whittington, Keith J."),
-                    new Kentta(vt.getKenttaTyyppi("title"),
-                              "Infusing active learning into introductory programming courses"),
-                    new Kentta(vt.getKenttaTyyppi("year"), "2004"));
+                    kt.luoKentta("author", "Whittington, Keith J."),
+                    kt.luoKentta("title", "Infusing active learning into introductory programming courses"),
+                    kt.luoKentta("year", "2004"));
 
             Viite viite2 = new Viite("CBH91", vt,
-                    new Kentta(vt.getKenttaTyyppi("author"),
-                              "Allan Collins and John Seely Brown and Ann Holum"),
-                    new Kentta(vt.getKenttaTyyppi("title"),
-                              "Cognitive apprenticeship: making thinking visible"),
-                    new Kentta(vt.getKenttaTyyppi("year"), "1991"));
+                    kt.luoKentta("author", "Allan Collins and John Seely Brown and Ann Holum"),
+                    kt.luoKentta("title", "Cognitive apprenticeship: making thinking visible"),
+                    kt.luoKentta("year", "1991"));
 
             // Saving to the database
             session.save(viite1);
