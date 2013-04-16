@@ -16,7 +16,7 @@ public class ViiteTyyppiTehdas {
         }
         
         if (vt.equals("inproceedings")) {
-            return luoKonferenssiJulkaisuViite();
+            return luoKonferenssijulkaisuTyyppi();
         }
         
         throw new IllegalArgumentException("Tuntematon viitetyyppi: " + vt);
@@ -66,9 +66,9 @@ public class ViiteTyyppiTehdas {
         return kirjaTyyppi;
     }
     
-    private static ViiteTyyppi luoKonferenssiJulkaisuViite() {
+    private static ViiteTyyppi luoKonferenssijulkaisuTyyppi() {
         
-        ViiteTyyppi konferenssiJulkaisuTyyppi = new ViiteTyyppi(
+        ViiteTyyppi konferenssijulkaisuTyyppi = new ViiteTyyppi(
                 "inproceedings",
                 "Konferenssi julkaisu",
                 new KenttaTyyppi("author","Kirjoittaja",true),
@@ -87,6 +87,6 @@ public class ViiteTyyppiTehdas {
                 new KenttaTyyppi("series","Sarja",false),
                 new KenttaTyyppi("volume","Nide",false));
         
-        return konferenssiJulkaisuTyyppi;
+        return konferenssijulkaisuTyyppi;
     }
 }
