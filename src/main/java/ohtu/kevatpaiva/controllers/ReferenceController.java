@@ -7,6 +7,7 @@ import ohtu.kevatpaiva.tallennus.ArtikkelinTallentaja;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -179,6 +180,28 @@ public class ReferenceController {
             String bibtex = artikkeli.toBibTeX();
             bibit.add(bibtex);
         }
+         
+        model.addAttribute("bibit", bibit);
+
+        return "bibtex";
+    }
+    
+    @RequestMapping(value="haebibtex/{id}", method = RequestMethod.GET)
+    public String tulostaHaettuBibTeX(Model model, @PathVariable(value="id") String id) {
+        
+        Article article;
+        try {
+            ArtikkelinTallentaja tallentaja = new ArtikkelinTallentaja();
+            article = tallentaja.haeIdlla(id);
+        } catch (Exception e) {
+            model.addAttribute("title", "Poikkeus");
+            model.addAttribute("message", e.getMessage());
+            return "message"; 
+        }
+        
+        String bibtex = article.toBibTeX();
+        ArrayList<String> bibit = new ArrayList<String>();
+        bibit.add(bibtex);
          
         model.addAttribute("bibit", bibit);
 

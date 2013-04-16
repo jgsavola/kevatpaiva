@@ -20,9 +20,15 @@
             <li><a href="haebibtex">Tarkastele viitteitä BibTex-muodossa</a></li>
             <li><a href="lomake">Lisää uusi viite</a></li>
         </ul>
-        <ul>
+        <!-- <ul>
             <c:forEach var="item" items="${artikkelit}">
                 <li>${item.id} | ${item.title} | ${item.author} | ${item.year}</li>
+            </c:forEach>
+        </ul> -->
+        
+        <ul>
+            <c:forEach var="item" items="${artikkelit}">
+                <li><a href="haebibtex/${item.id}">${item.id} | ${item.title} | ${item.author} | ${item.year}</a></li>
             </c:forEach>
         </ul>
         

@@ -141,4 +141,21 @@ public class ArtikkelinTallentaja {
         }
         }
     }
+    
+    public Article haeIdlla(String id) {
+        Article article;
+        try {
+            tx = session.beginTransaction();
+             
+            article = (Article) session.get(Article.class, id);
+             
+            // Committing the change in the database.
+            session.flush();
+            tx.commit();
+        }
+        finally {
+            
+        }
+        return article;
+    } 
 }

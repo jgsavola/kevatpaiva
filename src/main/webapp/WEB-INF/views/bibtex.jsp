@@ -17,8 +17,8 @@
     <body>
         <h1>BibTeX</h1>
         <ul style="list-style: none">
-            <li><a href="listaa">Tarkastele viitteitä</a></li>
-            <li><a href="lomake">Lisää uusi viite</a></li>
+            <li><a href="${pageContext.request.contextPath}/listaa">Tarkastele viitteitä</a></li>
+            <li><a href="${pageContext.request.contextPath}/lomake">Lisää uusi viite</a></li>
     </ul>
         <p>Artikkelit BibTeX-muodossa:</p>
         <pre><c:forEach var="item" items="${bibit}">${item}
