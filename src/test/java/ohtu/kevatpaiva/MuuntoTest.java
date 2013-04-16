@@ -21,7 +21,16 @@ public class MuuntoTest {
 
     @Test
     public void muunnaSkandit() {
-        assertEquals("a\\\"{A}\\\"{o}O", Muunto.muunnaMuoto("aÄöO", false));
+        String syote = "aÄöO";
+        String odotettu = "a\\\"{A}\\\"{o}O";
+
+        String tulos = Muunto.muunnaMuoto(syote, false);
+
+        System.out.println("syöte:    " + syote);
+        System.out.println("odotettu: " + odotettu);
+        System.out.println("tulos:    " + tulos);
+
+        assertEquals("Skandien muuntaminen onnistuu.", odotettu, tulos);
     }
     
     @Test
