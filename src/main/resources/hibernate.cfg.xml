@@ -16,6 +16,9 @@
          
         <mapping class="ohtu.kevatpaiva.Article"/>
         <mapping class="ohtu.kevatpaiva.Viite"/>
-        
+        <mapping class="ohtu.kevatpaiva.ViiteTyyppi"/>
+        <mapping class="ohtu.kevatpaiva.Kentta"/>
+        <mapping class="ohtu.kevatpaiva.KenttaTyyppi"/>
+
     </session-factory>
 </hibernate-configuration>
