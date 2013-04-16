@@ -2,19 +2,31 @@ body {
 	font-family:Arial, Helvetica, sans-serif;
 }
 form {
-	width: 30%; 
+	width: 40%; 
+}
+legend {
+    
+        font-size:small;
+        font-weight:bold;
 }
 label {
 	display:block;
+        width: 40%;
+        float:left;
+        font-size:small;
 }
 select, input {
-	width:90%;
+	width:50%;
 	margin-bottom:0.6em;
 	padding:3px;
 }
 input.button {
 	margin:0;
+        width:100%;
 }
 p.help {
 	display:inline;
+}
+#navigation {
+        list-style:none;
 }
