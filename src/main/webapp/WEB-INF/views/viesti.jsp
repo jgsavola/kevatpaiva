@@ -1,26 +1,23 @@
-<%-- 
-    Document   : message
-    Created on : Apr 4, 2013, 12:39:06 AM
-    Author     : Daniel Lillqvist <daniel.lillqvist@helsinki.fi>
---%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="fi">
-<head>
-    <meta charset="UTF-8" />
-    <title>${title} - kevätpäivä</title>
-    <link rel="stylesheet" href="resources/css/main.css" />
-    <link rel="shortcut icon" href="resources/images/favicon.ico" />
-</head>
-<body>
-    <h1>${title}</h1>
-    <ul style="list-style: none">
-            <li><a href="listaa">Tarkastele viitteitä</a></li>
-            <li><a href="haebibtex">Tarkastele viitteitä BibTex-muodossa</a></li>
-            <li><a href="lomake">Lisää uusi viite</a></li>
-    </ul>
-    <p>${message}</p>
-    
-</body>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>${otsikko} - Kevätpäivä</title>
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/main.css" />
+        <link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/images/favicon.ico" />
+    </head>
+    <body>
+        
+        <ul id="navigaatio">
+            <li><a href="${pageContext.request.contextPath}">S</a></li>
+            <li><a href="${pageContext.request.contextPath}/lomake">Lisää uusi viite</a></li>
+            <li><a href="${pageContext.request.contextPath}/listaa">Tarkastele viitteitä</a></li>
+            <li><a href="${pageContext.request.contextPath}/haebibtex">Tarkastele viitteitä BibTex-muodossa</a></li>
+        </ul>
+        
+        <h1>${otsikko}</h1>
+        <p>${viesti}</p>
+        
+    </body>
 </html>

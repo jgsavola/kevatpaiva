@@ -1,12 +1,12 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="fi">
     <head>
-        <meta charset="UTF-8" />
-        <title>Lisää lähdeviitteitä</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Lisää lähdeviite - Kevätpäivä</title>
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/main.css" />
         <link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/images/favicon.ico" />
         <script>
@@ -23,13 +23,18 @@
         </script>
     </head>
     <body>
-        <ul id="navigation">
+        
+        <ul id="navigaatio">
+            <li><a href="${pageContext.request.contextPath}">S</a></li>
             <li><a href="${pageContext.request.contextPath}/listaa">Tarkastele viitteitä</a></li>
             <li><a href="${pageContext.request.contextPath}/haebibtex">Tarkastele viitteitä BibTex-muodossa</a></li>
         </ul>
+        
+        <h1>Lisää lähdeviite</h1>
+        
         <sf:form modelAttribute="viiteTyypit" id="viiteTyypiLomake" action="${pageContext.request.contextPath}/lomake/${viiteTyyppi.nimi}" method="GET" enctype="application/x-www-form-urlencoded">
             <fieldset>
-                <legend>Lisää lähdeviite</legend>
+                <legend>Valitse viitteen tyyppi</legend>
                 <label for="viiteTyyppi">Tyyppi</label>
                 <select name="viiteTyyppi" id="viiteTyyppi" size="3" onchange="changeForm();">
                 <c:forEach items="${viiteTyypit}" var="vt">
@@ -65,5 +70,6 @@
                 </fieldset>
             </sf:form>
         </c:if>
+        
     </body>
 </html>
