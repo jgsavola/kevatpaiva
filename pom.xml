@@ -85,11 +85,11 @@
         </dependency>
 
 
-        <!-- hibernate -->
+        <!-- hibernate (from 4.1.4.Final) -->
         <dependency>
           <groupId>org.hibernate</groupId>
           <artifactId>hibernate-core</artifactId>
-          <version>4.1.4.Final</version>
+          <version>4.2.0.Final</version>
         </dependency>
 
         <!-- SQLite JDBC library -->
