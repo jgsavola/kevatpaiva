@@ -4,10 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
-import ohtu.kevatpaiva.Article;
+import ohtu.kevatpaiva.KenttaTehdas;
+import ohtu.kevatpaiva.Viite;
 import ohtu.kevatpaiva.ViiteTyyppi;
 import ohtu.kevatpaiva.ViiteTyyppiTehdas;
-import ohtu.kevatpaiva.tallennus.ArtikkelinTallentaja;
+import ohtu.kevatpaiva.tallennus.ViitteenTallentaja;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,14 +23,16 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 @Controller
 @RequestMapping("/")
-public class ReferenceController {
+public class ViiteController {
 
-    private ArtikkelinTallentaja tallentaja;
-    private @Autowired
-    HttpServletRequest request;
+    private ViitteenTallentaja viitteenTallentaja;
+    
+    @Autowired
+    private HttpServletRequest request;
 
-    public ReferenceController() {
-        this.tallentaja = new ArtikkelinTallentaja();
+    public ViiteController() {
+
+        this.viitteenTallentaja = new ViitteenTallentaja();
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -47,16 +50,14 @@ public class ReferenceController {
 
     @RequestMapping(value = "lomake/{viiteTyyppi}", method = RequestMethod.GET)
     public String naytaLomakeViiteTyypilla(@PathVariable("viiteTyyppi") String viiteTyyppi, Model model) {
-
+        
         model.addAttribute("viiteTyypit", ViiteTyyppiTehdas.luoViiteTyyppiLista());
         model.addAttribute("viiteTyyppi", ViiteTyyppiTehdas.luoViiteTyyppi(viiteTyyppi));
         return "lomake";
     }
 
     @RequestMapping(value = "lisaa", method = RequestMethod.POST)
-    public String lisaaArtikkeli(
-            @RequestParam("type") String type,
-            ModelMap model) {
+    public String lisaaViite(@RequestParam("viiteTyyppi") String viiteTyyppi, ModelMap model) {
 
         /**
          * Hommaa lomakkeen kentät request-objektilta. Tässä pitäisi olla koko
@@ -64,23 +65,19 @@ public class ReferenceController {
          */
         Map<String, String[]> parameterMap = request.getParameterMap();
 
-        /*
-         * TODO: refactor type to viite
-         */
+        ViiteTyyppi vt = ViiteTyyppiTehdas.luoViiteTyyppi(parameterMap.get("viiteTyyppi")[0]);
+        KenttaTehdas kt = new KenttaTehdas(vt);
 
-        ViiteTyyppi vt = ViiteTyyppiTehdas.luoViiteTyyppi(type);
-
-        // pieni validointi
-
-        // 
-
-
-
+        // FIXME: Oikea mappaus/validointi
+        Viite viite = new Viite(parameterMap.get("id")[0], vt,
+                kt.luoKentta("author", parameterMap.get("author")[0]),
+                kt.luoKentta("title", parameterMap.get("title")[0]),
+                kt.luoKentta("journal", parameterMap.get("journal")[0]),
+                kt.luoKentta("year", parameterMap.get("year")[0]));
+        
         //boolean idOnJo = tallentaja.onkoArtikkeli(id);
 
         /*
-        
-        
          if (idOnJo || id.equals("") || author.equals("") || title.equals("") || year.equals("") 
          || (type.equals("article") && journal.equals(""))
          || (type.equals("book") && (editor.equals("") || publisher.equals(""))) 
@@ -146,88 +143,104 @@ public class ReferenceController {
          if (publisher != null) {
          artikkeli.setPublisher(publisher);
          }
+                 */
         
          try {
-         tallentaja.tallennaArtikkeli(artikkeli);
+             
+            viitteenTallentaja.tallenna(viite);
+            
          } catch (Exception e) {
-         model.addAttribute("title", "Poikkeus");
-         model.addAttribute("message", e.getMessage());
-         return "message"; 
+            
+            e.printStackTrace();
+            model.addAttribute("title", "Poikkeus");
+            model.addAttribute("message", e.getMessage());
+            return "message"; 
          }
         
          model.addAttribute("title", "Lisätty!");
-         model.addAttribute("message", id + " lisätty onnistuneesti!");
-         */
+         model.addAttribute("message", parameterMap.get("id")[0] + " lisätty onnistuneesti!");
+
 
         return "message";
     }
 
     @RequestMapping(value = "listaa", method = RequestMethod.GET)
-    public String get(Model model) {
+    public String listaaViitteet(Model model) {
 
-        List<Article> artikkelit;
+        List<Viite> viitteet;
 
         try {
-            artikkelit = tallentaja.listaaArtikelit();
+            
+            ViitteenTallentaja viitteenTallentaja = new ViitteenTallentaja();
+            viitteet = viitteenTallentaja.listaa();
+            
         } catch (Exception e) {
+            
+            e.printStackTrace();
             model.addAttribute("title", "Poikkeus");
             model.addAttribute("message", e.getMessage());
             return "message";
         }
-
-        ArrayList<Article> articles = new ArrayList();
-        for (Article artikkeli : artikkelit) {
-            articles.add(artikkeli);
+/*
+        ArrayList<Viite> refs = new ArrayList();
+        for (Viite viite : viitteet) {
+            refs.add(viite);
         }
-
-        model.addAttribute("artikkelit", articles);
-
+*/
+        model.addAttribute("viiteLista", viitteet);
         return "lista";
     }
-
+    
     @RequestMapping(value = "haebibtex", method = RequestMethod.GET)
     public String tulostaBibTeX(Model model) {
 
-        List<Article> artikkelit;
+        List<Viite> viitteet;
+        
         try {
-            ArtikkelinTallentaja tallentaja = new ArtikkelinTallentaja();
-            artikkelit = tallentaja.listaaArtikelit();
+            
+            ViitteenTallentaja viitteenTallentaja = new ViitteenTallentaja();
+            viitteet = viitteenTallentaja.listaa();
+            
         } catch (Exception e) {
+            
+            e.printStackTrace();
             model.addAttribute("title", "Poikkeus");
             model.addAttribute("message", e.getMessage());
             return "message";
         }
 
         ArrayList<String> bibit = new ArrayList<String>();
-        for (Article artikkeli : artikkelit) {
-            String bibtex = artikkeli.toBibTeX();
+        for (Viite viite : viitteet) {
+            String bibtex = viite.toBibTeX();
             bibit.add(bibtex);
         }
 
         model.addAttribute("bibit", bibit);
-
         return "bibtex";
     }
 
     @RequestMapping(value = "haebibtex/{id}", method = RequestMethod.GET)
-    public String tulostaHaettuBibTeX(Model model, @PathVariable(value = "id") String id) {
+    public String tulostaHaettuBibTeX(@PathVariable(value = "id") String id, Model model) {
 
-        Article article;
+        Viite viite;
         try {
-            ArtikkelinTallentaja tallentaja = new ArtikkelinTallentaja();
-            article = tallentaja.haeIdlla(id);
+            
+            ViitteenTallentaja viitteenTallentaja = new ViitteenTallentaja();
+            viite = viitteenTallentaja.haeIdlla(id);
+            
         } catch (Exception e) {
+            
+            e.printStackTrace();
             model.addAttribute("title", "Poikkeus");
             model.addAttribute("message", e.getMessage());
             return "message";
         }
 
-        String bibtex = article.toBibTeX();
+        String bibtex = viite.toBibTeX();
         ArrayList<String> bibit = new ArrayList<String>();
         bibit.add(bibtex);
 
         model.addAttribute("bibit", bibit);
-
         return "bibtex";
     }
 }

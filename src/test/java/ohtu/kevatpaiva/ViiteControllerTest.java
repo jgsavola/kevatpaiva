@@ -1,6 +1,6 @@
 package ohtu.kevatpaiva;
 
-import ohtu.kevatpaiva.controllers.ReferenceController;
+import ohtu.kevatpaiva.controllers.ViiteController;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,7 +26,7 @@ import org.springframework.web.context.WebApplicationContext;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration
 @WebAppConfiguration
-public class ReferenceControllerTest {
+public class ViiteControllerTest {
  
     @Autowired
     private WebApplicationContext context;
@@ -50,8 +50,8 @@ public class ReferenceControllerTest {
     public static class TestConfiguration {
  
         @Bean
-        public ReferenceController referenceController() {
-            return new ReferenceController();
+        public ViiteController referenceController() {
+            return new ViiteController();
         }
  
     }
