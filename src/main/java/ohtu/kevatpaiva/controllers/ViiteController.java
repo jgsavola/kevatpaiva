@@ -1,10 +1,15 @@
 package ohtu.kevatpaiva.controllers;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
+import ohtu.kevatpaiva.Kentta;
 import ohtu.kevatpaiva.KenttaTehdas;
+import ohtu.kevatpaiva.KenttaTyyppi;
 import ohtu.kevatpaiva.Viite;
 import ohtu.kevatpaiva.ViiteTyyppi;
 import ohtu.kevatpaiva.ViiteTyyppiTehdas;
@@ -25,14 +30,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/")
 public class ViiteController {
 
-    private ViitteenTallentaja viitteenTallentaja;
+    private ViitteenTallentaja tallentaja;
     
     @Autowired
     private HttpServletRequest request;
 
     public ViiteController() {
 
-        this.viitteenTallentaja = new ViitteenTallentaja();
+        this.tallentaja = new ViitteenTallentaja();
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -65,18 +70,30 @@ public class ViiteController {
          */
         Map<String, String[]> parameterMap = request.getParameterMap();
 
+        //boolean idOnJo = tallentaja.onkoViite(parameterMap.get("id")[0]);
+        
         ViiteTyyppi vt = ViiteTyyppiTehdas.luoViiteTyyppi(parameterMap.get("viiteTyyppi")[0]);
         KenttaTehdas kt = new KenttaTehdas(vt);
-
-        // FIXME: Oikea mappaus/validointi
-        Viite viite = new Viite(parameterMap.get("id")[0], vt,
-                kt.luoKentta("author", parameterMap.get("author")[0]),
-                kt.luoKentta("title", parameterMap.get("title")[0]),
-                kt.luoKentta("journal", parameterMap.get("journal")[0]),
-                kt.luoKentta("year", parameterMap.get("year")[0]));
+        Set<KenttaTyyppi> skt = vt.getKenttaTyypit();
+        Set<Kentta> sk = new HashSet<Kentta>();
         
-        //boolean idOnJo = tallentaja.onkoArtikkeli(id);
+        for (Iterator<KenttaTyyppi> it = skt.iterator(); it.hasNext();) {
+            
+            KenttaTyyppi kety = it.next();
 
+            if(parameterMap.containsKey(kety.getNimi()) && !parameterMap.get(kety.getNimi())[0].isEmpty()) {
+                sk.add(kt.luoKentta(kety.getNimi(), parameterMap.get(kety.getNimi())[0]));
+            }
+        }
+
+        Viite viite = new Viite(parameterMap.get("id")[0], vt, sk);
+       
+        /*
+        model.addAttribute("otsikko", "DEBUG!!");
+        model.addAttribute("viesti", sk.toString());
+        return "viesti";
+        */
+        
         /*
          if (idOnJo || id.equals("") || author.equals("") || title.equals("") || year.equals("") 
          || (type.equals("article") && journal.equals(""))
@@ -119,8 +136,7 @@ public class ViiteController {
          model.addAttribute("message", message);
          return "form-article";
          }
-        
-        
+
          Article artikkeli = new Article(id, author, title, year);
         
          // (journal) NOT REQUIRED?
@@ -143,25 +159,23 @@ public class ViiteController {
          if (publisher != null) {
          artikkeli.setPublisher(publisher);
          }
-                 */
-        
-         try {
-             
-            viitteenTallentaja.tallenna(viite);
-            
-         } catch (Exception e) {
-            
-            e.printStackTrace();
-            model.addAttribute("title", "Poikkeus");
-            model.addAttribute("message", e.getMessage());
-            return "message"; 
-         }
-        
-         model.addAttribute("title", "Lisätty!");
-         model.addAttribute("message", parameterMap.get("id")[0] + " lisätty onnistuneesti!");
+*   */   
+      
+        try {
 
+           tallentaja.tallenna(viite);
 
-        return "message";
+        } catch (Exception e) {
+
+           e.printStackTrace();
+           model.addAttribute("viesti", e.getMessage());
+           return "poikkeus"; 
+        } 
+
+        model.addAttribute("otsikko", "Lisätty!");
+        model.addAttribute("viesti", parameterMap.get("id")[0] + " lisätty onnistuneesti!");
+
+        return "viesti";
     }
 
     @RequestMapping(value = "listaa", method = RequestMethod.GET)
@@ -171,22 +185,15 @@ public class ViiteController {
 
         try {
             
-            ViitteenTallentaja viitteenTallentaja = new ViitteenTallentaja();
-            viitteet = viitteenTallentaja.listaa();
+            viitteet = tallentaja.listaa();
             
         } catch (Exception e) {
             
             e.printStackTrace();
-            model.addAttribute("title", "Poikkeus");
             model.addAttribute("message", e.getMessage());
-            return "message";
+            return "poikkeus";
         }
-/*
-        ArrayList<Viite> refs = new ArrayList();
-        for (Viite viite : viitteet) {
-            refs.add(viite);
-        }
-*/
+
         model.addAttribute("viiteLista", viitteet);
         return "lista";
     }
@@ -198,15 +205,13 @@ public class ViiteController {
         
         try {
             
-            ViitteenTallentaja viitteenTallentaja = new ViitteenTallentaja();
-            viitteet = viitteenTallentaja.listaa();
+            viitteet = tallentaja.listaa();
             
         } catch (Exception e) {
             
             e.printStackTrace();
-            model.addAttribute("title", "Poikkeus");
-            model.addAttribute("message", e.getMessage());
-            return "message";
+            model.addAttribute("viesti", e.getMessage());
+            return "poikkeus";
         }
 
         ArrayList<String> bibit = new ArrayList<String>();
@@ -223,17 +228,17 @@ public class ViiteController {
     public String tulostaHaettuBibTeX(@PathVariable(value = "id") String id, Model model) {
 
         Viite viite;
+        
         try {
             
-            ViitteenTallentaja viitteenTallentaja = new ViitteenTallentaja();
-            viite = viitteenTallentaja.haeIdlla(id);
+            viite = tallentaja.haeIdlla(id);
             
         } catch (Exception e) {
             
             e.printStackTrace();
-            model.addAttribute("title", "Poikkeus");
-            model.addAttribute("message", e.getMessage());
-            return "message";
+            model.addAttribute("viesti", e.getMessage());
+            
+            return "poikkeus";
         }
 
         String bibtex = viite.toBibTeX();
