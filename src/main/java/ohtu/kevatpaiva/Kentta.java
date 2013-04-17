@@ -1,5 +1,6 @@
 package ohtu.kevatpaiva;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -46,6 +47,7 @@ public class Kentta {
     @ManyToOne()
     private KenttaTyyppi tyyppi;
 
+    @Column
     private String arvo;
 
     public Kentta() {

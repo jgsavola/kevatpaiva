@@ -1,5 +1,6 @@
 package ohtu.kevatpaiva;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -15,7 +16,11 @@ public class KenttaTyyppi {
 
     @Id
     private String nimi;
+    
+    @Column
     private String selite;
+    
+    @Column
     private boolean pakollinen;
 
     public KenttaTyyppi() {

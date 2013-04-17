@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -22,7 +23,8 @@ public class ViiteTyyppi {
 
     @Id
     private String nimi;
-
+    
+    @Column
     private String selitys;
 
     @OneToMany(cascade = CascadeType.ALL)
