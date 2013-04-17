@@ -31,7 +31,7 @@ scenario "user can see articles as a list starting from insertion", {
     }
 
     when 'user clicks lista-link', {
-        element = driver.findElement(By.linkText("Tarkastele viitteitä"))
+        element = driver.findElement(By.linkText("Tarkastele viitteit\u00e4"))
         element.click()
     }
  

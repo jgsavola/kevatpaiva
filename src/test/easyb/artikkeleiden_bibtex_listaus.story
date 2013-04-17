@@ -63,9 +63,7 @@ scenario "user can see the articles in bibtex form starting from the insertion p
     }
 
     when 'user clicks BibTex-link', {
-        System.out.println("== tulostetaan lähtösivun koodi ==");
-        System.out.println( driver.getPageSource() );
-        element = driver.findElement(By.name("haebibtex"))
+        element = driver.findElement(By.partialLinkText("BibTex-muodossa"))
         element.click()
         System.out.println("== tulostetaan tulosivun koodi ==");
         System.out.println( driver.getPageSource() );
