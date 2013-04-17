@@ -1,4 +1,5 @@
 import ohtu.*
+import ohtu.kevatpaiva.tallennus.ArtikkelinTallentaja
 import org.openqa.selenium.*
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.support.ui.Select
@@ -10,6 +11,9 @@ scenario "user can see the articles in bibtex form starting from insertion", {
     given 'user has inserted an article', {
         driver = new HtmlUnitDriver();
         driver.get("http://localhost:8080/miniprojekti/lomake")
+        tallentaja = new ArtikkelinTallentaja()
+        tallentaja.poistaViite("RRR03")
+
         element = driver.findElement(By.name("type"))
         select = new Select(element)
         select.selectByValue("article")
@@ -70,7 +74,23 @@ scenario "user can see the articles in bibtex form starting from the insertion p
     }
  
     then 'articles will be listed', {
-        driver.getPageSource().contains("Artikkelit BibTeX-muodossa").shouldBe true
+    }
+
+}
+
+scenario "user can see the articles in bibtex form starting from the reference list", {
+
+    given 'user is on the reference list page', {
+        driver = new HtmlUnitDriver();
+        driver.get("http://localhost:8080/miniprojekti/listaa/")
+    }
+
+    when 'user clicks BibTex-link', {
+        element = driver.findElement(By.partialLinkText("BibTex-muodossa"))
+        element.click()
+    }
+ 
+    then 'articles will be listed', {
     }
 
 }
