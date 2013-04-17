@@ -169,11 +169,10 @@ toString();
     return false;
   }
 
-  /*
-public String getAddColumnString() {
-return "add column";
-}
-*/
+  @Override
+  public String getAddColumnString() {
+    return "add column";
+  }
 
   public String getForUpdateString() {
     return "";
