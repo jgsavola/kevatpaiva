@@ -65,8 +65,24 @@ scenario "user can see the articles in bibtex form starting from the insertion p
     when 'user clicks BibTex-link', {
         element = driver.findElement(By.partialLinkText("BibTex-muodossa"))
         element.click()
-        System.out.println("== tulostetaan sivun koodi ==");
-        System.out.println( driver.getPageSource() );
+    }
+ 
+    then 'articles will be listed', {
+        driver.getPageSource().contains("Artikkelit BibTeX-muodossa").shouldBe true
+    }
+
+}
+
+scenario "user can see the articles in bibtex form starting from the reference list", {
+
+    given 'user is on the reference list page', {
+        driver = new HtmlUnitDriver();
+        driver.get("http://localhost:8080/miniprojekti/listaa/")
+    }
+
+    when 'user clicks BibTex-link', {
+        element = driver.findElement(By.partialLinkText("BibTex-muodossa"))
+        element.click()
     }
  
     then 'articles will be listed', {
