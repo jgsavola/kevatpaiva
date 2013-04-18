@@ -57,9 +57,14 @@ public class ViitteenTallentaja {
             /**
              * Suorita <code>rollback()</code> kaikissa poikkeustapauksissa.
              */
-            ex.printStackTrace();
+            //ex.printStackTrace();
             tx.rollback();
+            System.out.println("ViitteenTallentaja.tallenna: " + ex.getMessage());
             throw ex;
+        } finally {
+            if (tx != null && tx.isActive()) {
+                tx.rollback();
+            }
         }
     }
 
@@ -74,7 +79,11 @@ public class ViitteenTallentaja {
             session.flush();
             tx.commit();
             
-        } finally { }
+        } finally {
+            if (tx != null && tx.isActive()) {
+                tx.rollback();
+            }
+        }
         
         return viiteLista;
     }
@@ -92,7 +101,11 @@ public class ViitteenTallentaja {
             session.flush();
             tx.commit();
             
-        } finally { }
+        } finally {
+            if (tx != null && tx.isActive()) {
+                tx.rollback();
+            }
+        }
         
         for (Viite viite : viiteLista) {
 
@@ -120,7 +133,11 @@ public class ViitteenTallentaja {
                 session.flush();
                 tx.commit();
                 
-            } finally { }
+            } finally {
+                if (tx != null && tx.isActive()) {
+                    tx.rollback();
+                }
+            }
         }
     }
 
@@ -135,7 +152,11 @@ public class ViitteenTallentaja {
             session.flush();
             tx.commit();
             
-        } finally { }
+        } finally {
+            if (tx != null && tx.isActive()) {
+                tx.rollback();
+            }
+        }
         
         return viite;
     }
