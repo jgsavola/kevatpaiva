@@ -28,6 +28,6 @@ scenario "user can see the articles in bibtex form", {
     }
  
     then 'articles will be listed', {
-        driver.getPageSource().contains("Artikkelit BibTeX-muodossa").shouldBe true
+        driver.getPageSource().contains("Viitteet BibTeX-muodossa").shouldBe true
     }
 }
