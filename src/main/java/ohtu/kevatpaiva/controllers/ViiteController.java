@@ -14,6 +14,7 @@ import ohtu.kevatpaiva.Viite;
 import ohtu.kevatpaiva.ViiteTyyppi;
 import ohtu.kevatpaiva.ViiteTyyppiTehdas;
 import ohtu.kevatpaiva.tallennus.ViitteenTallentaja;
+import org.hibernate.NonUniqueObjectException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -165,8 +166,10 @@ public class ViiteController {
 
            tallentaja.tallenna(viite);
 
+        } catch (NonUniqueObjectException exception) {
+           model.addAttribute("viesti", "Viite kyseisellä id:llä on jo tallennettu");
+           return "poikkeus"; 
         } catch (Exception e) {
-
            e.printStackTrace();
            model.addAttribute("viesti", e.getMessage());
            return "poikkeus"; 
