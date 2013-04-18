@@ -66,7 +66,7 @@
                     <input type="text" name="${vts.nimi}" />
                 </c:forEach>
 
-                    <input name="lahetaLomake" id="lahetaLomake"" class="button" type="submit" value="Lähetä" />
+                    <input name="lahetaLomake" id="lahetaLomake" class="button" type="submit" value="Lähetä" />
                 </fieldset>
             </sf:form>
         </c:if>
