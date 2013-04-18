@@ -8,10 +8,7 @@ description 'User gets a list of articles in bibtex form'
 scenario "user can see the articles in bibtex form", {
     given 'user has inserted an article', {
         driver = new HtmlUnitDriver();
-        driver.get("http://localhost:8080/miniprojekti/lomake")
-        element = driver.findElement(By.name("type"))
-        select = new Select(element)
-        select.selectByValue("article")
+        driver.get("http://localhost:8080/miniprojekti/lomake/article?viiteTyyppi=article")
 
         element = driver.findElement(By.name("id"));
         element.sendKeys("RRR03");
@@ -21,7 +18,7 @@ scenario "user can see the articles in bibtex form", {
         element.sendKeys("Learning and teaching programming: A review and discussion");
         element = driver.findElement(By.name("year"));
         element.sendKeys("2003");
-        element = driver.findElement(By.name("form-submit"));
+        element = driver.findElement(By.name("lahetaLomake"))
         element.submit();
     }
 
