@@ -74,9 +74,8 @@ scenario "user can see the articles in bibtex form starting from the insertion p
         System.out.println("== tulostetaan tulosivun koodi ==");
         System.out.println( driver.getPageSource() );
     }
- 
-    then 'articles will be listed', {
-    }
+
+    then 'articles will be listed'
 
 }
 

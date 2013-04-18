@@ -137,10 +137,8 @@ scenario "user cannot add a article to the database without type", {
         element.submit();
         System.out.println( driver.getPageSource() );
     }
- 
-    then 'article will not be added', {
+
+    then 'article will not be added'
         // FIXME: tähän tarvitaan tarkastus, kunhan typen validointi ja sen
         // puuttumisen aiheuttava virheilmoitus on toteutettu
-    }
-
 }
