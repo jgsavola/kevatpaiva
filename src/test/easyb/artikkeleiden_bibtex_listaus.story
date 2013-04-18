@@ -24,6 +24,8 @@ scenario "user can see the articles in bibtex form starting from insertion", {
         element.sendKeys("Anthony Robins and Janet Rountree and Nathan Rountree");
         element = driver.findElement(By.name("title"));
         element.sendKeys("Learning and teaching programming: A review and discussion");
+        element = driver.findElement(By.name("journal"));
+        element.sendKeys("Pakollinen journaali!");
         element = driver.findElement(By.name("year"));
         element.sendKeys("2003");
         element = driver.findElement(By.name("form-submit"));
@@ -82,15 +84,22 @@ scenario "user can see the articles in bibtex form starting from the reference l
 
     given 'user is on the reference list page', {
         driver = new HtmlUnitDriver();
-        driver.get("http://localhost:8080/miniprojekti/listaa/")
+        driver.get("http://localhost:8080/miniprojekti/listaa")
     }
 
     when 'user clicks BibTex-link', {
-        element = driver.findElement(By.partialLinkText("BibTex-muodossa"))
+        System.out.println("== tulostetaan tulosivun koodiRRR03 ==");
+        System.out.println( driver.getPageSource() );
+        element = driver.findElement(By.partialLinkText("RRR03"))
         element.click()
+
+        System.out.println("== tulostetaan tulosivun koodi ==");
+        System.out.println( driver.getPageSource() );
     }
- 
+
     then 'articles will be listed', {
+        driver.getPageSource().contains("Artikkelit BibTeX-muodossa").shouldBe true
+        driver.getPageSource().contains("@article{RRR03,").shouldBe true
     }
 
 }
