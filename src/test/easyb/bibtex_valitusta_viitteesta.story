@@ -4,11 +4,11 @@ import org.openqa.selenium.*
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.support.ui.Select
 
-description 'User gets a list of articles in bibtex form'
+description 'User gets a chosen reference in bibtex form'
 
 scenario "user can see the articles in bibtex form starting from insertion", {
 
-    given 'user has inserted an article', {
+    given 'user has inserted an article and gone to the reference list', {
         driver = new HtmlUnitDriver();
         driver.get("http://localhost:8080/miniprojekti/lomake")
         tallentaja = new ArtikkelinTallentaja()
@@ -30,61 +30,7 @@ scenario "user can see the articles in bibtex form starting from insertion", {
         element.sendKeys("2003");
         element = driver.findElement(By.name("form-submit"));
         element.submit();
-    }
 
-    when 'user clicks BibTex-link', {
-        element = driver.findElement(By.partialLinkText("BibTex-muodossa"))
-        element.click()
-    }
- 
-    then 'articles will be listed', {
-        driver.getPageSource().contains("Artikkelit BibTeX-muodossa").shouldBe true
-    }
-
-}
-
-scenario "user can see the articles in bibtex form starting from the main page", {
-
-    given 'user is on the main page', {
-        driver = new HtmlUnitDriver();
-        driver.get("http://localhost:8080/miniprojekti/")
-    }
-
-    when 'user clicks BibTex-link', {
-        element = driver.findElement(By.partialLinkText("BibTex-muodossa"))
-        element.click()
-    }
- 
-    then 'articles will be listed', {
-        driver.getPageSource().contains("Artikkelit BibTeX-muodossa").shouldBe true
-    }
-
-}
-
-scenario "user can see the articles in bibtex form starting from the insertion page", {
-
-    given 'user is on the lomake page', {
-        driver = new HtmlUnitDriver()
-        driver.get("http://localhost:8080/miniprojekti/lomake/")
-    }
-
-    when 'user clicks BibTex-link', {
-        element = driver.findElement(By.partialLinkText("BibTex-muodossa"))
-        element.click()
-        System.out.println("== tulostetaan tulosivun koodi ==");
-        System.out.println( driver.getPageSource() );
-    }
-
-    then 'articles will be listed', {
-// FIXME: jostain syystä menee virhesivulle, ei bibtex-sivulle
-//        driver.getPageSource().contains("Artikkelit BibTeX-muodossa").shouldBe true
-    }
-}
-
-scenario "user can see the articles in bibtex form starting from the reference list", {
-
-    given 'user is on the reference list page', {
-        driver = new HtmlUnitDriver();
         driver.get("http://localhost:8080/miniprojekti/listaa")
     }
 

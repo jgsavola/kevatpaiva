@@ -219,9 +219,9 @@ public class ArticleTest {
         String bibtex_ok = "@article{W04,\n"
             + "    author = {Whittington, Keith J.},\n"
             + "    title = {{I}nfusing active learning into introductory programming courses},\n"
-            + "    volume = {null},\n"
-            + "    number = {null},\n"
-            + "    year = {2004}\n"
+//            + "    volume = {null},\n"
+//            + "    number = {null},\n"
+            + "    year = {2004},\n"
             + "}\n";
 
         String bibtex = article1.toBibTeX();

@@ -2,8 +2,6 @@ package ohtu.kevatpaiva;
  
 import java.io.Serializable;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
  
@@ -126,9 +124,7 @@ public class Article implements Serializable {
      * @return Artikkelin BibTeX-esitys.
      */
     public String toBibTeX() {
-        /**
-         * FIXME: Kentät pitää koodata BibTeX-muotoon.
-         */
+
         String bibtex = "@article{" + this.getId() + ",\n";
 
         if (this.getAuthor() != null) {
@@ -140,14 +136,25 @@ public class Article implements Serializable {
         if (this.getJournal() != null) {
             bibtex += "    journal = {" + Muunto.muunnaMuoto(this.getJournal(), false) + "},\n";
         }
-        /**
-         * FIXME: volume, number, year ovat tyyppiä int, joten ne eivät
-         * voi olla null. Siis niistä tulee käytännössä pakollisia kenttä.
-         */
-        bibtex += "    volume = {" + this.getVolume() + "},\n";
-        bibtex += "    number = {" + this.getNumber() + "},\n";
-        bibtex += "    year = {" + this.getYear() + "}\n";
-
+        if (this.getVolume() != null) {
+            bibtex += "    volume = {" + Muunto.muunnaMuoto(this.getVolume(), false) + "},\n";
+        }
+        if (this.getNumber() != null) {
+            bibtex += "    number = {" + Muunto.muunnaMuoto(this.getNumber(), false) + "},\n";
+        }
+        if (this.getYear() != null) {
+            bibtex += "    year = {" + Muunto.muunnaMuoto(this.getYear(), false) + "},\n";
+        }
+        if (this.getPages() != null) {
+            bibtex += "    pages = {" + Muunto.muunnaMuoto(this.getPages(), false) + "},\n";
+        }
+        if (this.getPublisher() != null && this.getPublisher() != "") {
+            bibtex += "    publisher = {" + Muunto.muunnaMuoto(this.getPublisher(), false) + "},\n";
+        }
+        if (this.getAddress() != null) {
+            bibtex += "    address = {" + Muunto.muunnaMuoto(this.getAddress(), false) + "},\n";
+        } 
+       
         bibtex += "}\n";
 
         return bibtex;
