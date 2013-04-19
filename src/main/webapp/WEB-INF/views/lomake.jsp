@@ -39,8 +39,8 @@
                 <select name="viiteTyyppi" id="viiteTyyppi" size="3" onchange="changeForm();">
                 <c:forEach items="${viiteTyypit}" var="vt">
                     <c:choose>
-                        <c:when test="${viiteTyyppi == vt.nimi}">
-                            <option selected="selected" value="${vt.nimi}">${vt.selitys}</option>
+                        <c:when test="${viiteTyyppi.nimi == vt.nimi}">
+                            <option class="selected" selected="selected" value="${vt.nimi}">${vt.selitys}</option>
                         </c:when>
                         <c:otherwise>
                             <option value="${vt.nimi}">${vt.selitys}</option>
@@ -58,11 +58,13 @@
                     
                     <input type="hidden" name="viiteTyyppi" value="${viiteTyyppi.nimi}" />
                     
+                    <c:if test="${viesti != null}"><p class="virhe">${viesti}</p></c:if>
+                    
                     <label for="id" class="pakollinen">Id</label>
                     <input type="text" name="id" />
                 
                 <c:forEach items="${viiteTyyppi.kenttaTyypit}" var="vts">
-                    <label for="${vts.nimi}"<c:if test="${vts.pakollinen}"> class="pakollinen"</c:if>>${vts.selite}</label>
+                    <label for="${vts.nimi}"<c:if test="${vts.pakollinen}"> class="pakollinen"</c:if>>${vts.selite} (${vts.nimi})</label>
                     <input type="text" name="${vts.nimi}" />
                 </c:forEach>
 

@@ -14,9 +14,15 @@ h1{
 h2 {
     font-size:large;
 }
+p.virhe {
+    border:1px solid red;
+    color:red;
+    text-align:center;
+    padding:1em;
+    margin:1em;
+}
 form {
-	width: 24%;
-        min-width:20em;
+        width:33em;
 }
 legend {
         text-transform:lowercase;
@@ -27,9 +33,9 @@ legend:first-letter {
         text-transform: uppercase;
 }
 label {
+        border:1px solid red;
 	display:block;
-        width: 24%;
-        min-width:5em;
+        width: 15em;
         float:left;
         font-size:small;
         text-align:right;
@@ -40,11 +46,17 @@ label.pakollinen {
         color:red;
 }
 select, input {
-	width:70%;
-        min-width:10em;
+	width:20em;
 	margin-bottom:0.6em;
 	padding:3px;
 }
+select {
+        background-color:white;
+}
+option.selected {
+        color:red;
+}
+
 input.button {
 	margin:0;
         width:100%;
