@@ -58,8 +58,8 @@
                     
                     <input type="hidden" name="viiteTyyppi" value="${viiteTyyppi.nimi}" />
                     
-                    <c:if test="${viesti != null}"><p class="virhe">${viesti}</p></c:if>
-                    
+                    <c:if test="${virhe != null}"><p class="virhe">${virhe}</p></c:if>
+
                     <label for="id" class="pakollinen">Id</label>
                     <input type="text" name="id" />
                 

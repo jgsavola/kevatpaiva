@@ -96,27 +96,27 @@ public class ViiteController {
          || (viitteenTyyppi.equals("book") && (parameterMap.get("editor")[0].equals("") || parameterMap.get("publisher")[0].equals(""))) 
          || (viitteenTyyppi.equals("inproceedings") && parameterMap.get("booktitle")[0].equals(""))) {
                
-            String viesti;
+            String virhe;
             if (idOnJo) {
-                viesti = "Viite kyseisellä id:llä on jo tallennettu";
+                virhe = "Viite kyseisellä id:llä on jo tallennettu";
             }
             else if (viitteenTyyppi.equals("article") && parameterMap.get("journal")[0].equals("")) {
-                viesti = "Journaali on pakollinen kenttä";
+                virhe = "Journaali on pakollinen kenttä";
             }
             else if (viitteenTyyppi.equals("book") && (parameterMap.get("editor")[0].equals("") || parameterMap.get("publisher")[0].equals(""))) {
-                viesti = "Ediittori ja julkaisija ovat pakollisia kenttiä";
+                virhe = "Ediittori ja julkaisija ovat pakollisia kenttiä";
             }
             else if (viitteenTyyppi.equals("inproceedings") && parameterMap.get("booktitle")[0].equals("")) {
-                viesti = "Kirjan otsikko on pakollinen kenttä";
+                virhe = "Kirjan otsikko on pakollinen kenttä";
             }
             else {
-                viesti = "Id, kirjoittaja, otsikko ja vuosi ovat pakollisia kenttiä";
+                virhe = "Id, kirjoittaja, otsikko ja vuosi ovat pakollisia kenttiä";
             }
             
             model.addAttribute("viiteTyypit", ViiteTyyppiTehdas.luoViiteTyyppiLista());
             model.addAttribute("viiteTyyppi", vt);
-            model.addAttribute("viesti", viesti);
-            return "redirect:lomake/" + vt.getNimi();
+            model.addAttribute("virhe", virhe);
+            return "lomake";
         }
 
         Viite viite = new Viite(id, vt, sk);
