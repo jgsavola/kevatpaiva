@@ -65,7 +65,7 @@ scenario "user can see the articles in bibtex form starting from the insertion p
 
     given 'user is on the lomake page', {
         driver = new HtmlUnitDriver()
-        driver.get("http://localhost:8080/miniprojekti/lomake/")
+        driver.get("http://localhost:8080/miniprojekti/lomake")
     }
 
     when 'user clicks BibTex-link', {

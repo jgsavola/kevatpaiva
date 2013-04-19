@@ -63,7 +63,7 @@ scenario "user can see the articles in copy-paste bibtex form starting from the 
 
     given 'user is on the lomake page', {
         driver = new HtmlUnitDriver()
-        driver.get("http://localhost:8080/miniprojekti/lomake/")
+        driver.get("http://localhost:8080/miniprojekti/lomake")
     }
 
     when 'user clicks BibTex-link', {
