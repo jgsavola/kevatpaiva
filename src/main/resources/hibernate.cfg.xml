@@ -16,6 +16,7 @@
          
         <mapping class="ohtu.kevatpaiva.Article"/>
         <mapping class="ohtu.kevatpaiva.Viite"/>
+        <mapping class="ohtu.kevatpaiva.Reference"/>
         
     </session-factory>
 </hibernate-configuration>

@@ -9,7 +9,7 @@ import javax.persistence.Table;
  *
  */
 @Entity
-@Table(name = "viite")
+@Table(name = "reference")
 public class Reference {
     private String type;
     private String id;
