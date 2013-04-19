@@ -66,7 +66,13 @@
             <version>1.2</version>
         </dependency>
   
-
+        <!-- slf4j-log4j -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.7.5</version>
+        </dependency>
+  
         <!-- spring -->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -83,7 +89,6 @@
             <artifactId>spring-webmvc</artifactId>
             <version>${spring.version}</version>
         </dependency>
-
 
         <!-- hibernate -->
         <dependency>
