@@ -17,6 +17,7 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Ignore;
 
 /**
  *
@@ -95,6 +96,50 @@ public class ViiteTest {
     }
 
     /**
+     * Testaa viitteen luomista.
+     */
+    @Test
+    public void testaa00AluksiYhdenViitteenLuomista() {
+        System.out.println("Luo viite.");
+
+        Transaction tx=null;
+
+        try {
+            tx = session.beginTransaction();
+
+            ViiteTyyppi artikkeliTyyppi = ViiteTyyppiTehdas.luoViiteTyyppi("book");
+            KenttaTehdas kt = new KenttaTehdas(artikkeliTyyppi);
+
+            Viite viite1 = new Viite("W04_1", artikkeliTyyppi,
+                    kt.luoKentta("author", "Whittington, Keith J."),
+                    kt.luoKentta("title", "Infusing active learning into introductory programming courses"),
+                    kt.luoKentta("year", "2004"));
+
+            // Saving to the database
+            session.save(viite1);
+
+            // Committing the change in the database.
+            session.flush();
+            tx.commit();
+
+            // Fetching saved data
+            List<Viite> viiteList = session.createQuery("from Viite").list();
+
+            assertEquals("Viitteitä on talletettu 1", viiteList.size(), 1);
+
+            for (Viite viite : viiteList) {
+                System.out.println("Viite Id: " + viite.getId()); // + " | Name:"  + viite.getAuthor() + " | Email:" + viite.getTitle());
+                System.out.println(viite.toBibTeX());
+            }
+        } finally {
+            if (tx.isActive()) {
+                tx.rollback();
+            }
+        }
+    }
+
+    
+    /**
      * Testaa viitteiden luomista.
      */
     @Test
@@ -151,6 +196,7 @@ public class ViiteTest {
      * hibernate-yhteys (vain yksi olio kutakin id:tä kohtaan saa olla olemassa).
      */
     @Test
+    @Ignore
     public void testaaEttaKahdenArtikkelinTallentaminenOnnistuuEriViiteTyyppiOliolla() {
         System.out.println("Luo viitteitä.");
 
