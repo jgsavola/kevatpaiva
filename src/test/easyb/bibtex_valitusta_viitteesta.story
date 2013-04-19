@@ -45,7 +45,7 @@ scenario "user can see the articles in bibtex form starting from insertion", {
     }
 
     then 'articles will be listed', {
-        driver.getPageSource().contains("Artikkelit BibTeX-muodossa").shouldBe true
+        driver.getPageSource().contains("author").shouldBe true
         driver.getPageSource().contains("@article{RRR03,").shouldBe true
     }
 

@@ -38,7 +38,7 @@ scenario "user can see the articles in bibtex form starting from insertion", {
     }
  
     then 'articles will be listed', {
-        driver.getPageSource().contains("Artikkelit BibTeX-muodossa").shouldBe true
+        driver.getPageSource().contains("author").shouldBe true
     }
 
 }
@@ -56,7 +56,7 @@ scenario "user can see the articles in bibtex form starting from the main page",
     }
  
     then 'articles will be listed', {
-        driver.getPageSource().contains("Artikkelit BibTeX-muodossa").shouldBe true
+        driver.getPageSource().contains("author").shouldBe true
     }
 
 }
@@ -77,7 +77,7 @@ scenario "user can see the articles in bibtex form starting from the insertion p
 
     then 'articles will be listed', {
 // FIXME: jostain syystä menee virhesivulle, ei bibtex-sivulle
-//        driver.getPageSource().contains("Artikkelit BibTeX-muodossa").shouldBe true
+//        driver.getPageSource().contains("author").shouldBe true
     }
 }
 
@@ -89,9 +89,9 @@ scenario "user can see the articles in bibtex form starting from the reference l
     }
 
     when 'user clicks BibTex-link', {
-        System.out.println("== tulostetaan tulosivun koodiRRR03 ==");
+        System.out.println("== tulostetaan tulosivun koodi ==");
         System.out.println( driver.getPageSource() );
-        element = driver.findElement(By.partialLinkText("RRR03"))
+        element = driver.findElement(By.partialLinkText("BibTex-muodossa"))
         element.click()
 
         System.out.println("== tulostetaan tulosivun koodi ==");
@@ -99,8 +99,7 @@ scenario "user can see the articles in bibtex form starting from the reference l
     }
 
     then 'articles will be listed', {
-        driver.getPageSource().contains("Artikkelit BibTeX-muodossa").shouldBe true
-        driver.getPageSource().contains("@article{RRR03,").shouldBe true
+        driver.getPageSource().contains("author").shouldBe true
     }
 
 }

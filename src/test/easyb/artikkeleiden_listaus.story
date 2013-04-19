@@ -77,20 +77,22 @@ scenario "user can see articles as a list starting from the insertion page", {
 
 }
 
-scenario "user can see articles as a list starting from the bibtex page", {
-
-    given 'user is on the bibtex page', {
-        driver = new HtmlUnitDriver();
-        driver.get("http://localhost:8080/miniprojekti/haebibtex")
-    }
-
-    when 'user clicks lista-link', {
-        element = driver.findElement(By.linkText("Tarkastele viitteit\u00e4"))
-        element.click()
-    }
- 
-    then 'articles will be listed', {
-        driver.getPageSource().contains("Artikkeliviitteet").shouldBe true
-    }
-
-}
+//scenario "user can see articles as a list starting from the bibtex page", {
+//
+// TÄTÄ EI TARVITA, KUN BIBTEXISSÄ EI LINKKEJÄ (COPYPASTE-SIVU)
+//
+//    given 'user is on the bibtex page', {
+//        driver = new HtmlUnitDriver();
+//        driver.get("http://localhost:8080/miniprojekti/haebibtex")
+//    }
+//
+//    when 'user clicks lista-link', {
+//        element = driver.findElement(By.linkText("Tarkastele viitteit\u00e4"))
+//        element.click()
+//    }
+// 
+//    then 'articles will be listed', {
+//        driver.getPageSource().contains("Artikkeliviitteet").shouldBe true
+//    }
+//
+//}

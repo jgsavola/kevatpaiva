@@ -70,7 +70,7 @@ scenario "user can navigate from the main page to the bibtex list", {
     }
  
     then 'the bibtex list will be shown', {
-        driver.getPageSource().contains("Artikkelit BibTeX-muodossa").shouldBe true
+        driver.getPageSource().contains("author").shouldBe true
     }
 
 }

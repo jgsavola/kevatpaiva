@@ -15,7 +15,12 @@
         <link rel="shortcut icon" href="resources/images/favicon.ico" />
     </head>
     <body>
+        <h1>BibTeX</h1>
+        <ul style="list-style: none">
+            <li><a href="${pageContext.request.contextPath}/listaa">Tarkastele viitteitä</a></li>
+            <li><a href="${pageContext.request.contextPath}/lomake">Lisää uusi viite</a></li>
     </ul>
+        <p>Artikkelit BibTeX-muodossa:</p>
         <pre><c:forEach var="item" items="${bibit}">${item}
 </c:forEach></pre>
     </body>
