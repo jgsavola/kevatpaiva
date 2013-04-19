@@ -9,7 +9,7 @@ import javax.persistence.Table;
  *
  */
 @Entity
-@Table(name = "reference")
+@Table(name = "viite")
 public class Reference {
     private String type;
     private String id;
@@ -48,15 +48,7 @@ public class Reference {
         this.title = title;
         this.year = year;
     }
-    
-    public Reference(String type, String id, String author, String title, String year) {
-        this.type = type;
-        this.id = id;
-        this.author = author;
-        this.title = title;
-        this.year = year;
-    }
-    
+ 
     @Id
     public String getId() {
         return this.id;

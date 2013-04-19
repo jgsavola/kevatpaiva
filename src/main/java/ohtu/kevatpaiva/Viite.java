@@ -14,11 +14,11 @@ public class Viite {
     private String id;
     private String author;
     private String title;
-    private String year;
+    private int year;
     private String address;
     private String annote;
     private String booktitle;
-    private String chapter;
+    private int chapter;
     private String crossref;
     private String edition;
     private String editor;
@@ -26,23 +26,23 @@ public class Viite {
     private String institution;
     private String journal;
     private String key;
-    private String month;
+    private int month;
     private String note;
-    private String number;
+    private int number;
     private String organization;
     private String pages;
     private String publisher;
     private String school;
     private String series;
     private String type;
-    private String volume;
+    private int volume;
     private String url;                     // nonstandard field
 
     public Viite() {
  
     }
  
-    public Viite(String id, String author, String title, String year) {
+    public Viite(String id, String author, String title, int year) {
         this.id = id;
         this.author = author;
         this.title = title;
@@ -74,11 +74,11 @@ public class Viite {
         this.title = title;
     }
 
-    public String getYear() {
+    public int getYear() {
         return year;
     }
 
-    public void setYear(String year) {
+    public void setYear(int year) {
         this.year = year;
     }
     
@@ -106,11 +106,11 @@ public class Viite {
         this.booktitle = booktitle;
     }
 
-    public String getChapter() {
+    public int getChapter() {
         return chapter;
     }
 
-    public void setChapter(String chapter) {
+    public void setChapter(int chapter) {
         this.chapter = chapter;
     }
 
@@ -170,11 +170,11 @@ public class Viite {
         this.key = key;
     }
 
-    public String getMonth() {
+    public int getMonth() {
         return month;
     }
 
-    public void setMonth(String month) {
+    public void setMonth(int month) {
         this.month = month;
     }
 
@@ -186,11 +186,11 @@ public class Viite {
         this.note = note;
     }
 
-    public String getNumber() {
+    public int getNumber() {
         return number;
     }
 
-    public void setNumber(String number) {
+    public void setNumber(int number) {
         this.number = number;
     }
 
@@ -242,11 +242,11 @@ public class Viite {
         this.type = type;
     }
 
-    public String getVolume() {
+    public int getVolume() {
         return volume;
     }
 
-    public void setVolume(String volume) {
+    public void setVolume(int volume) {
         this.volume = volume;
     }
  

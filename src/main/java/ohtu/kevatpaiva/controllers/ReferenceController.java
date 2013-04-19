@@ -2,9 +2,8 @@ package ohtu.kevatpaiva.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
-import ohtu.kevatpaiva.Reference;
-import ohtu.kevatpaiva.ViiteTyyppiTehdas;
-import ohtu.kevatpaiva.tallennus.Tallentaja;
+import ohtu.kevatpaiva.Article;
+import ohtu.kevatpaiva.tallennus.ArtikkelinTallentaja;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -20,10 +19,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequestMapping("/")
 public class ReferenceController {
-    private Tallentaja tallentaja;
+    private ArtikkelinTallentaja tallentaja;
 
     public ReferenceController() {
-        this.tallentaja = new Tallentaja();
+        this.tallentaja = new ArtikkelinTallentaja();
     }
     
     @RequestMapping(method = RequestMethod.GET)
@@ -33,23 +32,14 @@ public class ReferenceController {
     }
     
     @RequestMapping(value="lomake", method = RequestMethod.GET)
-    public String naytaLomake(Model model) {
-        
-        model.addAttribute("viiteTyypit", ViiteTyyppiTehdas.luoViiteTyyppiLista());
-        return "lomake";
+    public String naytaLomake() {
+
+        return "form-article";
     }
 
-    @RequestMapping(value = "lomake/{viiteTyyppi}", method = RequestMethod.GET)
-    public String naytaLomakeViiteTyypilla(@PathVariable("viiteTyyppi") String viiteTyyppi, Model model) {
-        
-        model.addAttribute("viiteTyypit", ViiteTyyppiTehdas.luoViiteTyyppiLista());
-        model.addAttribute("viiteTyyppi", ViiteTyyppiTehdas.luoViiteTyyppi(viiteTyyppi));
-        return "lomake";
-    }
-    
     @RequestMapping(value="lisaa", method = RequestMethod.POST)
     public String lisaaArtikkeli(
-            @RequestParam String viiteTyyppi,
+            @RequestParam String type,
             @RequestParam String id,
             @RequestParam String author,
             @RequestParam String title,
@@ -69,12 +59,12 @@ public class ReferenceController {
             @RequestParam(value = "series", required = false) String series,
             ModelMap model) {
         
-        boolean idOnJo = tallentaja.onkoReference(id);
+        boolean idOnJo = tallentaja.onkoArtikkeli(id);
         
         if (idOnJo || id.equals("") || author.equals("") || title.equals("") || year.equals("") 
-                || (viiteTyyppi.equals("article") && journal.equals(""))
-                || (viiteTyyppi.equals("book") && (editor.equals("") || publisher.equals(""))) 
-                || (viiteTyyppi.equals("inproceedings") && booktitle.equals(""))) {
+                || (type.equals("article") && journal.equals(""))
+                || (type.equals("book") && (editor.equals("") || publisher.equals(""))) 
+                || (type.equals("inproceedings") && booktitle.equals(""))) {
             //model.addAttribute("type", type);
             model.addAttribute("id", id);
             model.addAttribute("author", author);
@@ -97,26 +87,23 @@ public class ReferenceController {
             if (idOnJo) {
                 message = "Viite kyseisellä id:llä on jo tallennettu";
             }
-            else if (viiteTyyppi.equals("article") && journal.equals("")) {
+            else if (type.equals("article") && journal.equals("")) {
                 message = "Journaali on pakollinen kenttä";
             }
-            else if (viiteTyyppi.equals("book") && (editor.equals("") || publisher.equals(""))) {
+            else if (type.equals("book") && (editor.equals("") || publisher.equals(""))) {
                 message = "Ediittori ja julkaisija ovat pakollisia kenttiä";
             }
-            else if (viiteTyyppi.equals("inproceedings") && booktitle.equals("")) {
+            else if (type.equals("inproceedings") && booktitle.equals("")) {
                 message = "Kirjan otsikko on pakollinen kenttä";
             }
             else {
                 message = "Id, kirjoittaja, otsikko ja vuosi ovat pakollisia kenttiä";
             }
-              model.addAttribute("viiteTyypit", ViiteTyyppiTehdas.luoViiteTyyppiLista());
-              model.addAttribute("viiteTyyppi", ViiteTyyppiTehdas.luoViiteTyyppi(viiteTyyppi));
             model.addAttribute("message", message);
-            return "lomake";
+            return "form-article";
         }
         
-        
-        Reference artikkeli = new Reference(viiteTyyppi, id, author, title, year);
+        Article artikkeli = new Article(id, author, title, year);
         
         // (journal) NOT REQUIRED?
         if (journal != null) {
@@ -140,7 +127,7 @@ public class ReferenceController {
         }
         
         try {
-            tallentaja.tallennaReferencet(artikkeli);
+            tallentaja.tallennaArtikkeli(artikkeli);
         } catch (Exception e) {
             model.addAttribute("title", "Poikkeus");
             model.addAttribute("message", e.getMessage());
@@ -155,18 +142,18 @@ public class ReferenceController {
     @RequestMapping(value = "listaa", method = RequestMethod.GET)
     public String get(Model model) {
 
-        List<Reference> artikkelit;
+        List<Article> artikkelit;
 
         try {
-            artikkelit = tallentaja.listaaReferencet();
+            artikkelit = tallentaja.listaaArtikelit();
         } catch (Exception e) {
             model.addAttribute("title", "Poikkeus");
             model.addAttribute("message", e.getMessage());
             return "message";
         }
 
-        ArrayList<Reference> articles = new ArrayList();
-        for (Reference artikkeli : artikkelit) {
+        ArrayList<Article> articles = new ArrayList();
+        for (Article artikkeli : artikkelit) {
             articles.add(artikkeli);
         }
 
@@ -178,10 +165,10 @@ public class ReferenceController {
     @RequestMapping(value="haebibtex", method = RequestMethod.GET)
     public String tulostaBibTeX(Model model) {
         
-        List<Reference> artikkelit;
+        List<Article> artikkelit;
         try {
-
-            artikkelit = tallentaja.listaaReferencet();
+            ArtikkelinTallentaja tallentaja = new ArtikkelinTallentaja();
+            artikkelit = tallentaja.listaaArtikelit();
         } catch (Exception e) {
             model.addAttribute("title", "Poikkeus");
             model.addAttribute("message", e.getMessage());
@@ -189,7 +176,7 @@ public class ReferenceController {
         }
         
        ArrayList<String> bibit = new ArrayList<String>();
-        for (Reference artikkeli : artikkelit) {
+        for (Article artikkeli : artikkelit) {
             String bibtex = artikkeli.toBibTeX();
             bibit.add(bibtex);
         }
@@ -202,9 +189,9 @@ public class ReferenceController {
     @RequestMapping(value="haebibtex/{id}", method = RequestMethod.GET)
     public String tulostaHaettuBibTeX(Model model, @PathVariable(value="id") String id) {
         
-        Reference article;
+        Article article;
         try {
-
+            ArtikkelinTallentaja tallentaja = new ArtikkelinTallentaja();
             article = tallentaja.haeIdlla(id);
         } catch (Exception e) {
             model.addAttribute("title", "Poikkeus");
