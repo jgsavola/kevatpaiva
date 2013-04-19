@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import ohtu.kevatpaiva.Kentta;
 import ohtu.kevatpaiva.KenttaTehdas;
@@ -31,6 +32,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/")
 public class ViiteController {
 
+    //private static final Logger logger = Logger.getLogger(ViiteController.class);
+    
     private ViitteenTallentaja tallentaja;
     
     @Autowired
@@ -71,8 +74,19 @@ public class ViiteController {
          */
         Map<String, String[]> parameterMap = request.getParameterMap();
 
+        String viitteenTyyppi;
+        try {
+            viitteenTyyppi = parameterMap.get("viiteTyyppi")[0];
+        } catch (Exception e) {
+            model.addAttribute("viiteTyypit", ViiteTyyppiTehdas.luoViiteTyyppiLista());
+            model.addAttribute("virhe", "Viitteen tyyppi puuttui!");
+            return "lomake";
+        }
+
+        
         String id = parameterMap.get("id")[0];
-        String viitteenTyyppi = parameterMap.get("viiteTyyppi")[0];
+        
+        //String viitteenTyyppi = parameterMap.get("viiteTyyppi")[0];
         
         boolean idOnJo = tallentaja.onkoViite(id);
         
@@ -91,10 +105,10 @@ public class ViiteController {
             }
         }
 
-        if (idOnJo || id.equals("") || parameterMap.get("author")[0].equals("") || parameterMap.get("title")[0].equals("") || parameterMap.get("year")[0].equals("") 
-         || (viitteenTyyppi.equals("article") && parameterMap.get("journal")[0].equals(""))
-         || (viitteenTyyppi.equals("book") && (parameterMap.get("editor")[0].equals("") || parameterMap.get("publisher")[0].equals(""))) 
-         || (viitteenTyyppi.equals("inproceedings") && parameterMap.get("booktitle")[0].equals(""))) {
+        if (    viitteenTyyppi.equals("") || idOnJo || id.equals("") || parameterMap.get("author")[0].equals("") || parameterMap.get("title")[0].equals("") || parameterMap.get("year")[0].equals("") 
+                || (viitteenTyyppi.equals("article") && parameterMap.get("journal")[0].equals(""))
+                || (viitteenTyyppi.equals("book") && (parameterMap.get("editor")[0].equals("") || parameterMap.get("publisher")[0].equals(""))) 
+                || (viitteenTyyppi.equals("inproceedings") && parameterMap.get("booktitle")[0].equals(""))) {
                
             String virhe;
             if (idOnJo) {
@@ -108,6 +122,9 @@ public class ViiteController {
             }
             else if (viitteenTyyppi.equals("inproceedings") && parameterMap.get("booktitle")[0].equals("")) {
                 virhe = "Kirjan otsikko on pakollinen kenttä";
+            }
+            else if (viitteenTyyppi.equals("")) {
+                virhe = "Viitteen tyyppi puuttui!";
             }
             else {
                 virhe = "Id, kirjoittaja, otsikko ja vuosi ovat pakollisia kenttiä";

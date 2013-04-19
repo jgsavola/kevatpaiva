@@ -51,15 +51,15 @@
             </fieldset>
         </sf:form>
         
+        <c:if test="${virhe != null}"><p class="virhe">${virhe}</p></c:if>
+        
         <c:if test="${viiteTyyppi != null}">
             <sf:form modelAttribute="viiteTyyppi" action="${pageContext.request.contextPath}/lisaa" method="POST" enctype="application/x-www-form-urlencoded">
                 <fieldset>
                     <legend>Lisää ${viiteTyyppi.selitys}</legend>
                     
                     <input type="hidden" name="viiteTyyppi" value="${viiteTyyppi.nimi}" />
-                    
-                    <c:if test="${virhe != null}"><p class="virhe">${virhe}</p></c:if>
-
+        
                     <label for="id" class="pakollinen">Id</label>
                     <input type="text" name="id" />
                 
