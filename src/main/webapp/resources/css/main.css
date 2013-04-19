@@ -33,7 +33,6 @@ legend:first-letter {
         text-transform: uppercase;
 }
 label {
-        border:1px solid red;
 	display:block;
         width: 15em;
         float:left;
