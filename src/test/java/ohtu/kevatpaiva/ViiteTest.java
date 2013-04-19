@@ -106,15 +106,15 @@ public class ViiteTest {
         try {
             tx = session.beginTransaction();
 
-            ViiteTyyppi vt = ViiteTyyppiTehdas.luoViiteTyyppi("article");
-            KenttaTehdas kt = new KenttaTehdas(vt);
+            ViiteTyyppi artikkeliTyyppi = ViiteTyyppiTehdas.luoViiteTyyppi("article");
+            KenttaTehdas kt = new KenttaTehdas(artikkeliTyyppi);
 
-            Viite viite1 = new Viite("W04", vt,
+            Viite viite1 = new Viite("W04", artikkeliTyyppi,
                     kt.luoKentta("author", "Whittington, Keith J."),
                     kt.luoKentta("title", "Infusing active learning into introductory programming courses"),
                     kt.luoKentta("year", "2004"));
 
-            Viite viite2 = new Viite("CBH91", vt,
+            Viite viite2 = new Viite("CBH91", artikkeliTyyppi,
                     kt.luoKentta("author", "Allan Collins and John Seely Brown and Ann Holum"),
                     kt.luoKentta("title", "Cognitive apprenticeship: making thinking visible"),
                     kt.luoKentta("year", "1991"),
@@ -137,13 +137,64 @@ public class ViiteTest {
                 System.out.println("Viite Id: " + viite.getId()); // + " | Name:"  + viite.getAuthor() + " | Email:" + viite.getTitle());
                 System.out.println(viite.toBibTeX());
             }
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } finally {
+            if (tx.isActive()) {
+                tx.rollback();
+            }
+        }
+    }
 
-            // Rolling back the changes to make the data consistent in case of any failure
-            // in between multiple database write operations.
-            tx.rollback();
-        } finally{
+    /**
+     * Testaa viitteiden luomista niin, että viitetyyppi-oliot luodaan erikseen.
+     *
+     * Tällöin pitää olla toteutettuna viitetyypin (ja muiden riippuvien luokkien)
+     * hibernate-yhteys (vain yksi olio kutakin id:tä kohtaan saa olla olemassa).
+     */
+    @Test
+    public void testaaEttaKahdenArtikkelinTallentaminenOnnistuuEriViiteTyyppiOliolla() {
+        System.out.println("Luo viitteitä.");
+
+        Transaction tx=null;
+
+        try {
+            tx = session.beginTransaction();
+
+            ViiteTyyppi artikkeliTyyppi = ViiteTyyppiTehdas.luoViiteTyyppi("article");
+            KenttaTehdas kt = new KenttaTehdas(artikkeliTyyppi);
+
+            Viite viite1 = new Viite("W04a", artikkeliTyyppi,
+                    kt.luoKentta("author", "Whittington, Keith J."),
+                    kt.luoKentta("title", "Infusing active learning into introductory programming courses"),
+                    kt.luoKentta("year", "2004"));
+
+            ViiteTyyppi artikkeliTyyppiInstanssi2 = ViiteTyyppiTehdas.luoViiteTyyppi("article");
+            Viite viite2 = new Viite("CBH91a", artikkeliTyyppiInstanssi2,
+                    kt.luoKentta("author", "Allan Collins and John Seely Brown and Ann Holum"),
+                    kt.luoKentta("title", "Cognitive apprenticeship: making thinking visible"),
+                    kt.luoKentta("year", "1991"),
+                    kt.luoKentta("note", "Joku ääkkösiä sisältävä \"note\"."));
+
+            // Saving to the database
+            session.save(viite1);
+            session.save(viite2);
+            
+            // Committing the change in the database.
+            session.flush();
+            tx.commit();
+            
+            // Fetching saved data
+            List<Viite> viiteList = session.createQuery("from Viite").list();
+
+            assertEquals("Viitteitä on talletettu 2", viiteList.size(), 2);
+
+            for (Viite viite : viiteList) {
+                System.out.println("Viite Id: " + viite.getId()); // + " | Name:"  + viite.getAuthor() + " | Email:" + viite.getTitle());
+                System.out.println(viite.toBibTeX());
+            }
+        } finally {
+            if (tx.isActive()) {
+                tx.rollback();
+            }
         }
     }
 }
