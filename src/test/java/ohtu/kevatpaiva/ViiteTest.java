@@ -6,6 +6,7 @@ package ohtu.kevatpaiva;
 
 import java.util.List;
 import java.util.Properties;
+import ohtu.kevatpaiva.tallennus.ViitteenTallentaja;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -24,31 +25,14 @@ import org.junit.Ignore;
  * @author jonne
  */
 public class ViiteTest {
-    private static SessionFactory sessionFactory = null;
-    private static ServiceRegistry serviceRegistry = null;
-
-    private static Session session = null;
-
-    private static SessionFactory configureSessionFactory() throws HibernateException {
-        Configuration configuration = new Configuration();
-        configuration.configure();
-
-        Properties properties = configuration.getProperties();
-
-        /**
-         * Käytä testaukseen erillistä tietokantatiedostoa, koska
-         * testit muokkaavat tietokantaa. Näin käyttäjän tietokantaa
-         * ei tarvitse muuttaa.
-         */
-        properties.setProperty("hibernate.connection.url", "jdbc:sqlite:kevatpaiva.test.db");
-
-        serviceRegistry = new ServiceRegistryBuilder().applySettings(properties).buildServiceRegistry();
-        sessionFactory = configuration.buildSessionFactory(serviceRegistry);
-
-        return sessionFactory;
-    }
+    private final ViitteenTallentaja tallentaja;
+    private static Session session;
+    private final ViiteTyyppiTehdas viiteTyyppiTehdas;
 
     public ViiteTest() {
+        this.tallentaja = new ViitteenTallentaja();
+        this.session = tallentaja.getSession();
+        this.viiteTyyppiTehdas = new ViiteTyyppiTehdas();
     }
 
     /**
@@ -61,38 +45,33 @@ public class ViiteTest {
 
         System.out.println("setUp");
 
-        configureSessionFactory();
-
-        session = null;
-        Transaction tx=null;
-
-        session = sessionFactory.openSession();
-        tx = session.beginTransaction();
-
-        /**
-         * FIXME: Pitää miettiä uudestaan tämä rakenne.
-         */
-        try {
-            /**
-             * Tyhjennä taulu testejä varten.
-             */
-            List<Viite> viiteList = session.createQuery("from Viite").list();
-            for (Viite v : viiteList) {
-                session.delete(v);
-            }
-
-            tx.commit();
-            tx = null;
-        } finally {
-            if (tx != null)
-                tx.rollback();
-        }
+//        Transaction tx=null;
+//
+//        tx = session.beginTransaction();
+//
+//        /**
+//         * FIXME: Pitää miettiä uudestaan tämä rakenne.
+//         */
+//        try {
+//            /**
+//             * Tyhjennä taulu testejä varten.
+//             */
+//            List<Viite> viiteList = session.createQuery("from Viite").list();
+//            for (Viite v : viiteList) {
+//                session.delete(v);
+//            }
+//
+//            tx.commit();
+//            tx = null;
+//        } finally {
+//            if (tx != null)
+//                tx.rollback();
+//        }
 
     }
 
     @AfterClass
     public static void tearDown() throws Exception {
-        session.close();
     }
 
     /**
@@ -105,15 +84,15 @@ public class ViiteTest {
         Transaction tx=null;
 
         try {
-            tx = session.beginTransaction();
-
-            ViiteTyyppi artikkeliTyyppi = ViiteTyyppiTehdas.luoViiteTyyppi("book");
+            ViiteTyyppi artikkeliTyyppi = viiteTyyppiTehdas.luoViiteTyyppi("book");
             KenttaTehdas kt = new KenttaTehdas(artikkeliTyyppi);
 
             Viite viite1 = new Viite("W04_1", artikkeliTyyppi,
                     kt.luoKentta("author", "Whittington, Keith J."),
                     kt.luoKentta("title", "Infusing active learning into introductory programming courses"),
                     kt.luoKentta("year", "2004"));
+
+            tx = session.beginTransaction();
 
             // Saving to the database
             session.save(viite1);
@@ -132,7 +111,7 @@ public class ViiteTest {
                 System.out.println(viite.toBibTeX());
             }
         } finally {
-            if (tx.isActive()) {
+            if (tx != null && tx.isActive()) {
                 tx.rollback();
             }
         }
@@ -149,9 +128,7 @@ public class ViiteTest {
         Transaction tx=null;
 
         try {
-            tx = session.beginTransaction();
-
-            ViiteTyyppi artikkeliTyyppi = ViiteTyyppiTehdas.luoViiteTyyppi("article");
+            ViiteTyyppi artikkeliTyyppi = viiteTyyppiTehdas.luoViiteTyyppi("article");
             KenttaTehdas kt = new KenttaTehdas(artikkeliTyyppi);
 
             Viite viite1 = new Viite("W04", artikkeliTyyppi,
@@ -164,6 +141,8 @@ public class ViiteTest {
                     kt.luoKentta("title", "Cognitive apprenticeship: making thinking visible"),
                     kt.luoKentta("year", "1991"),
                     kt.luoKentta("note", "Joku ääkkösiä sisältävä \"note\"."));
+
+            tx = session.beginTransaction();
 
             // Saving to the database
             session.save(viite1);
@@ -183,7 +162,7 @@ public class ViiteTest {
                 System.out.println(viite.toBibTeX());
             }
         } finally {
-            if (tx.isActive()) {
+            if (tx != null && tx.isActive()) {
                 tx.rollback();
             }
         }
@@ -203,9 +182,7 @@ public class ViiteTest {
         Transaction tx=null;
 
         try {
-            tx = session.beginTransaction();
-
-            ViiteTyyppi artikkeliTyyppi = ViiteTyyppiTehdas.luoViiteTyyppi("article");
+            ViiteTyyppi artikkeliTyyppi = viiteTyyppiTehdas.luoViiteTyyppi("article");
             KenttaTehdas kt = new KenttaTehdas(artikkeliTyyppi);
 
             Viite viite1 = new Viite("W04a", artikkeliTyyppi,
@@ -213,12 +190,14 @@ public class ViiteTest {
                     kt.luoKentta("title", "Infusing active learning into introductory programming courses"),
                     kt.luoKentta("year", "2004"));
 
-            ViiteTyyppi artikkeliTyyppiInstanssi2 = ViiteTyyppiTehdas.luoViiteTyyppi("article");
+            ViiteTyyppi artikkeliTyyppiInstanssi2 = viiteTyyppiTehdas.luoViiteTyyppi("article");
             Viite viite2 = new Viite("CBH91a", artikkeliTyyppiInstanssi2,
                     kt.luoKentta("author", "Allan Collins and John Seely Brown and Ann Holum"),
                     kt.luoKentta("title", "Cognitive apprenticeship: making thinking visible"),
                     kt.luoKentta("year", "1991"),
                     kt.luoKentta("note", "Joku ääkkösiä sisältävä \"note\"."));
+
+            tx = session.beginTransaction();
 
             // Saving to the database
             session.save(viite1);
@@ -238,7 +217,7 @@ public class ViiteTest {
                 System.out.println(viite.toBibTeX());
             }
         } finally {
-            if (tx.isActive()) {
+            if (tx != null && tx.isActive()) {
                 tx.rollback();
             }
         }

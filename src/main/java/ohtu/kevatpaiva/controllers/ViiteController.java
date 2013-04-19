@@ -31,13 +31,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/")
 public class ViiteController {
 
+    private final ViiteTyyppiTehdas viiteTyyppiTehdas;
     private ViitteenTallentaja tallentaja;
     
     @Autowired
     private HttpServletRequest request;
 
     public ViiteController() {
-
+        this.viiteTyyppiTehdas = new ViiteTyyppiTehdas();
         this.tallentaja = new ViitteenTallentaja();
     }
 
@@ -50,15 +51,15 @@ public class ViiteController {
     @RequestMapping(value = "lomake", method = RequestMethod.GET)
     public String naytaLomake(Model model) {
 
-        model.addAttribute("viiteTyypit", ViiteTyyppiTehdas.luoViiteTyyppiLista());
+        model.addAttribute("viiteTyypit", viiteTyyppiTehdas.luoViiteTyyppiLista());
         return "lomake";
     }
 
     @RequestMapping(value = "lomake/{viiteTyyppi}", method = RequestMethod.GET)
     public String naytaLomakeViiteTyypilla(@PathVariable("viiteTyyppi") String viiteTyyppi, Model model) {
         
-        model.addAttribute("viiteTyypit", ViiteTyyppiTehdas.luoViiteTyyppiLista());
-        model.addAttribute("viiteTyyppi", ViiteTyyppiTehdas.luoViiteTyyppi(viiteTyyppi));
+        model.addAttribute("viiteTyypit", viiteTyyppiTehdas.luoViiteTyyppiLista());
+        model.addAttribute("viiteTyyppi", viiteTyyppiTehdas.luoViiteTyyppi(viiteTyyppi));
         return "lomake";
     }
 
@@ -76,7 +77,7 @@ public class ViiteController {
         
         boolean idOnJo = tallentaja.onkoViite(id);
         
-        ViiteTyyppi vt = ViiteTyyppiTehdas.luoViiteTyyppi(viitteenTyyppi);
+        ViiteTyyppi vt = viiteTyyppiTehdas.luoViiteTyyppi(viitteenTyyppi);
         KenttaTehdas kt = new KenttaTehdas(vt);
         Set<KenttaTyyppi> skt = vt.getKenttaTyypit();
         Set<Kentta> sk = new HashSet<Kentta>();
@@ -113,7 +114,7 @@ public class ViiteController {
                 virhe = "Id, kirjoittaja, otsikko ja vuosi ovat pakollisia kenttiä";
             }
             
-            model.addAttribute("viiteTyypit", ViiteTyyppiTehdas.luoViiteTyyppiLista());
+            model.addAttribute("viiteTyypit", viiteTyyppiTehdas.luoViiteTyyppiLista());
             model.addAttribute("viiteTyyppi", vt);
             model.addAttribute("virhe", virhe);
             return "lomake";

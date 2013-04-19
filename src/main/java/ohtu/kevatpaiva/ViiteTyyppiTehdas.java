@@ -3,38 +3,66 @@ package ohtu.kevatpaiva;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import ohtu.kevatpaiva.tallennus.ViitteenTallentaja;
+import org.hibernate.IdentifierLoadAccess;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 /**
  * Tältä tehtaalta saadaan alustettuja viite-olioita, jolla kentät valmiina.
  */
 public class ViiteTyyppiTehdas {
+    private ViitteenTallentaja tallentaja;
+
+    public ViiteTyyppiTehdas() {
+        tallentaja = new ViitteenTallentaja();
+    }
     
-    public static List<ViiteTyyppi> luoViiteTyyppiLista() {
+    public List<ViiteTyyppi> luoViiteTyyppiLista() {
         return Arrays.asList(
                 luoArtikkeliTyyppi(),
                 luoKirjaTyyppi(),
                 luoKonferenssijulkaisuTyyppi());
     }
     
-    public static ViiteTyyppi luoViiteTyyppi(String vt) {
+    public ViiteTyyppi luoViiteTyyppi(String viiteTyyppiId) {
+        Session session = tallentaja.getSession();
+        Transaction tx = null;
+        
+        ViiteTyyppi vt = lataa(viiteTyyppiId);
+        if (vt != null) {
+            return vt;
+        }
+        
+        try {
+            
+            if (vt != null) {
+                return vt;
+            }
+        
+            if (viiteTyyppiId.equals("article")) {
+                vt = luoArtikkeliTyyppi();
+            } else if (viiteTyyppiId.equals("book")) {
+                vt = luoKirjaTyyppi();
+            } else if (viiteTyyppiId.equals("inproceedings")) {
+                vt = luoKonferenssijulkaisuTyyppi();
+            } else {
+                throw new IllegalArgumentException("Tuntematon viitetyyppi: " + viiteTyyppiId);
+            }
 
-        if (vt.equals("article")) {
-            return luoArtikkeliTyyppi();
+            tx = session.beginTransaction();
+            session.save(vt);
+            tx.commit();            
+        } finally {
+            if (tx != null && tx.isActive()) {
+                tx.rollback();
+            }
         }
         
-        if (vt.equals("book")) {
-            return luoKirjaTyyppi();
-        }
-        
-        if (vt.equals("inproceedings")) {
-            return luoKonferenssijulkaisuTyyppi();
-        }
-        
-        throw new IllegalArgumentException("Tuntematon viitetyyppi: " + vt);
-  
+        return vt;
     }
     
-    private static ViiteTyyppi luoArtikkeliTyyppi() {
+    private ViiteTyyppi luoArtikkeliTyyppi() {
         
         ViiteTyyppi artikkeliTyyppi = new ViiteTyyppi(
                 "article",
@@ -55,7 +83,7 @@ public class ViiteTyyppiTehdas {
         
     }
 
-    private static ViiteTyyppi luoKirjaTyyppi() {
+    private ViiteTyyppi luoKirjaTyyppi() {
         
         ViiteTyyppi kirjaTyyppi = new ViiteTyyppi(
                 "book",
@@ -77,7 +105,7 @@ public class ViiteTyyppiTehdas {
         return kirjaTyyppi;
     }
     
-    private static ViiteTyyppi luoKonferenssijulkaisuTyyppi() {
+    private ViiteTyyppi luoKonferenssijulkaisuTyyppi() {
         
         ViiteTyyppi konferenssijulkaisuTyyppi = new ViiteTyyppi(
                 "inproceedings",
@@ -99,5 +127,25 @@ public class ViiteTyyppiTehdas {
                 new KenttaTyyppi("volume","Nide",false));
         
         return konferenssijulkaisuTyyppi;
+    }
+
+    private ViiteTyyppi lataa(String viiteTyyppiId) {
+        Session session = tallentaja.getSession();
+
+        Transaction tx = null;
+        ViiteTyyppi vt = null;
+        try {
+            tx = session.beginTransaction();
+            vt = (ViiteTyyppi)session.load(ViiteTyyppi.class, viiteTyyppiId);
+            tx.commit();
+        } catch (Exception ex) {
+                System.out.println("oli jo olemassa? " + ex.getMessage());
+        } finally {
+            if (tx != null && tx.isActive()) {
+                tx.rollback();
+            }
+        }
+
+        return vt;
     }
 }

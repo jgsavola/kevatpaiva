@@ -20,9 +20,13 @@ public class ViitteenTallentaja {
     Transaction tx = null;
 
     public ViitteenTallentaja() {
-
-        configureSessionFactory();
-        session = sessionFactory.openSession();
+        /**
+         * Vain yksi sessio / prosessi!
+         */
+        if (session == null) {
+            configureSessionFactory();
+            session = sessionFactory.openSession();
+        }
     }
 
     private static void configureSessionFactory() throws HibernateException {
@@ -43,7 +47,7 @@ public class ViitteenTallentaja {
      * @param viite
      * @throws Exception
      */
-    public void tallenna(Viite viite) throws Exception {
+    public void tallenna(Object viite) throws Exception {
         
         try {
             
@@ -159,5 +163,9 @@ public class ViitteenTallentaja {
         }
         
         return viite;
+    }
+
+    public Session getSession() {
+        return session;
     }
 }

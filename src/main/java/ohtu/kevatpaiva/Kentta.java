@@ -2,6 +2,7 @@ package ohtu.kevatpaiva;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,7 +16,7 @@ public class Kentta {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.EAGER)
     private KenttaTyyppi tyyppi;
 
     @Column
