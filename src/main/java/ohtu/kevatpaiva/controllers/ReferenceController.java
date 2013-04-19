@@ -115,7 +115,8 @@ public class ReferenceController {
             return "lomake";
         }
         
-        Reference artikkeli = new Reference(id, author, title, year);
+        
+        Reference artikkeli = new Reference(viiteTyyppi, id, author, title, year);
         
         // (journal) NOT REQUIRED?
         if (journal != null) {
