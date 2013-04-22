@@ -15,7 +15,6 @@
         <property name="hibernate.hbm2ddl.auto">update</property>
          
         <mapping class="ohtu.kevatpaiva.Article"/>
-        <mapping class="ohtu.kevatpaiva.Viite"/>
         
     </session-factory>
 </hibernate-configuration>
