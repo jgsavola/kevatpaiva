@@ -195,7 +195,9 @@
                         <fileset>
                             <directory>.</directory>
                             <includes>
-                                 <include>kevatpaiva.test.db</include>
+                                <include>kevatpaiva.log</include>
+                                <include>kevatpaiva.db</include>
+                                <include>kevatpaiva.test.db</include>
                             </includes>
                             <followSymlinks>false</followSymlinks>
                         </fileset>
