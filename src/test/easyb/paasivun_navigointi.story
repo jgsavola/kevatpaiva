@@ -70,7 +70,8 @@ scenario "user can navigate from the main page to the bibtex list", {
     }
  
     then 'the bibtex list will be shown', {
-        driver.getPageSource().contains("author").shouldBe true
+        System.out.println( driver.getPageSource() );
+        driver.getPageSource().contains("<pre/>").shouldBe true
     }
 
 }
