@@ -38,7 +38,7 @@ scenario "user can see the articles in bibtex form starting from insertion", {
     }
  
     then 'articles will be listed', {
-        driver.getPageSource().contains("author").shouldBe true
+        driver.getCurrentUrl().contains("haebibtex").shouldBe true
     }
 
 }
@@ -56,7 +56,7 @@ scenario "user can see the articles in bibtex form starting from the main page",
     }
  
     then 'articles will be listed', {
-        driver.getPageSource().contains("author").shouldBe true
+        driver.getCurrentUrl().contains("haebibtex").shouldBe true
     }
 
 }
@@ -76,8 +76,7 @@ scenario "user can see the articles in bibtex form starting from the insertion p
     }
 
     then 'articles will be listed', {
-// FIXME: jostain syystä menee virhesivulle, ei bibtex-sivulle
-//        driver.getPageSource().contains("author").shouldBe true
+        driver.getCurrentUrl().contains("haebibtex").shouldBe true
     }
 }
 
@@ -99,7 +98,7 @@ scenario "user can see the articles in bibtex form starting from the reference l
     }
 
     then 'articles will be listed', {
-        driver.getPageSource().contains("author").shouldBe true
+        driver.getCurrentUrl().contains("haebibtex").shouldBe true
     }
 
 }

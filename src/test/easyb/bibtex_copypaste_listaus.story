@@ -38,6 +38,7 @@ scenario "user can see the articles in bibtex form starting from insertion", {
     }
  
     then 'articles will be listed', {
+        driver.getCurrentUrl().contains("haebibtex").shouldBe true
     }
 
 }
@@ -55,6 +56,7 @@ scenario "user can see the articles in copy-paste bibtex form starting from the 
     }
  
     then 'articles will be listed', {
+        driver.getCurrentUrl().contains("haebibtex").shouldBe true
     }
 
 }
@@ -74,6 +76,7 @@ scenario "user can see the articles in copy-paste bibtex form starting from the 
     }
 
     then 'articles will be listed', {
+        driver.getCurrentUrl().contains("haebibtex").shouldBe true
     }
 }
 
@@ -90,6 +93,7 @@ scenario "user can see the articles in copy-paste bibtex form starting from the 
     }
 
     then 'articles will be listed', {
+        driver.getCurrentUrl().contains("haebibtex").shouldBe true
     }
 
 }

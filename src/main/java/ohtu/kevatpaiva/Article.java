@@ -58,12 +58,24 @@ public class Article implements Serializable {
     public Article(String id, String author, String title, String year) {
         setViiteTyyppi("article");
 
+        // HUOM: jättää typen tyhjäksi
+        
         this.id = id;
         this.author = author;
         this.title = title;
         this.year = year;
     }
     
+    public Article(String type, String id, String author, String title, String year) {
+        setViiteTyyppi("article");
+
+        this.type = type;
+        this.id = id;
+        this.author = author;
+        this.title = title;
+        this.year = year;
+    }
+
     public String getId() {
         return this.id;
     }
@@ -295,13 +307,17 @@ public class Article implements Serializable {
      */
     public String toBibTeX() {
 
-        String bibtex = "@article{" + this.getId() + ",\n";
+        String bibtex = "@" + this.getType() + "{" + this.getId() + ",\n";
+        //String bibtex = "@article{" + this.getId() + ",\n";
 
         if (this.getAuthor() != null) {
             bibtex += "    author = {" + Muunto.muunnaMuoto(this.getAuthor(), false) + "},\n";
         }
         if (this.getTitle() != null) {
             bibtex += "    title = {" + Muunto.muunnaMuoto(this.getTitle(), true) + "},\n";
+        }
+        if (this.getBooktitle() != null) {
+            bibtex += "    booktitle = {" + Muunto.muunnaMuoto(this.getBooktitle(), false) + "},\n";
         }
         if (this.getJournal() != null) {
             bibtex += "    journal = {" + Muunto.muunnaMuoto(this.getJournal(), false) + "},\n";
@@ -312,11 +328,14 @@ public class Article implements Serializable {
         if (this.getNumber() != null) {
             bibtex += "    number = {" + Muunto.muunnaMuoto(this.getNumber(), false) + "},\n";
         }
+        if (this.getPages() != null) {
+            bibtex += "    pages = {" + Muunto.muunnaMuoto(this.getPages(), false) + "},\n";
+        }
         if (this.getYear() != null) {
             bibtex += "    year = {" + Muunto.muunnaMuoto(this.getYear(), false) + "},\n";
         }
-        if (this.getPages() != null) {
-            bibtex += "    pages = {" + Muunto.muunnaMuoto(this.getPages(), false) + "},\n";
+        if (this.getMonth() != null) {
+            bibtex += "    month = {" + Muunto.muunnaMuoto(this.getMonth(), false) + "},\n";
         }
         if (this.getPublisher() != null && this.getPublisher() != "") {
             bibtex += "    publisher = {" + Muunto.muunnaMuoto(this.getPublisher(), false) + "},\n";
@@ -324,6 +343,45 @@ public class Article implements Serializable {
         if (this.getAddress() != null) {
             bibtex += "    address = {" + Muunto.muunnaMuoto(this.getAddress(), false) + "},\n";
         } 
+        if (this.getAnnote() != null) {
+            bibtex += "    annote = {" + Muunto.muunnaMuoto(this.getAnnote(), false) + "},\n";
+        }
+        if (this.getChapter() != null) {
+            bibtex += "    chapter = {" + Muunto.muunnaMuoto(this.getChapter(), false) + "},\n";
+        }
+        if (this.getCrossref() != null) {
+            bibtex += "    crossref = {" + Muunto.muunnaMuoto(this.getCrossref(), false) + "},\n";
+        }
+        if (this.getEdition() != null) {
+            bibtex += "    edition = {" + Muunto.muunnaMuoto(this.getEdition(), false) + "},\n";
+        }
+        if (this.getEditor() != null) {
+            bibtex += "    editor = {" + Muunto.muunnaMuoto(this.getEditor(), false) + "},\n";
+        }
+        if (this.getHowpublished() != null) {
+            bibtex += "    howpublished = {" + Muunto.muunnaMuoto(this.getHowpublished(), false) + "},\n";
+        }
+        if (this.getInstitution() != null) {
+            bibtex += "    institution = {" + Muunto.muunnaMuoto(this.getInstitution(), false) + "},\n";
+        }
+        if (this.getKey() != null) {
+            bibtex += "    key = {" + Muunto.muunnaMuoto(this.getKey(), false) + "},\n";
+        }
+        if (this.getNote() != null) {
+            bibtex += "    note = {" + Muunto.muunnaMuoto(this.getNote(), false) + "},\n";
+        }
+        if (this.getOrganization() != null) {
+            bibtex += "    organization = {" + Muunto.muunnaMuoto(this.getOrganization(), false) + "},\n";
+        }
+        if (this.getSchool() != null) {
+            bibtex += "    school = {" + Muunto.muunnaMuoto(this.getSchool(), false) + "},\n";
+        }
+        if (this.getSeries() != null) {
+            bibtex += "    series = {" + Muunto.muunnaMuoto(this.getSeries(), false) + "},\n";
+        }
+        if (this.getUrl() != null) {
+            bibtex += "    url = {" + Muunto.muunnaMuoto(this.getUrl(), false) + "},\n";
+        }
        
         bibtex += "}\n";
 
