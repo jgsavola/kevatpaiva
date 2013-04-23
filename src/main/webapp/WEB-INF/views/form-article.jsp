@@ -18,7 +18,6 @@
         <form id="viiteTyyppiLomake" action="lomake" method="GET" enctype="application/x-www-form-urlencoded">
             <fieldset>
                 <legend>Valitse viitetyyppi</legend>
-                <label for="viiteTyyppi">Tyyppi</label>
                 <select name="viiteTyyppi" id="viiteTyyppi" size="3" onchange="vaihdaLomake();">
                     <option value="article" title="An article from a journal or magazine">Artikkeli</option>
                     <option value="book" title="A book with an explicit publisher">Kirja</option>
