@@ -32,9 +32,25 @@ public class ReferenceController {
     }
     
     @RequestMapping(value="lomake", method = RequestMethod.GET)
-    public String naytaLomake() {
+    public String naytaLomake(@RequestParam(value="viiteTyyppi", required=false) String viiteTyyppi) {
 
-        return "form-article";
+        if(viiteTyyppi != null) {
+            
+            if (viiteTyyppi.equals("article")) {
+                return "form-article";
+            }
+            
+            if (viiteTyyppi.equals("book")) {
+                return "form-book";
+            }
+            
+            if (viiteTyyppi.equals("inproceedings")) {
+                return "form-inproceedings";
+            }
+            
+        }
+        
+        return "form-viitetyyppi";
     }
 
     @RequestMapping(value="lisaa", method = RequestMethod.POST)

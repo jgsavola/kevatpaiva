@@ -1,4 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="fi">
     <head>
@@ -14,18 +15,24 @@
             <li><a href="haebibtex">Tarkastele viitteitä BibTex-muodossa</a></li>
         </ul>
 
-        <form action="lisaa" method="POST" enctype="application/x-www-form-urlencoded">
+        <form id="viiteTyyppiLomake" action="lomake" method="GET" enctype="application/x-www-form-urlencoded">
             <fieldset>
-                <legend>Lisää lähdeviite</legend>
-
-                <label for="type">Tyyppi</label>
-                <select name="type" id="type" size="3" onchange="vaihdaLomake();">
+                <legend>Valitse viitetyyppi</legend>
+                <select name="viiteTyyppi" id="viiteTyyppi" size="3" onchange="vaihdaLomake();">
                     <option value="article" title="An article from a journal or magazine">Artikkeli</option>
                     <option value="book" title="A book with an explicit publisher">Kirja</option>
                     <option value="inproceedings" title="An article in a conference proceedings">Konferenssi</option>
                 </select>
+            </fieldset>
+        </form>
 
-                <p class="virhe">${message}</p>
+        <form id="viiteLomake" action="lisaa" method="POST" enctype="application/x-www-form-urlencoded">
+            <fieldset>
+                <legend>Lisää konferenssijulkaisuviite</legend>
+                <pre><c:forEach var="item" items="${messages}">${item}
+                    </c:forEach></pre>
+
+                <input name="viiteTyyppi" value="inproceedings" type="hidden" />
 
                 <label for="id">ID</label>
                 <input name="id" id="id" type="text" value="${id}"/>    

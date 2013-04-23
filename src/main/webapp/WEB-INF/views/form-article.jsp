@@ -14,25 +14,27 @@
             <li><a href="listaa">Tarkastele viitteitä</a></li>
             <li><a href="haebibtex">Tarkastele viitteitä BibTex-muodossa</a></li>
         </ul>
-    
-    <form action="lisaa" method="POST" enctype="application/x-www-form-urlencoded">
-<fieldset>
-<legend>Lisää lähdeviite</legend>
-        
-        <form action="lisaa" method="POST" enctype="application/x-www-form-urlencoded">
+
+        <form id="viiteTyyppiLomake" action="lomake" method="GET" enctype="application/x-www-form-urlencoded">
             <fieldset>
-                <legend>Lisää lähdeviite</legend>
-                
-                <label for="type">Tyyppi</label>
-                <select name="type" id="type" size="3" onchange="vaihdaLomake();">
+                <legend>Valitse viitetyyppi</legend>
+                <label for="viiteTyyppi">Tyyppi</label>
+                <select name="viiteTyyppi" id="viiteTyyppi" size="3" onchange="vaihdaLomake();">
                     <option value="article" title="An article from a journal or magazine">Artikkeli</option>
                     <option value="book" title="A book with an explicit publisher">Kirja</option>
                     <option value="inproceedings" title="An article in a conference proceedings">Konferenssi</option>
                 </select>
-                
+            </fieldset>
+        </form>
+        
+        <form id="viiteLomake" action="lisaa" method="POST" enctype="application/x-www-form-urlencoded">
+            <fieldset>
+                <legend>Lisää artikkeliviite</legend>
                 <pre><c:forEach var="item" items="${messages}">${item}
-</c:forEach></pre>
+                    </c:forEach></pre>
 
+                <input name="viiteTyyppi" value="article" type="hidden" />
+                       
                 <label for="id">ID</label>
                 <input name="id" id="id" type="text" value="${id}"/>    
 
@@ -51,16 +53,16 @@
                 <input name="form-submit" id="form-submit" class="button" type="submit" value="Lähetä" />
 
                 <p>Valinnaiset</p>
-               
+
                 <label for="key">Avain (key)</label>
                 <input name="key" id="key" type="text" value="${key}"/>
-                
+
                 <label for="month">Kuukausi (month)</label>
                 <input name="month" id="month" type="text" value="${month}"/>
 
                 <label for="note">Kommentti (note)</label>
                 <input name="note" id="note" type="text" value="${note}"/>
-                
+
                 <label for="number">Numero (number)</label>
                 <input name="number" id="number" type="text" value="${number}"/>
 
@@ -71,10 +73,10 @@
                 <input name="volume" id="volume" type="text" value="${volume}"/>
 
                 <!-- joskus! -->
-                
+
                 <label for="address">Osoite (address)</label>
                 <input name="address" id="address" type="text" value="${address}"/>
-                
+
                 <label for="publisher">Kustantaja (publisher)</label>
                 <input name="publisher" id="publisher" type="text" value="${publisher}"/>
 
