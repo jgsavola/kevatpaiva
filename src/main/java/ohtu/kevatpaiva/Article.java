@@ -67,7 +67,7 @@ public class Article implements Serializable {
     }
     
     public Article(String type, String id, String author, String title, String year) {
-        setViiteTyyppi("article");
+        //setViiteTyyppi("article");
 
         this.type = type;
         this.id = id;

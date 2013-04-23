@@ -103,7 +103,7 @@ public class ReferenceController {
             return "form-article";
         }
         
-        Article artikkeli = new Article(id, author, title, year);
+        Article artikkeli = new Article(type, id, author, title, year);
         
         // (journal) NOT REQUIRED?
         if (journal != null) {
