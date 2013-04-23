@@ -107,7 +107,7 @@ scenario "user cannot add a article to the database without id", {
     }
  
     then 'article will not be added', {
-        driver.getPageSource().contains("ovat pakollisia").shouldBe true
+        driver.getPageSource().contains("on pakollinen").shouldBe true
     }
 
 }

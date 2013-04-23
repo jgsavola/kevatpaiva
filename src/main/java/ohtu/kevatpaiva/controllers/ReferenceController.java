@@ -59,13 +59,14 @@ public class ReferenceController {
             @RequestParam(value = "series", required = false) String series,
             ModelMap model) {
         
+        ArrayList<String> viestit = new ArrayList<String>();
         boolean idOnJo = tallentaja.onkoArtikkeli(id);
         
         if (idOnJo || id.equals("") || author.equals("") || title.equals("") || year.equals("") 
                 || (type.equals("article") && journal.equals(""))
                 || (type.equals("book") && (editor.equals("") || publisher.equals(""))) 
                 || (type.equals("inproceedings") && booktitle.equals(""))) {
-            //model.addAttribute("type", type);
+            model.addAttribute("type", type);
             model.addAttribute("id", id);
             model.addAttribute("author", author);
             model.addAttribute("title", title);
@@ -83,23 +84,41 @@ public class ReferenceController {
             model.addAttribute("edition", edition);
             model.addAttribute("series", series);
             
-            String message;
+            String message = "";
             if (idOnJo) {
                 message = "Viite kyseisellä id:llä on jo tallennettu";
+                viestit.add(message);
             }
-            else if (type.equals("article") && journal.equals("")) {
-                message = "Journaali on pakollinen kenttä";
+            if (id.equals("")) {
+                message = "Id on pakollinen kenttä";
+                viestit.add(message);
             }
-            else if (type.equals("book") && (editor.equals("") || publisher.equals(""))) {
-                message = "Ediittori ja julkaisija ovat pakollisia kenttiä";
+            if (author.equals("")) {
+                message = "Kirjoittaja on pakollinen kenttä";
+                viestit.add(message);
             }
-            else if (type.equals("inproceedings") && booktitle.equals("")) {
-                message = "Kirjan otsikko on pakollinen kenttä";
+            if (title.equals("")) {
+                message = "Otsikko on pakollinen kenttä";
+                viestit.add(message);
             }
-            else {
-                message = "Id, kirjoittaja, otsikko ja vuosi ovat pakollisia kenttiä";
+            if (year.equals("")) {
+                message = "Vuosi on pakollinen kenttä";
+                viestit.add(message);
             }
-            model.addAttribute("message", message);
+            if (type.equals("article") && journal.equals("")) {
+                message = "Journaali on pakollinen kenttä artikkeli-tyyppisessä viitteessä";
+                viestit.add(message);
+            }
+            if (type.equals("book") && (editor.equals("") || publisher.equals(""))) {
+                message = "Ediittori ja julkaisija ovat pakollisia kenttiä kirja-tyyppisessä viittessä";
+                viestit.add(message);
+            }
+            if (type.equals("inproceedings") && booktitle.equals("")) {
+                message = "Kirjan otsikko on pakollinen kenttä konferenssi-tyyppisessä viitteessä";
+                viestit.add(message);
+            }
+            
+            model.addAttribute("messages", viestit);
             return "form-article";
         }
         

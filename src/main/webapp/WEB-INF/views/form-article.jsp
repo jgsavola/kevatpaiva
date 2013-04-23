@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="fi">
 <head>
@@ -18,7 +19,8 @@
             <li><a href="listaa">Tarkastele viitteitä</a></li>
             <li><a href="haebibtex">Tarkastele viitteitä BibTex-muodossa</a></li>
         </ul>
-    <p>${message}</p>
+    <pre><c:forEach var="item" items="${messages}">${item}
+</c:forEach></pre>
     <form action="lisaa" method="POST" enctype="application/x-www-form-urlencoded">
 <fieldset>
 <legend>Lisää lähdeviite</legend>
