@@ -33,8 +33,8 @@ scenario "user can navigate from the main page to the insertion page", {
         element.click()
     }
  
-    then 'the instertion page will be shown', {
-        driver.getPageSource().contains("l\u00e4hdeviite").shouldBe true
+    then 'the insertion page will be shown', {
+        driver.getPageSource().contains("form-article.jsp").shouldBe true
     }
 
 }

@@ -10,16 +10,12 @@ scenario "user can add a new article to the database", {
 
     given 'article-form selected', {
         driver = new HtmlUnitDriver();
-        driver.get("http://localhost:8080/miniprojekti/lomake")
+        driver.get("http://localhost:8080/miniprojekti/lomake?viiteTyyppi=article")
     }
 
     when 'article information is given', {
         tallentaja = new ArtikkelinTallentaja()
         tallentaja.poistaViite("B06")
-
-        element = driver.findElement(By.name("type"))
-        select = new Select(element)
-        select.selectByValue("article")
 
         element = driver.findElement(By.name("id"));
         element.sendKeys("B06");
@@ -46,13 +42,10 @@ scenario "user cannot add a article with a already used id", {
 
     given 'article-form selected', {
         driver = new HtmlUnitDriver();
-        driver.get("http://localhost:8080/miniprojekti/lomake")
+        driver.get("http://localhost:8080/miniprojekti/lomake?viiteTyyppi=article")
     }
 
     when 'article information is given', {
-        element = driver.findElement(By.name("type"))
-        select = new Select(element)
-        select.selectByValue("article")
 
         element = driver.findElement(By.name("id"));
         element.sendKeys("B06");
@@ -85,13 +78,10 @@ scenario "user cannot add a article to the database without id", {
 
     given 'article-form selected', {       
         driver = new HtmlUnitDriver();
-        driver.get("http://localhost:8080/miniprojekti/lomake")
+        driver.get("http://localhost:8080/miniprojekti/lomake?viiteTyyppi=article")
     }
 
     when 'article information is given', {
-        element = driver.findElement(By.name("type"))
-        select = new Select(element)
-        select.selectByValue("article")
 
         element = driver.findElement(By.name("author"));
         element.sendKeys("Black, Toni R.");

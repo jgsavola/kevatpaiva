@@ -32,14 +32,31 @@ public class ReferenceController {
     }
     
     @RequestMapping(value="lomake", method = RequestMethod.GET)
-    public String naytaLomake() {
+    public String naytaLomake(@RequestParam(value="viiteTyyppi", required=false) String viiteTyyppi) {
 
+        if(viiteTyyppi != null) {
+            
+            if (viiteTyyppi.equals("article")) {
+                return "form-article";
+            }
+            
+            if (viiteTyyppi.equals("book")) {
+                return "form-book";
+            }
+            
+            if (viiteTyyppi.equals("inproceedings")) {
+                return "form-inproceedings";
+            }
+            
+        }
+        
+        // Defaultti-lomake
         return "form-article";
     }
 
     @RequestMapping(value="lisaa", method = RequestMethod.POST)
     public String lisaaArtikkeli(
-            @RequestParam(value = "type", required = false) String type,
+            @RequestParam(value = "viiteTyyppi", required = false) String viiteTyyppi,
             @RequestParam String id,
             @RequestParam String author,
             @RequestParam String title,
@@ -57,16 +74,17 @@ public class ReferenceController {
             @RequestParam(value = "note", required = false) String note,
             @RequestParam(value = "edition", required = false) String edition,
             @RequestParam(value = "series", required = false) String series,
+            @RequestParam(value = "organization", required = false) String organization,
             ModelMap model) {
         
         ArrayList<String> viestit = new ArrayList<String>();
         boolean idOnJo = tallentaja.onkoArtikkeli(id);
         
-        if (idOnJo || id.equals("") || type == null||author.equals("") || title.equals("") || year.equals("") 
-                || (type.equals("article") && journal.equals(""))
-                || (type.equals("book") && (editor.equals("") || publisher.equals(""))) 
-                || (type.equals("inproceedings") && booktitle.equals(""))) {
-            model.addAttribute("type", type);
+        if (idOnJo || id.equals("") || viiteTyyppi == null||author.equals("") || title.equals("") || year.equals("") 
+                || (viiteTyyppi.equals("article") && journal.equals(""))
+                || (viiteTyyppi.equals("book") && (editor.equals("") || publisher.equals(""))) 
+                || (viiteTyyppi.equals("inproceedings") && booktitle.equals(""))) {
+            model.addAttribute("viiteTyyppi", viiteTyyppi);
             model.addAttribute("id", id);
             model.addAttribute("author", author);
             model.addAttribute("title", title);
@@ -83,10 +101,12 @@ public class ReferenceController {
             model.addAttribute("note", note);
             model.addAttribute("edition", edition);
             model.addAttribute("series", series);
+            model.addAttribute("organization", organization);
+            model.addAttribute("volume", organization);
             
             String message = "";
-            if (type == null) {
-                message = "Tyyppi pitää olla valittuna";
+            if (viiteTyyppi == null) {
+                message = "Viitteen tyyppi pitää olla valittuna";
                 viestit.add(message);
             }
             else {
@@ -110,15 +130,15 @@ public class ReferenceController {
                     message = "Vuosi on pakollinen kenttä";
                     viestit.add(message);
                 }
-                if (type.equals("article") && journal.equals("")) {
+                if (viiteTyyppi.equals("article") && journal.equals("")) {
                     message = "Journaali on pakollinen kenttä artikkeli-tyyppisessä viitteessä";
                     viestit.add(message);
                 }
-                if (type.equals("book") && (editor.equals("") || publisher.equals(""))) {
+                if (viiteTyyppi.equals("book") && (editor.equals("") || publisher.equals(""))) {
                     message = "Ediittori ja julkaisija ovat pakollisia kenttiä kirja-tyyppisessä viittessä";
                     viestit.add(message);
                 }
-                if (type.equals("inproceedings") && booktitle.equals("")) {
+                if (viiteTyyppi.equals("inproceedings") && booktitle.equals("")) {
                     message = "Kirjan otsikko on pakollinen kenttä konferenssi-tyyppisessä viitteessä";
                     viestit.add(message);
                 }
@@ -128,31 +148,77 @@ public class ReferenceController {
             return "form-article";
         }
         
-        Article artikkeli = new Article(type, id, author, title, year);
+        Article viite = new Article();
         
-        // (journal) NOT REQUIRED?
-        if (journal != null) {
-            artikkeli.setJournal(journal);
+        if (viiteTyyppi.equals("article")) {
+            
+            viite = new Article(viiteTyyppi, id, author, title, year, journal, null, null, null);
+            
+        } else if (viiteTyyppi.equals("book")) {
+            
+            viite = new Article(viiteTyyppi, id, author, title, year, null, editor, publisher, null);
+            
+        } else if (viiteTyyppi.equals("inproceedings")) {
+            
+            viite = new Article(viiteTyyppi, id, author, title, year, null, null, null, booktitle);
+            
+        } else {
+            model.addAttribute("title", "Poikkeus");
+            model.addAttribute("message", "Viitteen tyyppi " + viiteTyyppi + " on tuntematon!");
+            return "message";
         }
 
-        if (volume != null) {
-            artikkeli.setVolume(volume);
-        }
-
-        if (number != null) {
-            artikkeli.setNumber(number);
-        }
-
-        if (pages != null) {
-            artikkeli.setPages(pages);
+        /* Valinnaiset */
+        if (address != null && !address.isEmpty()) {
+            viite.setAddress(address);
         }
         
-        if (publisher != null) {
-            artikkeli.setPublisher(publisher);
+        if (edition != null && !edition.isEmpty()) {
+            viite.setEdition(edition);
+        }
+        
+        if (editor != null && !editor.isEmpty()) {
+            viite.setEditor(editor);
+        }
+        
+        if (key != null && !key.isEmpty()) {
+            viite.setKey(key);
+        }
+
+        if (month != null && !month.isEmpty()) {
+            viite.setMonth(month);
+        }
+
+        if (note != null && !note.isEmpty()) {
+            viite.setNote(note);
+        }
+        
+        if (number != null && !number.isEmpty()) {
+            viite.setNumber(number);
+        }
+
+        if (organization != null && !organization.isEmpty()) {
+            viite.setOrganization(organization);
+        }
+        
+        if (pages != null && !pages.isEmpty()) {
+            viite.setPages(pages);
+        }
+        
+        if (publisher != null && !publisher.isEmpty()) {
+            viite.setPublisher(publisher);
+        }
+        
+        if (series != null && !series.isEmpty()) {
+            viite.setSeries(series);
+        }
+        
+        if (volume != null && !volume.isEmpty()) {
+            viite.setVolume(volume);
         }
         
         try {
-            tallentaja.tallennaArtikkeli(artikkeli);
+            tallentaja.tallennaArtikkeli(viite);
         } catch (Exception e) {
             model.addAttribute("title", "Poikkeus");
             model.addAttribute("message", e.getMessage());

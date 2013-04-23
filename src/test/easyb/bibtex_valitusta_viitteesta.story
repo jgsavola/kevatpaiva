@@ -10,13 +10,7 @@ scenario "user can see the articles in bibtex form starting from insertion", {
 
     given 'user has inserted an article and gone to the reference list', {
         driver = new HtmlUnitDriver();
-        driver.get("http://localhost:8080/miniprojekti/lomake")
-        tallentaja = new ArtikkelinTallentaja()
-        tallentaja.poistaViite("RRR03")
-
-        element = driver.findElement(By.name("type"))
-        select = new Select(element)
-        select.selectByValue("article")
+        driver.get("http://localhost:8080/miniprojekti/lomake?viiteTyyppi=article")
 
         element = driver.findElement(By.name("id"));
         element.sendKeys("RRR03");
