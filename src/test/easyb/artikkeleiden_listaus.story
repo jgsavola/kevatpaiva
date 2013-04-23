@@ -10,13 +10,9 @@ scenario "user can see articles as a list starting from insertion", {
 
     given 'user has inserted an article', {
         driver = new HtmlUnitDriver();
-        driver.get("http://localhost:8080/miniprojekti/lomake")
+        driver.get("http://localhost:8080/miniprojekti/lomake?viiteTyyppi=article")
         tallentaja = new ArtikkelinTallentaja()
         tallentaja.poistaViite("RRR03")
-
-        element = driver.findElement(By.name("type"))
-        select = new Select(element)
-        select.selectByValue("article")
 
         element = driver.findElement(By.name("id"));
         element.sendKeys("RRR03");

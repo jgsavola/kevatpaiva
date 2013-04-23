@@ -1,10 +1,10 @@
 package ohtu.kevatpaiva;
- 
+
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
- 
+
 /**
  * The persistent class for the article database table.
  *
@@ -12,16 +12,13 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "article")
 public class Article implements Serializable {
-    
+
     @Id
     private String id;
-
     /**
      * Tämä attribuutti ei ole BibTeX-kenttä, vaan viitteen tyyppi!
      */
     private String viiteTyyppi;
-    
-    private String type;
     private String author;
     private String title;
     private String year;
@@ -44,58 +41,56 @@ public class Article implements Serializable {
     private String publisher;
     private String school;
     private String series;
+    private String type;
     private String volume;
     private String url;                     // nonstandard field
 
     public Article() {
         setViiteTyyppi("article");
     }
- 
+
     public Article(String viiteTyyppi) {
         setViiteTyyppi(viiteTyyppi);
     }
-    
-    public Article(String id, String author, String title, String year) {
-        setViiteTyyppi("article");
 
-        // HUOM: jättää typen tyhjäksi
+    public Article(
+            String viiteTyyppi, String id, String author, String title,
+            String year, String journal, String editor, String publisher,
+            String booktitle) {
         
-        this.id = id;
-        this.author = author;
-        this.title = title;
-        this.year = year;
-    }
-    
-    public Article(String type, String id, String author, String title, String year) {
-        //setViiteTyyppi("article");
+        setViiteTyyppi(viiteTyyppi);
 
-        this.type = type;
         this.id = id;
         this.author = author;
         this.title = title;
         this.year = year;
+        this.journal = journal;
+        this.editor = editor;
+        this.publisher = publisher;
+        this.booktitle = booktitle;
+
     }
 
     public String getId() {
         return this.id;
     }
- 
+
     public void setId(String id) {
         this.id = id;
     }
- 
+
     public String getAuthor() {
         return this.author;
     }
- 
+
     public void setAuthor(String author) {
         this.author = author;
     }
- 
+
     public String getTitle() {
         return title;
     }
- 
+
     public void setTitle(String title) {
         this.title = title;
     }
@@ -161,15 +156,15 @@ public class Article implements Serializable {
     }
 
     public void setViiteTyyppi(String viiteTyyppi) {
-        if ("article".equals(viiteTyyppi) 
-            || "book".equals(viiteTyyppi) 
-            || "inproceedings".equals(viiteTyyppi)) {
+        if ("article".equals(viiteTyyppi)
+                || "book".equals(viiteTyyppi)
+                || "inproceedings".equals(viiteTyyppi)) {
             this.viiteTyyppi = viiteTyyppi;
         } else {
             throw new IllegalArgumentException("Tuntematon viitetyyppi " + viiteTyyppi);
         }
     }
-    
+
     public String getType() {
         return type;
     }
@@ -297,17 +292,16 @@ public class Article implements Serializable {
     public void setUrl(String url) {
         this.url = url;
     }
- 
 
     /**
-     * Luo BibTeX-esitys artikkelista. Lopputuloksena pitäisi olla
-     * merkkijono käyvässä BibTeX-formaatissa.
+     * Luo BibTeX-esitys artikkelista. Lopputuloksena pitäisi olla merkkijono
+     * käyvässä BibTeX-formaatissa.
      *
      * @return Artikkelin BibTeX-esitys.
      */
     public String toBibTeX() {
 
-        String bibtex = "@" + this.getType() + "{" + this.getId() + ",\n";
+        String bibtex = "@" + this.getViiteTyyppi() + "{" + this.getId() + ",\n";
         //String bibtex = "@article{" + this.getId() + ",\n";
 
         if (this.getAuthor() != null) {
@@ -342,7 +336,7 @@ public class Article implements Serializable {
         }
         if (this.getAddress() != null) {
             bibtex += "    address = {" + Muunto.muunnaMuoto(this.getAddress(), false) + "},\n";
-        } 
+        }
         if (this.getAnnote() != null) {
             bibtex += "    annote = {" + Muunto.muunnaMuoto(this.getAnnote(), false) + "},\n";
         }
@@ -382,7 +376,7 @@ public class Article implements Serializable {
         if (this.getUrl() != null) {
             bibtex += "    url = {" + Muunto.muunnaMuoto(this.getUrl(), false) + "},\n";
         }
-       
+
         bibtex += "}\n";
 
         return bibtex;

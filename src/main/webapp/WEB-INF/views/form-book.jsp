@@ -68,7 +68,7 @@
                 <label for="month">Kuukausi (month)</label>
                 <input name="month" id="month" type="text" value="${month}"/>
 
-                <label for="note">Kommentti (note)/label>
+                <label for="note">Kommentti (note)</label>
                 <input name="note" id="note" type="text" value="${note}"/>
 
                 <label for="number">Numero (number)</label>
