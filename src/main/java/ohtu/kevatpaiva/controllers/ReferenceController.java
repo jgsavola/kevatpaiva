@@ -232,4 +232,20 @@ public class ReferenceController {
 
         return "bibtex";
     }
+    
+    @RequestMapping(value="poista/{id}", method = RequestMethod.POST)
+    public String poistaViite(Model model, @PathVariable(value="id") String id) {
+        
+        Article article;
+        try {
+            ArtikkelinTallentaja tallentaja = new ArtikkelinTallentaja();
+            tallentaja.poistaViite(id);
+        } catch (Exception e) {
+            model.addAttribute("title", "Poikkeus");
+            model.addAttribute("message", e.getMessage());
+            return "message"; 
+        }
+
+        return "redirect:../listaa";
+    }
 }

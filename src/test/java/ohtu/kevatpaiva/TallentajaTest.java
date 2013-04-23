@@ -47,7 +47,7 @@ public class TallentajaTest {
             tallentaja.poistaViite("K00");
         }
 
-        Article article3 = new Article("K00", "Karl, D.", "Funktion und Bedeutung einer weisen Frau im alten Ägypten", "2000");
+        Article article3 = new Article("article", "K00", "Karl, D.", "Funktion und Bedeutung einer weisen Frau im alten Ägypten", "2000");
         tallentaja.tallennaArtikkeli(article3);
         
         tallentaja.poistaViite("K00");
@@ -63,7 +63,7 @@ public class TallentajaTest {
             tallentaja.poistaViite("K00");
         }
 
-        Article article2 = new Article("K00", "Karl, D.", "Funktion und Bedeutung einer weisen Frau im alten Ägypten", "2000");
+        Article article2 = new Article("article", "K00", "Karl, D.", "Funktion und Bedeutung einer weisen Frau im alten Ägypten", "2000");
         tallentaja.tallennaArtikkeli(article2);
         
         assertTrue(tallentaja.onkoArtikkeli("K00"));
