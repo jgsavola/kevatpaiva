@@ -108,6 +108,7 @@ public class ReferenceController {
             if (viiteTyyppi == null) {
                 message = "Viitteen tyyppi pitää olla valittuna";
                 viestit.add(message);
+                return "form-article";
             }
             else {
                 if (idOnJo) {
@@ -135,7 +136,7 @@ public class ReferenceController {
                     viestit.add(message);
                 }
                 if (viiteTyyppi.equals("book") && (editor.equals("") || publisher.equals(""))) {
-                    message = "Ediittori ja julkaisija ovat pakollisia kenttiä kirja-tyyppisessä viittessä";
+                    message = "Ediittori ja kustantaja ovat pakollisia kenttiä kirja-tyyppisessä viittessä";
                     viestit.add(message);
                 }
                 if (viiteTyyppi.equals("inproceedings") && booktitle.equals("")) {
@@ -145,7 +146,15 @@ public class ReferenceController {
             }
             
             model.addAttribute("messages", viestit);
-            return "form-article";
+            if (viiteTyyppi.equals("inproceedings")) {
+                return "form-inproceedings";
+            }
+            else if (viiteTyyppi.equals("book")) {
+                return "form-book";
+            }
+            else {
+                return "form-article";
+            }
         }
         
         Article viite = new Article();
@@ -213,7 +222,7 @@ public class ReferenceController {
             viite.setSeries(series);
         }
         
-        if (volume != null && !volume.isEmpty()) {
+        if (volume != null && volume != "") {
             viite.setVolume(volume);
         }
         

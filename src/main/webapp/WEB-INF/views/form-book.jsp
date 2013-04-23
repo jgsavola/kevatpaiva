@@ -30,7 +30,7 @@
             <fieldset>
                 <legend>Lisää kirjaviite</legend>
                 <pre><c:forEach var="item" items="${messages}">${item}
-                    </c:forEach></pre>
+            </c:forEach></pre>
 
                 <input name="viiteTyyppi" value="book" type="hidden" />
 
