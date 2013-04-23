@@ -20,17 +20,36 @@
             <li><a href="haebibtex">Tarkastele viitteitä BibTex-muodossa</a></li>
             <li><a href="lomake">Lisää uusi viite</a></li>
         </ul>
+        
+        
         <!-- <ul>
             <c:forEach var="item" items="${artikkelit}">
-                <li>${item.id} | ${item.title} | ${item.author} | ${item.year}</li>
+                <li>
+                    <a href="haebibtex/${item.id}">${item.id} | ${item.title} | ${item.author} | ${item.year}</a>
+                    <form action="poista/${item.id}" method="POST">
+                        <input type="submit" value="Poista" style="width: auto"/>
+                    </form>
+                </li>
             </c:forEach>
         </ul> -->
         
-        <ul>
+        <table>
             <c:forEach var="item" items="${artikkelit}">
-                <li><a href="haebibtex/${item.id}">${item.id} | ${item.title} | ${item.author} | ${item.year}</a></li>
+                <tr>
+                    <td><a href="haebibtex/${item.id}">${item.id} | ${item.title} | ${item.author} | ${item.year}</a></td>
+                    <td>
+                        <form action="paivita/${item.id}" method="POST">
+                            <input type="submit" value="Muuta" style="width: auto"/>
+                        </form>
+                    </td>
+                    <td>
+                        <form action="poista/${item.id}" method="POST">
+                            <input type="submit" value="Poista" style="width: auto"/>
+                        </form>
+                    </td>
+            </tr>
             </c:forEach>
-        </ul>
+        </table>
         
     </body>
 </html>
