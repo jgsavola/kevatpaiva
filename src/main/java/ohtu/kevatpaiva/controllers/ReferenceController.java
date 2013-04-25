@@ -112,7 +112,7 @@ public class ReferenceController {
             }
             else {
                 if (idOnJo) {
-                    message = "Viite kyseisellä id:llä on jo tallennettu";
+                    message = "Viite kyseisell\u00e4 id:ll\u00e4 on jo tallennettu";
                     viestit.add(message);
                 }
                 if (id.equals("")) {
