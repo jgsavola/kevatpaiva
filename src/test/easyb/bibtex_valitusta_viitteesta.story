@@ -11,6 +11,8 @@ scenario "user can see the articles in bibtex form starting from insertion", {
     given 'user has inserted an article and gone to the reference list', {
         driver = new HtmlUnitDriver();
         driver.get("http://localhost:8080/miniprojekti/lomake?viiteTyyppi=article")
+        tallentaja = new ArtikkelinTallentaja()
+        tallentaja.poistaViite("RRR03")
 
         element = driver.findElement(By.name("id"));
         element.sendKeys("RRR03");
@@ -31,7 +33,7 @@ scenario "user can see the articles in bibtex form starting from insertion", {
     when 'user clicks BibTex-link', {
         System.out.println("== tulostetaan tulosivun koodiRRR03 ==");
         System.out.println( driver.getPageSource() );
-        element = driver.findElement(By.partialLinkText("[RRR03]"))
+        element = driver.findElement(By.partialLinkText("RRR03"))
         element.click()
 
         System.out.println("== tulostetaan tulosivun koodi ==");
