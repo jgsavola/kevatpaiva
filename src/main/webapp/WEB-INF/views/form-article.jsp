@@ -15,6 +15,7 @@
             <li><a href="${pageContext.request.contextPath}/haebibtex">Tarkastele viitteitä BibTex-muodossa</a></li>
         </ul>
 
+        <c:if test="${paivitysMoodi eq null}">
         <form id="viiteTyyppiLomake" action="lomake" method="GET" enctype="application/x-www-form-urlencoded">
             <fieldset>
                 <legend>Valitse viitetyyppi</legend>
@@ -25,6 +26,7 @@
                 </select>
             </fieldset>
         </form>
+        </c:if>
 
         <form id="viiteLomake" class="article" action="${pageContext.request.contextPath}/lisaa" method="POST" enctype="application/x-www-form-urlencoded">
             <fieldset>
