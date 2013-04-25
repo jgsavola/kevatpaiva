@@ -12,10 +12,10 @@ scenario "user can see the articles in bibtex form starting from insertion", {
         driver = new HtmlUnitDriver();
         driver.get("http://localhost:8080/miniprojekti/lomake?viiteTyyppi=article")
         tallentaja = new ArtikkelinTallentaja()
-        tallentaja.poistaViite("RRR03")
+        tallentaja.poistaViite("RRR04")
 
         element = driver.findElement(By.name("id"));
-        element.sendKeys("RRR03");
+        element.sendKeys("RRR04");
         element = driver.findElement(By.name("author"));
         element.sendKeys("Anthony Robins and Janet Rountree and Nathan Rountree");
         element = driver.findElement(By.name("title"));
@@ -23,7 +23,7 @@ scenario "user can see the articles in bibtex form starting from insertion", {
         element = driver.findElement(By.name("journal"));
         element.sendKeys("Pakollinen journaali!");
         element = driver.findElement(By.name("year"));
-        element.sendKeys("2003");
+        element.sendKeys("2004");
         element = driver.findElement(By.name("form-submit"));
         element.submit();
 
@@ -31,9 +31,9 @@ scenario "user can see the articles in bibtex form starting from insertion", {
     }
 
     when 'user clicks BibTex-link', {
-        System.out.println("== tulostetaan tulosivun koodiRRR03 ==");
+        System.out.println("== tulostetaan tulosivun koodiRRR04 ==");
         System.out.println( driver.getPageSource() );
-        element = driver.findElement(By.partialLinkText("RRR03"))
+        element = driver.findElement(By.partialLinkText("RRR04"))
         element.click()
 
         System.out.println("== tulostetaan tulosivun koodi ==");
@@ -42,7 +42,7 @@ scenario "user can see the articles in bibtex form starting from insertion", {
 
     then 'articles will be listed', {
         driver.getCurrentUrl().contains("haebibtex").shouldBe true
-        driver.getPageSource().contains("{RRR03,").shouldBe true
+        driver.getPageSource().contains("{RRR04,").shouldBe true
     }
 
 }
