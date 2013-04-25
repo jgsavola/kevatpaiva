@@ -60,7 +60,7 @@ public class ReferenceController {
             @RequestParam String id,
             @RequestParam String author,
             @RequestParam String title,
-            @RequestParam(value = "journal", required = false) String journal, // (journal) NOT REQUIRED?
+            @RequestParam(value = "journal", required = false) String journal,
             @RequestParam String year,
             @RequestParam(value = "volume", required = false) String volume,
             @RequestParam(value = "number", required = false) String number,
@@ -75,10 +75,16 @@ public class ReferenceController {
             @RequestParam(value = "edition", required = false) String edition,
             @RequestParam(value = "series", required = false) String series,
             @RequestParam(value = "organization", required = false) String organization,
+            @RequestParam(value = "paivitysMoodi", required = false) Boolean paivitysMoodi,
             ModelMap model) {
         
         ArrayList<String> viestit = new ArrayList<String>();
         boolean idOnJo = tallentaja.onkoArtikkeli(id);
+        
+        if(paivitysMoodi != null) {
+            idOnJo = false;
+            model.addAttribute("paivitysMoodi", true);
+        }
         
         if (idOnJo || id.equals("") || viiteTyyppi == null||author.equals("") || title.equals("") || year.equals("") 
                 || (viiteTyyppi.equals("article") && journal.equals(""))
@@ -102,7 +108,7 @@ public class ReferenceController {
             model.addAttribute("edition", edition);
             model.addAttribute("series", series);
             model.addAttribute("organization", organization);
-            model.addAttribute("volume", organization);
+            model.addAttribute("volume", volume);
             
             String message = "";
             if (viiteTyyppi == null) {
@@ -222,21 +228,37 @@ public class ReferenceController {
             viite.setSeries(series);
         }
         
-        if (volume != null && volume != "") {
+        if (volume != null && !volume.isEmpty()) {
             viite.setVolume(volume);
         }
         
-        try {
-            tallentaja.tallennaArtikkeli(viite);
-        } catch (Exception e) {
-            model.addAttribute("title", "Poikkeus");
-            model.addAttribute("message", e.getMessage());
-            return "message"; 
-        }
+        if(paivitysMoodi != null) {
+            
+            try {
+                tallentaja.paivitaViite(viite);
+            } catch (Exception e) {
+                model.addAttribute("title", "Poikkeus");
+                model.addAttribute("message", e.getMessage());
+                return "message"; 
+            }
+            model.addAttribute("title", "P\u00e4ivitetty!");
+            model.addAttribute("message", id + " p\u00e4ivitetty onnistuneesti!");
+            return "message";
+            
+        } else {
         
-        model.addAttribute("title", "Lisätty!");
-        model.addAttribute("message", id + " lis\u00e4tty onnistuneesti!");
-        return "message";
+            try {
+                tallentaja.tallennaArtikkeli(viite);
+            } catch (Exception e) {
+                model.addAttribute("title", "Poikkeus");
+                model.addAttribute("message", e.getMessage());
+                return "message"; 
+            }
+            model.addAttribute("title", "Lis\u00e4tty!");
+            model.addAttribute("message", id + " lis\u00e4tty onnistuneesti!");
+            return "message";
+        }
+       
     }
 
     @RequestMapping(value = "listaa", method = RequestMethod.GET)
@@ -322,5 +344,72 @@ public class ReferenceController {
         }
 
         return "redirect:../listaa";
+    }
+    
+    @RequestMapping(value="paivita/{id}", method = RequestMethod.POST)
+    public String paivitaViite(Model model, @PathVariable(value="id") String id) {
+        
+        Article article;
+        try {
+            ArtikkelinTallentaja tallentaja = new ArtikkelinTallentaja();
+            article = tallentaja.haeIdlla(id);
+        } catch (Exception e) {
+            model.addAttribute("title", "Poikkeus");
+            model.addAttribute("message", e.getMessage());
+            return "message"; 
+        }
+        
+        model.addAttribute("id", article.getId());
+        model.addAttribute("author", article.getAuthor());
+        model.addAttribute("title", article.getTitle());
+        model.addAttribute("year", article.getYear());
+        
+        if (article.getViiteTyyppi().equals("article")) {
+            model.addAttribute("journal", article.getJournal());
+            
+            model.addAttribute("pages", article.getPages());
+            
+            model.addAttribute("publisher", article.getPublisher());
+        }
+            
+        if (article.getViiteTyyppi().equals("book")) {
+            model.addAttribute("editor", article.getEditor());
+            model.addAttribute("publisher", article.getPublisher());
+            
+            model.addAttribute("edition", article.getEdition());
+            model.addAttribute("series", article.getSeries());
+            
+        }
+        
+        if (article.getViiteTyyppi().equals("inproceedings")) {
+            model.addAttribute("booktitle", article.getBooktitle());
+            
+            model.addAttribute("editor", article.getEditor());
+            model.addAttribute("organization", article.getOrganization());
+            model.addAttribute("pages", article.getPages());
+            model.addAttribute("publisher", article.getPublisher());
+            model.addAttribute("series", article.getSeries());
+        }
+        
+        model.addAttribute("address", article.getAddress());
+        model.addAttribute("key", article.getKey());
+        model.addAttribute("month", article.getMonth());
+        model.addAttribute("note", article.getNote());
+        model.addAttribute("number", article.getNumber());
+        model.addAttribute("volume", article.getVolume());
+ 
+        
+        model.addAttribute("viiteTyyppi", article.getViiteTyyppi());
+        model.addAttribute("paivitysMoodi", true);
+        
+        if (article.getViiteTyyppi().equals("inproceedings")) {
+            return "form-inproceedings";
+        }
+        else if (article.getViiteTyyppi().equals("book")) {
+            return "form-book";
+        }
+        else {
+            return "form-article";
+        }
     }
 }

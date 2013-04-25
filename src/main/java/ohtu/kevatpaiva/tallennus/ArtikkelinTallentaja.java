@@ -158,4 +158,27 @@ public class ArtikkelinTallentaja {
         }
         return article;
     } 
+    
+    public void paivitaViite(Article artikkeli) throws Exception {
+        
+        try {
+            tx = session.beginTransaction();
+
+            session.merge(artikkeli);
+
+            // Committing the change in the database.
+            session.flush();
+            tx.commit();
+
+        } catch (Exception ex) {
+            /**
+             * Suorita <code>rollback()</code> kaikissa 
+             * poikkeustapauksissa.
+             */
+            ex.printStackTrace();
+            tx.rollback();
+            throw ex;
+        }
+    }
+    
 }

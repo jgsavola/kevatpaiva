@@ -6,3 +6,9 @@ function vaihdaLomake() {
     var selectorForm = document.getElementById("viiteTyyppiLomake");
     selectorForm.submit();
 }
+function togglaaSetti(id) {
+    if(document.getElementById(id).style.display === 'block')
+        document.getElementById(id).style.display = 'none';
+    else
+        document.getElementById(id).style.display = 'block';
+}

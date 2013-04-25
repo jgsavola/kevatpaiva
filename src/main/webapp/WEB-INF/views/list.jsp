@@ -36,6 +36,7 @@
         <table>
             <c:forEach var="item" items="${artikkelit}">
                 <tr>
+                    <td style="text-align:center">${item.viiteTyyppi}</td>
                     <td><a href="haebibtex/${item.id}">[${item.id}] ${item.title}</a></td>
                     <td>${item.author}</td>
                     <td>${item.year}</td>

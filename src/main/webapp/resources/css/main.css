@@ -104,3 +104,25 @@ table td a {
 table tr:hover {
     background-color:#eee;
 }
+p.toggle {
+    text-align:center;
+    text-decoration:none;
+    font-size:small;
+    padding:0.3em 0.6em;
+    border:1px solid #eee;
+    color:black;
+    background-color:#eee;
+    cursor: hand;
+    cursor: pointer;
+}
+p.toggle:hover {
+    text-decoration:none;
+    font-size:small;
+    background-color:#666;
+    color:#fff;
+    cursor: hand;
+    cursor: pointer;
+}
+#valinnaiset {
+    display:none;
+}
