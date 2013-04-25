@@ -7,7 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<html lang="fi">
+<html lang="fi" id="list.jsp">
     <head>
         <meta charset="UTF-8" />
         <title>Viitteet - kevätpäivä</title>

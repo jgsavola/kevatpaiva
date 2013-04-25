@@ -32,7 +32,7 @@ scenario "user can see articles as a list starting from insertion", {
     }
  
     then 'articles will be listed', {
-        driver.getPageSource().contains("Artikkeliviitteet").shouldBe true
+        driver.getPageSource().contains("list.jsp").shouldBe true
     }
 
 }
@@ -50,7 +50,7 @@ scenario "user can see articles as a list starting from the main page", {
     }
  
     then 'articles will be listed', {
-        driver.getPageSource().contains("Artikkeliviitteet").shouldBe true
+        driver.getPageSource().contains("list.jsp").shouldBe true
     }
 
 }
@@ -68,7 +68,7 @@ scenario "user can see articles as a list starting from the insertion page", {
     }
  
     then 'articles will be listed', {
-        driver.getPageSource().contains("Artikkeliviitteet").shouldBe true
+        driver.getPageSource().contains("list.jsp").shouldBe true
     }
 
 }

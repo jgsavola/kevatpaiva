@@ -52,7 +52,7 @@ scenario "user can navigate from the main page to the reference list", {
     }
  
     then 'the reference list will be shown', {
-        driver.getPageSource().contains("Artikkeliviitteet").shouldBe true
+        driver.getPageSource().contains("list.jsp").shouldBe true
     }
 
 }
