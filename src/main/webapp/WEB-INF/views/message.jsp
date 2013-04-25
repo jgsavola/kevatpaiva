@@ -15,12 +15,11 @@
 </head>
 <body>
     <h1>${title}</h1>
-    <ul style="list-style: none">
-            <li><a href="listaa">Tarkastele viitteitä</a></li>
-            <li><a href="haebibtex">Tarkastele viitteitä BibTex-muodossa</a></li>
-            <li><a href="lomake">Lisää uusi viite</a></li>
-    </ul>
     <p>${message}</p>
-    
+    <ul class="navigaatio">
+        <li><a href="lomake">Lisää uusi viite</a></li>
+        <li><a href="listaa">Tarkastele viitteitä</a></li>
+        <li><a href="haebibtex">Tarkastele viitteitä BibTex-muodossa</a></li> 
+    </ul>
 </body>
 </html>

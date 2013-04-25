@@ -16,10 +16,10 @@
     <body>
         <h1>Kevätpäivä</h1>
         <h2>BibTex-viitteiden hallintatyökalu</h2>
-        <ul style="list-style: none">
+        <ul class="navigaatio">
+            <li><a href="lomake">Lisää uusi viite</a></li>
             <li><a href="listaa">Tarkastele viitteitä</a></li>
             <li><a href="haebibtex">Tarkastele viitteitä BibTex-muodossa</a></li>
-            <li><a href="lomake">Lisää uusi viite</a></li>
         </ul>
     </body>
 </html>

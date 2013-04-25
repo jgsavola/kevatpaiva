@@ -21,16 +21,22 @@
                 <select name="viiteTyyppi" id="viiteTyyppi" size="3" onchange="vaihdaLomake();">
                     <option value="article" title="An article from a journal or magazine">Artikkeli</option>
                     <option value="book" title="A book with an explicit publisher">Kirja</option>
-                    <option value="inproceedings" title="An article in a conference proceedings">Konferenssi</option>
+                    <option selected="selected" class="selected" value="inproceedings" title="An article in a conference proceedings">Konferenssi</option>
                 </select>
             </fieldset>
         </form>
 
-        <form id="viiteLomake" action="lisaa" method="POST" enctype="application/x-www-form-urlencoded">
+        <form id="viiteLomake" class="inproceedings" action="lisaa" method="POST" enctype="application/x-www-form-urlencoded">
             <fieldset>
                 <legend>Lisää konferenssijulkaisuviite</legend>
-                <pre><c:forEach var="item" items="${messages}">${item}
-                    </c:forEach></pre>
+                
+                <c:if test="${!empty messages}">
+                <ul class="virheet">
+                <c:forEach var="item" items="${messages}">
+                    <li>${item}</li>
+                </c:forEach>
+                </ul>
+                </c:if>
 
                 <input name="viiteTyyppi" value="inproceedings" type="hidden" />
 

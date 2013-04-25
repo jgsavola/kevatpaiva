@@ -10,15 +10,15 @@
 <html lang="fi">
     <head>
         <meta charset="UTF-8" />
-        <title>${title} - kevätpäivä</title>
+        <title>Viitteet - kevätpäivä</title>
         <link rel="stylesheet" href="resources/css/main.css" />
         <link rel="shortcut icon" href="resources/images/favicon.ico" />
     </head>
     <body>
-        <h1>Artikkeliviitteet</h1>
-        <ul style="list-style: none">
-            <li><a href="haebibtex">Tarkastele viitteitä BibTex-muodossa</a></li>
+        <h1>Viitteet</h1>
+        <ul class="navigaatio">
             <li><a href="lomake">Lisää uusi viite</a></li>
+            <li><a href="haebibtex">Tarkastele viitteitä BibTex-muodossa</a></li>
         </ul>
         
         
@@ -36,7 +36,9 @@
         <table>
             <c:forEach var="item" items="${artikkelit}">
                 <tr>
-                    <td><a href="haebibtex/${item.id}">${item.id} | ${item.title} | ${item.author} | ${item.year}</a></td>
+                    <td><a href="haebibtex/${item.id}">[${item.id}] ${item.title}</a></td>
+                    <td>${item.author}</td>
+                    <td>${item.year}</td>
                     <td>
                         <form action="paivita/${item.id}" method="POST">
                             <input type="submit" value="Muuta" style="width: auto"/>

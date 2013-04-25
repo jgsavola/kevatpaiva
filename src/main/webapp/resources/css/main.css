@@ -1,23 +1,106 @@
 body {
-	font-family:Arial, Helvetica, sans-serif;
+    font-family:Arial, Helvetica, sans-serif;
+    background-color:#fefefe;
+    padding:0.9em;
 }
-form {
-	width: 30%; 
+#viiteTyyppiLomake {
+    width: 15em;
+}
+#viiteLomake {
+    width: 36em;
+}
+#viiteLomake fieldset {
+    border:1px solid #666;
+}
+#viiteLomake.article fieldset {
+    border-top:3px solid #ff9999;
+}
+#viiteLomake.book fieldset {
+    border-top:3px solid #99ff99;
+}
+#viiteLomake.inproceedings fieldset {
+    border-top:3px solid #99ccff;
+}
+fieldset {
+    margin-bottom:1em;
+}
+legend {
+    font-size:small;
+    font-weight:bold;
 }
 label {
-	display:block;
+    display:block;
+    width:12em;
+    float:left;
+    font-size:small;
+    text-align:right;
+    margin: 0.4em 0.3em 0 0;
 }
 select, input {
-	width:90%;
-	margin-bottom:0.6em;
-	padding:3px;
+    width:21em;
+    margin-bottom:0.6em;
+    padding:3px;
 }
+#viiteTyyppi {
+    padding:0.5em;
+    background-color:#fff;
+    font-size:small;
+    width:16em;
+}
+#viiteTyyppi option.selected {
+    background-color:gray;
+}
+
 input.button {
-	margin:0;
+    margin:0;
+    width:100%;
+    padding:1em;
 }
-p.help {
-	display:inline;
+
+ul.navigaatio {
+    list-style:none;
+    padding:0;
+    padding-top:0.6em;
+    margin:1em 0;
+    border-top:3px solid yellowgreen;
 }
-fieldset pre {
-        color:red;
+ul.navigaatio li {
+    display:inline;
+}
+ul.navigaatio li a {
+    text-decoration:none;
+    font-size:small;
+    padding:0.3em 0.6em;
+    border:1px solid #eee;
+    color:black;
+    background-color:#eee;
+    
+}
+ul.navigaatio li a:hover {
+    text-decoration:none;
+    font-size:small;
+    background-color:#666;
+    color:#fff;
+}
+
+ul.virheet {
+    list-style:none;
+    margin:0;
+    padding:2em;
+    border:1px solid red;
+    font-size:small;
+    margin:1em 0;
+}
+ul.virheet li {
+    color:tomato;
+}
+
+table td {
+    font-size:small;
+}
+table td a {
+    color: navy;
+}
+table tr:hover {
+    background-color:#eee;
 }

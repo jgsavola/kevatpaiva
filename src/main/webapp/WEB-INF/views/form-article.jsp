@@ -19,18 +19,24 @@
             <fieldset>
                 <legend>Valitse viitetyyppi</legend>
                 <select name="viiteTyyppi" id="viiteTyyppi" size="3" onchange="vaihdaLomake();">
-                    <option value="article" title="An article from a journal or magazine">Artikkeli</option>
+                    <option selected="selected" class="selected" value="article" title="An article from a journal or magazine">Artikkeli</option>
                     <option value="book" title="A book with an explicit publisher">Kirja</option>
                     <option value="inproceedings" title="An article in a conference proceedings">Konferenssi</option>
                 </select>
             </fieldset>
         </form>
         
-        <form id="viiteLomake" action="lisaa" method="POST" enctype="application/x-www-form-urlencoded">
+        <form id="viiteLomake" class="article" action="lisaa" method="POST" enctype="application/x-www-form-urlencoded">
             <fieldset>
                 <legend>Lisää artikkeliviite</legend>
-                <pre><c:forEach var="item" items="${messages}">${item}
-                    </c:forEach></pre>
+                
+                <c:if test="${!empty messages}">
+                <ul class="virheet">
+                <c:forEach var="item" items="${messages}">
+                    <li>${item}</li>
+                </c:forEach>
+                </ul>
+                </c:if>
 
                 <input name="viiteTyyppi" value="article" type="hidden" />
                        
@@ -40,7 +46,7 @@
                 <label for="author">Kirjoittaja (author)</label>
                 <input name="author" id="author" type="text" value="${author}"/>
 
-                <label for="title">Otsikko (title</label>
+                <label for="title">Otsikko (title)</label>
                 <input name="title" id="title" type="text" value="${title}"/>
 
                 <label for="journal">Journaali (journal)</label>
