@@ -29,7 +29,7 @@ scenario "user can add a new article to the database", {
         element.sendKeys("Obligatory Scientific Journal")
         element = driver.findElement(By.name("form-submit"));
         element.submit();
-        System.out.println( driver.getPageSource() );
+//        System.out.println( driver.getPageSource() );
     }
  
     then 'article will be added', {
@@ -59,14 +59,12 @@ scenario "user cannot add a article with a already used id", {
         element.sendKeys("Obligatory Scientific Journal")
         element = driver.findElement(By.name("form-submit"));
         element.submit();
-        System.out.println( driver.getPageSource() );
+//        System.out.println( driver.getPageSource() );
     }
  
     then 'article will not be added', {
-        // FIXME: teoriassa kumpikin alla oleva virheilmoitus on mahdollinen
-        //        -- Pitäisi saada "or"-ehto toimimaan.
-        //driver.getPageSource().contains("column id is not unique").shouldBe true
-        //driver.getPageSource().contains("on jo tallennettu").shouldBe true
+        driver.getCurrentUrl().contains("lisaa").shouldBe true
+        driver.getPageSource().contains("viitetyyppi").shouldBe true
 
         tallentaja = new ArtikkelinTallentaja()
         tallentaja.poistaViite("B06")
@@ -93,42 +91,11 @@ scenario "user cannot add a article to the database without id", {
         element.sendKeys("Obligatory Scientific Journal")
         element = driver.findElement(By.name("form-submit"));
         element.submit();
-        System.out.println( driver.getPageSource() );
+//        System.out.println( driver.getPageSource() );
     }
  
     then 'article will not be added', {
         driver.getPageSource().contains("on pakollinen").shouldBe true
     }
 
-}
-
-scenario "user cannot add a article to the database without type", { 
-
-    given 'article-form selected', {       
-        driver = new HtmlUnitDriver();
-        driver.get("http://localhost:8080/miniprojekti/lomake")
-    }
-
-    when 'article information is given', {
-        tallentaja = new ArtikkelinTallentaja()
-        tallentaja.poistaViite("B06")
-
-        element = driver.findElement(By.name("id"));
-        element.sendKeys("B06");
-        element = driver.findElement(By.name("author"));
-        element.sendKeys("Black, Toni R.");
-        element = driver.findElement(By.name("title"));
-        element.sendKeys("Helping novice programming students succeed");
-        element = driver.findElement(By.name("year"));
-        element.sendKeys("2006");
-        element = driver.findElement(By.name("journal"))
-        element.sendKeys("Obligatory Scientific Journal")
-        element = driver.findElement(By.name("form-submit"));
-        element.submit();
-        System.out.println( driver.getPageSource() );
-    }
-
-    then 'article will not be added'
-        // FIXME: tähän tarvitaan tarkastus, kunhan typen validointi ja sen
-        // puuttumisen aiheuttava virheilmoitus on toteutettu
 }

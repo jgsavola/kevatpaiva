@@ -29,13 +29,13 @@ scenario "user can see the articles in bibtex form starting from insertion", {
     }
 
     when 'user clicks BibTex-link', {
-        System.out.println("== tulostetaan tulosivun koodiRRR03 ==");
-        System.out.println( driver.getPageSource() );
+//        System.out.println("== tulostetaan tulosivun koodiRRR03 ==");
+//        System.out.println( driver.getPageSource() );
         element = driver.findElement(By.partialLinkText("RRR03"))
         element.click()
 
-        System.out.println("== tulostetaan tulosivun koodi ==");
-        System.out.println( driver.getPageSource() );
+//        System.out.println("== tulostetaan tulosivun koodi ==");
+//        System.out.println( driver.getPageSource() );
     }
 
     then 'articles will be listed', {

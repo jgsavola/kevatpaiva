@@ -26,7 +26,7 @@
             <c:forEach var="item" items="${artikkelit}">
                 <li>
                     <a href="haebibtex/${item.id}">${item.id} | ${item.title} | ${item.author} | ${item.year}</a>
-                    <form name="poisto/${item.id}" action="poista/${item.id}" method="POST">
+                    <form name="poisto" action="poista/${item.id}" method="POST">
                         <input type="submit" value="Poista" style="width: auto"/>
                     </form>
                 </li>
@@ -45,7 +45,7 @@
                         </form>
                     </td>
                     <td>
-                        <form name="poisto/${item.id}" action="poista/${item.id}" method="POST">
+                        <form name="poisto" action="poista/${item.id}" method="POST">
                             <input type="submit" value="Poista" style="width: auto"/>
                         </form>
                     </td>

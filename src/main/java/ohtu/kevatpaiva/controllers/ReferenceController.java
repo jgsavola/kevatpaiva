@@ -106,7 +106,7 @@ public class ReferenceController {
             
             String message = "";
             if (viiteTyyppi == null) {
-                message = "Viitteen tyyppi pitää olla valittuna";
+                message = "Viitteen tyyppi pit\u00e4\u00e4 olla valittuna";
                 viestit.add(message);
                 return "form-article";
             }
@@ -116,31 +116,31 @@ public class ReferenceController {
                     viestit.add(message);
                 }
                 if (id.equals("")) {
-                    message = "Id on pakollinen kenttä";
+                    message = "Id on pakollinen kentt\u00e4";
                     viestit.add(message);
                 }
                 if (author.equals("")) {
-                    message = "Kirjoittaja on pakollinen kenttä";
+                    message = "Kirjoittaja on pakollinen kentt\u00e4";
                     viestit.add(message);
                 }
                 if (title.equals("")) {
-                    message = "Otsikko on pakollinen kenttä";
+                    message = "Otsikko on pakollinen kentt\u00e4";
                     viestit.add(message);
                 }
                 if (year.equals("")) {
-                    message = "Vuosi on pakollinen kenttä";
+                    message = "Vuosi on pakollinen kentt\u00e4";
                     viestit.add(message);
                 }
                 if (viiteTyyppi.equals("article") && journal.equals("")) {
-                    message = "Journaali on pakollinen kenttä artikkeli-tyyppisessä viitteessä";
+                    message = "Journaali on pakollinen kentt\u00e4 artikkeli-tyyppisess\u00e4 viitteess\u00e4";
                     viestit.add(message);
                 }
                 if (viiteTyyppi.equals("book") && (editor.equals("") || publisher.equals(""))) {
-                    message = "Ediittori ja kustantaja ovat pakollisia kenttiä kirja-tyyppisessä viittessä";
+                    message = "Ediittori ja kustantaja ovat pakollisia kentti\u00e4 kirja-tyyppisess\u00e4 viittess\u00e4";
                     viestit.add(message);
                 }
                 if (viiteTyyppi.equals("inproceedings") && booktitle.equals("")) {
-                    message = "Kirjan otsikko on pakollinen kenttä konferenssi-tyyppisessä viitteessä";
+                    message = "Nimike on pakollinen kentt\u00e4 konferenssi-tyyppisess\u00e4 viitteess\u00e4";
                     viestit.add(message);
                 }
             }
@@ -235,7 +235,7 @@ public class ReferenceController {
         }
         
         model.addAttribute("title", "Lisätty!");
-        model.addAttribute("message", id + " lisätty onnistuneesti!");
+        model.addAttribute("message", id + " lis\u00e4tty onnistuneesti!");
         return "message";
     }
 
