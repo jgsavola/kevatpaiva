@@ -41,7 +41,7 @@
                     <td>${item.author}</td>
                     <td>${item.year}</td>
                     <td>
-                        <form action="paivita/${item.id}" method="POST">
+                        <form name="muutos/${item.id}" action="paivita/${item.id}" method="POST">
                             <input type="submit" value="Muuta" style="width: auto"/>
                         </form>
                     </td>
