@@ -5,13 +5,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Luokka BibTeX-kenttien muodon käsittelyyn.
+ * Luokka BibTeX-kenttien muodon käsittelyyn. 
+ * 
+ * Skandien koodaus BibTeX/LaTeX-muotoon ja isojen kirjainten suojaus viitteen otsikossa.
  *
- * Toistaiseksi toteutettu skandien koodaus BibTeX/LaTeX-muotoon ja
- * isojen kirjainten suojaus.
- *
- * @author ninbarlu
- * @author jgsavola
+ * @author  Kevätpäivä
+ * @since   26.4.2013
  */
 public class Muunto {
     private static final Pattern isotKirjaimetPattern = Pattern.compile("([\\p{javaUpperCase}])");
@@ -20,8 +19,7 @@ public class Muunto {
     /**
      * Muunto-luokan staattinen alustus.
      *
-     * Lisää tähän LaTex/BibTeX-muunnokset skandeille. (Toki kelpaavat
-     * muutkin merkit kuin skandit.
+     * Lisää tähän LaTex/BibTeX-muodon vaatimat muunnokset.
      */
     static {
         skandiMap.put("\u00e5", "\\aa");
@@ -43,7 +41,7 @@ public class Muunto {
      * on käytössä (Ö ==> {Ö} ==> {\"{O}}). Onko tämä ok?
      *
      * @param merkkijono Muunnettava merkkijono.
-     * @param title Onko kyseessä otsikkokenttä ("title").
+     * @param title Viitteen otsikkokenttä.
      * @return Muunnettu merkkijono.
      */
     public static String muunnaMuoto(String merkkijono, boolean title) {

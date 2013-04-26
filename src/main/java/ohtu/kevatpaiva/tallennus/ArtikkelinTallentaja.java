@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package ohtu.kevatpaiva.tallennus;
 
 import java.util.List;
@@ -17,10 +13,13 @@ import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
 
 /**
+ * Viitteen käsittely tietokannassa.
+ * 
+ * Tuetut viitetyypit article, book ja inproceedings.
  *
- * @author hwikgren
- */
-public class ArtikkelinTallentaja {
+ * @author  Kevätpäivä
+ * @since   26.4.2013
+ */public class ArtikkelinTallentaja {
     
     private static SessionFactory sessionFactory = null; 
     private static ServiceRegistry serviceRegistry = null; 

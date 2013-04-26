@@ -6,8 +6,10 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * The persistent class for the article database table.
+ * Article-taulun muodostaminen. Tuetut viitetyypit article, book ja inproceedings.
  *
+ * @author  Kevätpäivä
+ * @since   26.4.2013
  */
 @Entity
 @Table(name = "article")
@@ -294,10 +296,10 @@ public class Article implements Serializable {
     }
 
     /**
-     * Luo BibTeX-esitys artikkelista. Lopputuloksena pitäisi olla merkkijono
+     * Luo BibTeX-esityksen tallennetusta viitteestä. Lopputuloksena on merkkijono
      * käyvässä BibTeX-formaatissa.
      *
-     * @return Artikkelin BibTeX-esitys.
+     * @return Viiteen BibTeX-esitys.
      */
     public String toBibTeX() {
 

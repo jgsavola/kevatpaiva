@@ -13,8 +13,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
+ * Pyyntöjen hallinta.
+ * 
+ * Hallinnoi näytöltä toteutettavaksi tulevat toiminnot.
  *
- * @author danielli
+ * @author  Kevätpäivä
+ * @since   26.4.2013
  */
 @Controller
 @RequestMapping("/")
